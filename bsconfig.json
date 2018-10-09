@@ -1,0 +1,34 @@
+{
+  "name": "next-reason-boilerplate",
+  "sources": [
+    {
+      "dir": "components",
+      "subdirs": true
+    },
+    {
+      "dir": "pages",
+      "subdirs": true
+    },
+    {
+      "dir": "bindings",
+      "subdirs": true
+    }
+  ],
+  "bs-dependencies": [
+    "reason-react",  "reason-apollo", "bs-ant-design-alt"
+  ],
+  "ppx-flags": ["graphql_ppx/ppx"],
+  "reason": {
+    "react-jsx": 2
+  },
+  "package-specs": {
+    "module": "commonjs",
+    "in-source": true
+  },
+  "suffix": ".bs.js",
+  "bsc-flags": [
+    "-bs-super-errors"
+  ],
+  "refmt": 3,
+  "namespace": false
+}

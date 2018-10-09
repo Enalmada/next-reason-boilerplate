@@ -1,0 +1,45 @@
+version: 0.2
+
+# Environment variables: https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref.html#build-env-ref-env-vars
+# Build phases: https://docs.aws.amazon.com/codebuild/latest/userguide/view-build-details.html#view-build-details-phases
+# No failed notifications: https://forums.aws.amazon.com/message.jspa?messageID=763542 (make comment)
+
+env:
+  variables:
+    AWS_DEFAULT_REGION: "us-west-1"
+    SNS_TOPIC_ARN: ""
+
+
+phases:
+
+  pre_build:
+    commands:
+
+    # For some reason I need to uninstall and reinstall these to get AWS codebuild to work
+    - npm install
+    - npm uninstall bs-platform
+    - npm install bs-platform
+    - npm uninstall graphql_ppx
+    - npm install graphql_ppx
+    - npm uninstall babel-plugin-bucklescript
+    - npm install babel-plugin-bucklescript
+    - npm uninstall repack-zip-alt
+    - npm install repack-zip-alt
+
+    - chmod +x codebuild.sh
+    - chmod +x codebuildPrep.sh
+    - ./codebuildPrep.sh
+
+  build:
+    commands:
+    - echo Build ${CODEBUILD_RESOLVED_SOURCE_VERSION} started on `date`
+    - echo Compile and test the code ...
+    - npm run build-repackzip
+    - ./codebuild.sh
+
+  # Apparently post_build runs if build fails
+  # https://stackoverflow.com/questions/43131439/aws-codepipeline-adding-artifacts-to-s3-in-less-useful-format-than-running-steps
+  post_build:
+    commands:
+    - echo Build completed on `date`
+

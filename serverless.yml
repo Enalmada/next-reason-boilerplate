@@ -1,0 +1,77 @@
+# If you are interested in serverless, please refer to this: https://github.com/skriems/next-material
+
+service: next-reason-client
+app: myapp
+tenant: <username>
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: prod
+  region: us-west-1
+  memorySize: 264
+  timeout: 15
+  environment:
+    NODE_ENV: production
+    LAMBDA: true
+  iamRoleStatements:
+  - Effect: 'Allow'
+    Action:
+    - 'lambda:InvokeFunction'
+    Resource:
+    - Fn::Join:
+      - ':'
+      - - arn:aws:lambda
+        - Ref: AWS::Region
+        - Ref: AWS::AccountId
+        - function:${self:service}-${opt:stage, self:provider.stage}-*
+
+package:
+  exclude:
+    - .git/**
+    - node_modules/webpack-dev-middleware/**
+    - node_modules/webpack-hot-middleware/**
+    - node_modules/antd/dist/**
+    - node_modules/bs-platform/**
+    - "**/*.map"
+    - "*.zip"
+  include:
+    - node_modules/bs-platform/lib/js/**
+    - lib/bs/**
+  artifact:
+    next-reason-client.zip
+
+plugins:
+  - serverless-domain-manager
+  - serverless-apigw-binary
+  - serverless-plugin-warmup
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  domain:
+    dev: dev.example.com
+    prod: prod.example.com
+  customDomain:
+    enabled: false
+    stage: ${self:custom.stage}
+    domainName: ${self:custom.domain.${self:custom.stage}}
+    certificateName: 'www.example.com'
+    basePath: ''
+    createRoute53Record: true
+    endpointType: regional
+  apigwBinary:
+    types:
+    - '*/*'
+  warmup:
+    schedule: 'rate(5 minutes)'
+
+functions:
+  next:
+    handler: lambda.handler
+    events:
+    - http:
+        method: ANY
+        path: /
+    - http:
+        method: ANY
+        path: /{any+}
+    warmup: true

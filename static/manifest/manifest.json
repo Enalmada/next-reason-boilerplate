@@ -1,0 +1,42 @@
+{
+  "icons": [
+    {
+      "src": "/static/manifest/icon_512x512.bee7ffea7b646c260f6982171dd51997.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/manifest/icon_384x384.3230a9358c096219b44ba2d129e2ce3f.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/manifest/icon_256x256.09326bab1e171c9c151359bcd0875b72.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/manifest/icon_192x192.e5c8b25a7a28d581fda5f15068407698.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/manifest/icon_128x128.7eac9294d4419b1d59f49dd16c1b92d3.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/manifest/icon_96x96.4f705b543da3a6029ff3f7c02675cd2b.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    }
+  ],
+  "short_name": "ShortName",
+  "name": "LongName",
+  "start_url": "/?utm_source=homescreen",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "splash_pages": null,
+  "gcm_sender_id": "103953800507"
+}
