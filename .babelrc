@@ -3,6 +3,12 @@
     "next/babel"
   ],
   "plugins": [
-    "babel-plugin-bucklescript"
+    "babel-plugin-bucklescript",
+    [
+      "import",
+      {
+        "libraryName": "antd-mobile"
+      }
+    ]
   ]
 }

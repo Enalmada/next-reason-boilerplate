@@ -3,8 +3,9 @@
 // Event handlers like onClick can't be added to this file
 
 // ./pages/_document.js
-import Document, {Head, Main, NextScript} from "next/document";
+import Document, {Main, NextScript} from "next/document";
 import React from "react";
+import Head from "../components/CustomHead";
 
 const facebookId = "<YOUR_ID>";
 

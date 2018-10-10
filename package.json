@@ -58,6 +58,7 @@
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-less": "^1.0.1",
     "antd": "^3.10.0",
+    "antd-mobile": "^2.2.5",
     "apollo-boost": "^0.1.16",
     "bs-ant-design-alt": "^1.0.6",
     "cors": "^2.8.4",
@@ -78,7 +79,10 @@
     "react-apollo": "^2.2.4",
     "react-dom": "^16.5.2",
     "reason-apollo": "^0.14.1",
-    "reason-react": "^0.5.3"
+    "reason-react": "^0.5.3",
+    "svg-sprite-loader": "^4.1.2",
+    "babel-plugin-import": "^1.9.1",
+    "require-hacker": "^3.0.1"
   },
   "devDependencies": {
     "babel-eslint": "10.0.1",
