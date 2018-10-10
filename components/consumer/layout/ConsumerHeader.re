@@ -12,5 +12,6 @@ let make = _children => {
       <Next.Link href="/test/reasonApollo"> <a style=styles> {ReasonReact.string("Apollo (tbd)")} </a> </Next.Link>
       <Next.Link href="/test/antdExamples"> <a style=styles> {ReasonReact.string("Ant Desktop")} </a> </Next.Link>
       <Next.Link href="/mobile/home"> <a style=styles> {ReasonReact.string("Ant Mobile")} </a> </Next.Link>
+      <Next.Link href="/test/agent"> <a style=styles> {ReasonReact.string("Agent")} </a> </Next.Link>
     </div>,
 };
