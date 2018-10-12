@@ -1,0 +1,12 @@
+body {
+    text-align: center;
+}
+
+h3 {
+    margin: 50px;
+}
+
+#container {
+    display: flex;
+    justify-content: center;
+}
