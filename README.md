@@ -51,10 +51,12 @@ on development I normally would import antd.less globally only in dev mode to ma
 * next-link - server push of critical assets for minimum "time to interactive" latency 
 * offline support - next-offline mostly.  See server.js manifest prefix with assetPrefix hack 
 * SEO - robots.txt in server.js.  meta with next-seo
-* PM2 - see start:multicore in package.json
+* PM2 - necessary to enable multicore support.  see start:multicore in package.json
 * create zip distributions - using repack-zip-alt until rollup is fixed 
 * PWA Manifest - originally using next-manifest but found it unnecessary.  See static/manifest dir for placeholders.
 * non-critical css loaded async with loadCSS (https://github.com/filamentgroup/loadCSS) see _document.js (note I may have hacked this to handle crossorigin)
+* RUM (Real User Monitoring) via next-rum (see _app.js) or site24x7 (see end of _document.js) 
+* Node Performance Monitoring via site24x7 (see top of server.js)
 
 TODO: 
 * make it look better 

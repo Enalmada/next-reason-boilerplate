@@ -60,6 +60,7 @@
     "@zeit/next-less": "^1.0.1",
     "antd": "^3.10.1",
     "antd-mobile": "^2.2.5",
+    "apminsight": "^1.2.0",
     "apollo-boost": "^0.1.16",
     "babel-plugin-import": "^1.10.0",
     "bs-ant-design-alt": "^1.0.7",

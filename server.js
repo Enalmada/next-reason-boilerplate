@@ -1,6 +1,26 @@
 /* eslint no-shadow: "off", "no-console":  off, no-unused-vars: 0, no-param-reassign: 0,
 guard-for-in: 0, no-restricted-syntax: 0,  no-underscore-dangle: 0, global-require: 0 */
 
+// dotenv needs to come before anything that reads local environment variables
+// In a real app you would make this dev only and .env would be in .gitignore.
+// It helps test production build on local machine with some sane env variable settings
+// TODO: think of a good way to enable this local machine dev and local production build testing
+// if(dev) {
+const dotenv = require("dotenv");
+
+dotenv.config();
+// }
+
+// Performance Monitoring for Node.js Applications (small fee to enable)
+// https://www.site24x7.com/node-js-monitoring.html
+if (process.env.SITE247_NODE_API && process.env.SITE247_NODE_APPNAME && process.env.SITE247_NODE_PORT) {
+    require("apminsight")({
+        licenseKey: process.env.SITE247_NODE_LICENSEKEY,
+        appName: process.env.SITE247_NODE_APPNAME,
+        port: process.env.SITE247_NODE_PORT,
+    });
+}
+
 const express = require("express");
 const next = require("next");
 const expressHealthcheck = require("express-healthcheck");
@@ -17,15 +37,6 @@ const helmet = require("helmet");
 
 const env = process.env.ENV;
 
-// dotenv needs to come before anything that reads local environment variables
-// In a real app you would make this dev only and .env would be in .gitignore.
-// It helps test production build on local machine with some sane env variable settings
-// TODO: think of a good way to enable this local machine dev and local production build testing
-// if(dev) {
-const dotenv = require("dotenv");
-
-dotenv.config();
-// }
 
 // Ensure you have CDN_URL environment variable defined in production
 // For local testing, .env file should have CDN_URL=http://localhost:3000

@@ -123,6 +123,13 @@ export default class MyDocument extends Document {
                         })(window,document,'script','dataLayer','${process.env.GTM}');`,
                     }}/>
 
+                    {/* Site24x7 RUM Monitoring (optional paid upgrade from next-rum) */}
+                    {process.env.SITE247_RUMMOKEY
+                        && <script dangerouslySetInnerHTML={{
+                            __html: `var rumMOKey='${process.env.SITE247_RUMMOKEY}';(function(){if(window.performance && window.performance.timing && window.performance.navigation) {var site24x7_rum_beacon=document.createElement('script');site24x7_rum_beacon.async=true;site24x7_rum_beacon.setAttribute('src','//static.site24x7rum.com/beacon/site24x7rum-min.js?appKey='+rumMOKey);document.getElementsByTagName('head')[0].appendChild(site24x7_rum_beacon);}})(window)`,
+                        }}/>
+                    }
+
                 </Head>
                 <body>
 
