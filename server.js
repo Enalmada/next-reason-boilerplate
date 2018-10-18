@@ -34,6 +34,7 @@ const app = next({dev});
 const handle = app.getRequestHandler();
 const path = require("path");
 const helmet = require("helmet");
+const shrinkRay = require("shrink-ray-current");
 
 const env = process.env.ENV;
 
@@ -75,6 +76,7 @@ const corsOptions = {
 const createServer = () => {
     const server = express();
 
+    server.use(shrinkRay()); // br compression with automatic recompression
 
     // It is important to have real cors value so service worker caches proper response code
     server.use(cors(corsOptions));

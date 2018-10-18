@@ -86,6 +86,7 @@
     "reason-apollo": "^0.14.1",
     "reason-react": "^0.5.3",
     "require-hacker": "^3.0.1",
+    "shrink-ray-current": "^2.1.2",
     "svg-sprite-loader": "^4.1.2"
   },
   "devDependencies": {

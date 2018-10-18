@@ -57,6 +57,7 @@ on development I normally would import antd.less globally only in dev mode to ma
 * non-critical css loaded async with loadCSS (https://github.com/filamentgroup/loadCSS) see _document.js (note I may have hacked this to handle crossorigin)
 * RUM (Real User Monitoring) via next-rum (see _app.js) or site24x7 (see end of _document.js) 
 * Node Performance Monitoring via site24x7 (see top of server.js)
+* br compression - you may want to disable if proxy already supports br
 
 TODO: 
 * make it look better 
@@ -75,7 +76,6 @@ TODO:
 * nextLink looks at assetPrefix rather than CDN_URL
 * sentry code only enabled everywhere if a valid DSN environment variable exists (so uncommenting code isn't necessary)
 * bundle analyzer from RAN 
-* note to only use compression if proxy doesn't support it (if you must have compression, use shrink-ray-current)
 * put babel legacy decorators back per https://github.com/zeit/next.js/pull/5263
 
 What else does every production next.js app need?
