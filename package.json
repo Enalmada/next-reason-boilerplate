@@ -90,6 +90,7 @@
     "svg-sprite-loader": "^4.1.2"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.1.2",
     "babel-eslint": "10.0.1",
     "babel-plugin-bucklescript": "^0.5.2",
     "bs-platform": "^4.0.6",

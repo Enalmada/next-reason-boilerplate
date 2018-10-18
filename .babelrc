@@ -4,10 +4,12 @@
   ],
   "plugins": [
     "babel-plugin-bucklescript",
+    ["@babel/plugin-proposal-decorators", { "decoratorsBeforeExport": true }],
     [
       "import",
       {
-        "libraryName": "antd-mobile"
+        "libraryName": "antd-mobile",
+        "style": true
       }
     ]
   ]
