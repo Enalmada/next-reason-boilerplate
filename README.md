@@ -58,6 +58,8 @@ on development I normally would import antd.less globally only in dev mode to ma
 * RUM (Real User Monitoring) via next-rum (see _app.js) or site24x7 (see end of _document.js) 
 * Node Performance Monitoring via site24x7 (see top of server.js)
 * br compression - you may want to disable if proxy already supports br
+* babel legacy decorators make antd theming work (https://github.com/zeit/next.js/pull/5263)
+* bundle analyzer (npm run analyze)
 
 TODO: 
 * make it look better 
@@ -75,8 +77,6 @@ TODO:
 * dotenv only runs on local machine (but still during local production build testing)
 * nextLink looks at assetPrefix rather than CDN_URL
 * sentry code only enabled everywhere if a valid DSN environment variable exists (so uncommenting code isn't necessary)
-* bundle analyzer from RAN 
-* put babel legacy decorators back per https://github.com/zeit/next.js/pull/5263
 
 What else does every production next.js app need?
 

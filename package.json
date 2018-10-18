@@ -15,6 +15,7 @@
   },
   "bin": "index.js",
   "scripts": {
+    "analyze": "cross-env ANALYZE=1 npm run build",
     "now": "now --public && now alias",
     "bsb-watch": "bsb -clean-world -make-world -w",
     "dev": "npm run lint-fix && node server.js",
@@ -94,6 +95,7 @@
     "babel-eslint": "10.0.1",
     "babel-plugin-bucklescript": "^0.5.2",
     "bs-platform": "^4.0.6",
+    "cross-env": "^5.2.0",
     "dotenv": "^6.1.0",
     "eslint": "5.7.0",
     "eslint-config-airbnb": "17.1.0",
@@ -112,6 +114,7 @@
     "pre-commit": "^1.2.2",
     "prettier": "1.14.3",
     "repack-zip-alt": "^0.2.8",
-    "rimraf": "2.6.2"
+    "rimraf": "2.6.2",
+    "webpack-bundle-analyzer": "^3.0.3"
   }
 }

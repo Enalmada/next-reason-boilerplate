@@ -8,6 +8,8 @@ const path = require("path");
 const fs = require("fs");
 const requireHacker = require("require-hacker");
 
+const {ANALYZE} = process.env;
+
 // styled jsx will fail without it
 if (typeof require !== "undefined") {
     require.extensions[".less"] = () => {
@@ -47,7 +49,7 @@ const nextConfig = {
         // theme antd here
         modifyVars: {"@primary-color": "#DA4453"},
     },
-    webpack: (config, {dev}) => {
+    webpack: (config, {dev, isServer}) => {
         // config.resolve.extensions = [".web.js", ".js", ".json"];
 
         config.module.rules.push(
@@ -71,6 +73,16 @@ const nextConfig = {
                 ],
             },
         );
+
+        if (ANALYZE) {
+            const {BundleAnalyzerPlugin} = require("webpack-bundle-analyzer");
+
+            config.plugins.push(new BundleAnalyzerPlugin({
+                analyzerMode: "server",
+                analyzerPort: isServer ? 8888 : 8889,
+                openAnalyzer: true,
+            }));
+        }
 
         return config;
     },
