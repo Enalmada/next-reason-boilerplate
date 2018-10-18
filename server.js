@@ -49,15 +49,13 @@ const nextLink = require("next-link");
 // VERSION_PLACEHOLDER swapped out during build
 // Note this part here only catches errors from server.js
 // Sentry is a big mess on next: https://github.com/zeit/next.js/issues/1852
-// Uncomment with a valid DSN else it crashes
-// TODO: enable sentry stuff everywhere if a valid DSN environment variable exists
-/*
-Sentry.init({
-    dsn: "<dsn>",
-    environment: env || "development",
-    release: "VERSION_PLACEHOLDER",
-});
-*/
+if (process.env.SENTRY_DSN) {
+    Sentry.init({
+        dsn: process.env.SENTRY_DSN,
+        environment: env || "development",
+        release: "VERSION_PLACEHOLDER",
+    });
+}
 
 
 const whitelist = ["http://localhost:3000"];

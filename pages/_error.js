@@ -3,14 +3,13 @@ import * as Sentry from "@sentry/browser";
 import React from "react";
 
 // Sentry is a big mess on next: https://github.com/zeit/next.js/issues/1852
-// Uncomment with a valid DSN else it crashes
-/*
-Sentry.init({
-    dsn: "<DSN>",
-    environment: process.env.ENV || "development",
-    release: "VERSION_PLACEHOLDER",
-});
-*/
+if (process.env.SENTRY_DSN) {
+    Sentry.init({
+        dsn: process.env.SENTRY_DSN,
+        environment: process.env.ENV || "development",
+        release: "VERSION_PLACEHOLDER",
+    });
+}
 
 /**
  * Send an error event to Sentry.

@@ -76,7 +76,6 @@ TODO:
 * placeholder favicons so everything loads without console errors (i removed my corporate ones to make this boilerplate generic)
 * dotenv only runs on local machine (but still during local production build testing)
 * nextLink looks at assetPrefix rather than CDN_URL
-* sentry code only enabled everywhere if a valid DSN environment variable exists (so uncommenting code isn't necessary)
 
 What else does every production next.js app need?
 
