@@ -60,11 +60,11 @@ on development I normally would import antd.less globally only in dev mode to ma
 * br compression - you may want to disable if proxy already supports br
 * babel legacy decorators make antd theming work (https://github.com/zeit/next.js/pull/5263)
 * bundle analyzer (npm run analyze)
+* desktop/mobile conditional rendering based on device (react-useragent)
 
 TODO: 
 * make it look better 
 * reason-apollo - perhaps the next.js "with-apollo" examples working in reason
-* desktop/mobile conditional rendering based on device - https://deviceatlas.com/blog/javascript-server-side-rendering-device-detection
 * ant-mobile reason bindings
 * localization - likely https://react.i18next.com.   
 * health check hit critical stuff (database, cdn)
@@ -72,10 +72,11 @@ TODO:
 * next-routes - need to learn this more
 * best way to generate site map
 * rollup - need dist file without the unused code bloat (see rollup.config.js for current issue)
-* beanstalk br compression and server push (would be best to put cloudflare in front instead but I am curious)
+* beanstalk server push (cloudflare could be simpler but I am curious)
 * placeholder favicons so everything loads without console errors (i removed my corporate ones to make this boilerplate generic)
 * dotenv only runs on local machine (but still during local production build testing)
 * nextLink looks at assetPrefix rather than CDN_URL
+* improve desktop/mobile example to use antd mobile/desktop rather than words
 
 What else does every production next.js app need?
 

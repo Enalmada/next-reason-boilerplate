@@ -1,5 +1,5 @@
 /* eslint no-shadow: "off", "no-console":  off, no-unused-vars: 0, no-param-reassign: 0,
-guard-for-in: 0, no-restricted-syntax: 0,  no-underscore-dangle: 0, global-require: 0 */
+guard-for-in: 0, no-restricted-syntax: 0,  no-underscore-dangle: 0, global-require: 0, no-useless-escape: 0, no-cond-assign: 0 */
 
 // dotenv needs to come before anything that reads local environment variables
 // In a real app you would make this dev only and .env would be in .gitignore.
@@ -10,6 +10,7 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 // }
+const onHeaders = require("on-headers");
 
 // Performance Monitoring for Node.js Applications (small fee to enable)
 // https://www.site24x7.com/node-js-monitoring.html
@@ -32,17 +33,13 @@ const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== "production";
 const app = next({dev});
 const handle = app.getRequestHandler();
+
 const path = require("path");
 const helmet = require("helmet");
 const shrinkRay = require("shrink-ray-current");
+const routes = require("./routes");
 
 const env = process.env.ENV;
-
-
-// Ensure you have CDN_URL environment variable defined in production
-// For local testing, .env file should have CDN_URL=http://localhost:3000
-// TODO: make nextLink look at assetPrefix (I just don't know how to do that yet)
-const nextLink = require("next-link");
 
 // https://github.com/expressjs/express/issues/2456
 
@@ -70,18 +67,71 @@ const corsOptions = {
     },
 };
 
+function linkFile(name) {
+    let as = "script";
+    if (name.endsWith(".css")) {
+        as = "style";
+    }
+    return `<${name}>; as=${as}; rel=preload; crossorigin=anonymous`;
+}
+
+// Put the preload hints in head into response headers for proxy to turn into h2 push
+// Link headers are turned into h2 server push by most proxy which improves time to interactive latency.
+// Use Chrome lighthouse plugin to test
+const renderAndLink = function renderAndCache(
+    req,
+    res,
+    pagePath,
+    queryParams,
+) {
+    app
+        .renderToHTML(req, res, pagePath, queryParams)
+        .then((html) => {
+            onHeaders(res, () => {
+                const matches = [];
+                const myRegex = /<link rel="preload" href=\"([^\"]*_next[^"]*)"/gs;
+                let match;
+                while (match = myRegex.exec(html)) matches.push(match[1]);
+                const newLinks = matches.map(m => linkFile(m)).join("; ");
+
+                const existingLinks = res.getHeader("link");
+
+                if (existingLinks) {
+                    res.setHeader("link", `${existingLinks}, ${newLinks}`);
+                } else {
+                    res.setHeader("link", newLinks);
+                }
+            });
+
+            res.send(html);
+        })
+        .catch((err) => {
+            app.renderError(err, req, res, pagePath, queryParams);
+        });
+};
+
+const routerHandler = routes.getRequestHandler(
+    app,
+    ({
+        req, res, route, query,
+    }) => {
+        renderAndLink(req, res, route.page, query);
+    },
+);
+
 
 const createServer = () => {
     const server = express();
 
-    server.use(shrinkRay()); // br compression with automatic recompression
+    // Compressing all assets in dev slows things down.
+    // Only use this in production if your assets are cdn cached and proxy doesn't do br natively
+    if (!dev) {
+        server.use(shrinkRay()); // br compression with automatic recompression
+    }
 
     // It is important to have real cors value so service worker caches proper response code
     server.use(cors(corsOptions));
 
-    // Link headers are turned into h2 server push by most proxy which improves time to interactive latency.
-    // Use Chrome lighthouse plugin to test
-    server.use(nextLink);
 
     // Basic best practice security settings
     server.use(helmet());
@@ -134,14 +184,18 @@ const createServer = () => {
     });
 
 
+    /*
     server.get("/", (req, res) => {
         // HTTP2 server push critical assets required for page to become user interactive
         // Currently necessary to do .pageLink for every page but I hope to automate this somehow in the middleware
         // Argument is relative to /pages directory
-        res.pageLink("index.js");
+        //res.pageLink("index.js");
         handle(req, res);
     });
+*/
 
+    // This seems to need to be after manual routes
+    server.use(routerHandler);
 
     server.get("*", (req, res) => {
         // TODO: figure out how to add "no-cache" to only text/html pages so we can put CloudFront CDN

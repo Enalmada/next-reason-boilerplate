@@ -13,7 +13,8 @@ const routes = require("next-routes")();
 //
 // ------------ ROUTES ---------------
 // @RANStartRoutes
-
+routes.add("index", "/", "index");
+routes.add("about", "/about", "about");
 // @RANEndRoutes
 // ------------ ROUTES ---------------
 //
