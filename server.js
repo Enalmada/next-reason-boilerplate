@@ -10,7 +10,6 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 // }
-const onHeaders = require("on-headers");
 
 // Performance Monitoring for Node.js Applications (small fee to enable)
 // https://www.site24x7.com/node-js-monitoring.html
@@ -37,6 +36,7 @@ const handle = app.getRequestHandler();
 const path = require("path");
 const helmet = require("helmet");
 const shrinkRay = require("shrink-ray-current");
+const nextLink = require("next-link");
 const routes = require("./routes");
 
 const env = process.env.ENV;
@@ -67,58 +67,14 @@ const corsOptions = {
     },
 };
 
-function linkFile(name) {
-    let as = "script";
-    if (name.endsWith(".css")) {
-        as = "style";
-    }
-    return `<${name}>; as=${as}; rel=preload; crossorigin=anonymous`;
-}
-
 // Put the preload hints in head into response headers for proxy to turn into h2 push
 // Link headers are turned into h2 server push by most proxy which improves time to interactive latency.
 // Use Chrome lighthouse plugin to test
-const renderAndLink = function renderAndCache(
-    req,
-    res,
-    pagePath,
-    queryParams,
-) {
-    app
-        .renderToHTML(req, res, pagePath, queryParams)
-        .then((html) => {
-            onHeaders(res, () => {
-                const matches = [];
-                const myRegex = /<link rel="preload" href=\"([^\"]*_next[^"]*)"/gs;
-                let match;
-                while (match = myRegex.exec(html)) matches.push(match[1]);
-                const newLinks = matches.map(m => linkFile(m)).join("; ");
-
-                const existingLinks = res.getHeader("link");
-
-                if (existingLinks) {
-                    res.setHeader("link", `${existingLinks}, ${newLinks}`);
-                } else {
-                    res.setHeader("link", newLinks);
-                }
-            });
-
-            res.send(html);
-        })
-        .catch((err) => {
-            app.renderError(err, req, res, pagePath, queryParams);
-        });
-};
-
-const routerHandler = routes.getRequestHandler(
-    app,
-    ({
-        req, res, route, query,
-    }) => {
-        renderAndLink(req, res, route.page, query);
-    },
-);
-
+const routerHandler = routes.getRequestHandler(app, ({
+    req, res, route, query,
+}) => {
+    nextLink(app, req, res, route.page, query);
+});
 
 const createServer = () => {
     const server = express();
