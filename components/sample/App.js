@@ -14,7 +14,7 @@ type Props = {
 // require("../../assets/styles.less");
 
 const App = ({children}) => (
-    <main>
+    <main className="container">
         {children}
     </main>
 );

@@ -1,15 +1,10 @@
 /* eslint no-shadow: "off", "no-console":  off, no-unused-vars: 0, no-param-reassign: 0,
-guard-for-in: 0, no-restricted-syntax: 0,  no-underscore-dangle: 0, global-require: 0, no-useless-escape: 0, no-cond-assign: 0 */
-
-// dotenv needs to come before anything that reads local environment variables
-// In a real app you would make this dev only and .env would be in .gitignore.
-// It helps test production build on local machine with some sane env variable settings
-// TODO: think of a good way to enable this local machine dev and local production build testing
-// if(dev) {
-const dotenv = require("dotenv");
-
-dotenv.config();
-// }
+guard-for-in: 0, no-restricted-syntax: 0,  no-underscore-dangle: 0, global-require: 0 */
+const dev = process.env.NODE_ENV !== "production";
+if (dev) {
+    const dotenv = require("dotenv");
+    dotenv.config();
+}
 
 // Performance Monitoring for Node.js Applications (small fee to enable)
 // https://www.site24x7.com/node-js-monitoring.html
@@ -29,17 +24,26 @@ const fs = require("fs");
 const cors = require("cors");
 
 const port = parseInt(process.env.PORT, 10) || 3000;
-const dev = process.env.NODE_ENV !== "production";
 const app = next({dev});
-const handle = app.getRequestHandler();
-
 const path = require("path");
+const parseURL = require("url").parse;
 const helmet = require("helmet");
 const shrinkRay = require("shrink-ray-current");
-const nextLink = require("next-link");
-const routes = require("./routes");
 
 const env = process.env.ENV;
+
+const nextLink = require("next-link");
+const i18nextMiddleware = require("i18next-express-middleware");
+const Backend = require("i18next-node-fs-backend");
+const routes = require("./routes");
+const config = require("./i18next/config");
+const i18n = require("./i18next/i18n");
+const getAllNamespaces = require("./i18next/lib/getAllNamespaces");
+
+const handle = app.getRequestHandler();
+
+const {CDN_URL} = process.env;
+const cdnPrefix = CDN_URL ? `${CDN_URL}` : "";
 
 // https://github.com/expressjs/express/issues/2456
 
@@ -58,7 +62,6 @@ if (process.env.SENTRY_DSN) {
 const whitelist = ["http://localhost:3000"];
 const corsOptions = {
     origin(origin, callback) {
-        // undefined is ok for assets without origin I think
         if (origin === undefined || whitelist.indexOf(origin) !== -1) {
             callback(null, true);
         } else {
@@ -66,6 +69,11 @@ const corsOptions = {
         }
     },
 };
+
+
+const buildId = !dev
+    ? fs.readFileSync("./.next/BUILD_ID", "utf8").toString()
+    : "";
 
 // Put the preload hints in head into response headers for proxy to turn into h2 push
 // Link headers are turned into h2 server push by most proxy which improves time to interactive latency.
@@ -76,29 +84,50 @@ const routerHandler = routes.getRequestHandler(app, ({
     nextLink(app, req, res, route.page, query);
 });
 
+const {
+    localesPath, allLanguages, defaultLanguage, enableSubpaths,
+} = config.translation;
+
+const serverSideOptions = {
+    fallbackLng: defaultLanguage,
+    preload: allLanguages, // preload all langages
+    ns: getAllNamespaces(`${localesPath}${defaultLanguage}`), // need to preload all the namespaces
+    backend: {
+        loadPath: path.join(__dirname, "/static/locales/{{lng}}/{{ns}}.json"),
+        addPath: path.join(__dirname, "/static/locales/{{lng}}/{{ns}}.missing.json"),
+    },
+};
+
 const createServer = () => {
     const server = express();
+
+    // enable middleware for i18next
+    server.use(i18nextMiddleware.handle(i18n));
+    // serve locales for client
+    server.use("/locales", express.static(path.join(__dirname, "/locales")));
+
+    // missing keys
+    server.post("/locales/add/:lng/:ns", i18nextMiddleware.missingKeyHandler(i18n));
+
 
     // Compressing all assets in dev slows things down.
     // Only use this in production if your assets are cdn cached and proxy doesn't do br natively
     if (!dev) {
-        server.use(shrinkRay()); // br compression with automatic recompression
+        server.use(shrinkRay());
     }
 
     // It is important to have real cors value so service worker caches proper response code
     server.use(cors(corsOptions));
 
+    server.use(helmet()); // Basic best practice security settings
+    server.use(helmet.dnsPrefetchControl({allow: true})); // Performance desired in this case
+    server.use(helmet.hsts({includeSubDomains: false})); // Lets not force our summary domain to https
 
-    // Basic best practice security settings
-    server.use(helmet());
-    server.use(helmet.dnsPrefetchControl({allow: true})); // Consumer privacy risk but I prefer improved performance
-    server.use(helmet.hsts({includeSubDomains: false})); // Security risk but I use some insecure domains
+    server.use(Sentry.Handlers.requestHandler());
 
-    // UNCOMMENT WITH VALID DSN ADDED ABOVE
-    // server.use(Sentry.Handlers.requestHandler());
     // The error handler must be before any other error middleware
     // Unfortunately Next error handler is in front blocking this but that is being looked into.
-    // server.use(Sentry.Handlers.errorHandler());
+    server.use(Sentry.Handlers.errorHandler());
 
     server.options("*", cors()); // include before other routes
 
@@ -116,14 +145,16 @@ const createServer = () => {
         res.set("Content-Type", "application/javascript");
         // prefix manifest precache links with cdn so they are not downloaded twice by the browser from different places
         // fix links with windows style slashes so windows can local test (todo: replace with normalize-paths)
+        /*
         res.send(
             Buffer.from(fs.readFileSync("./.next/service-worker.js", "utf8").toString()
-                .replace(new RegExp("\"url\": \"/_next", "g"), `"url": "${process.env.CDN_URL}/_next`)
-                .replace(new RegExp("\"url\": \"static", "g"), `"url": "${process.env.CDN_URL}/static`)
+                .replace(new RegExp("\"url\": \"/_next", "g"), `"url": "${cdnPrefix}/_next`)
+                .replace(new RegExp("\"url\": \"static", "g"), `"url": "${cdnPrefix}/static`)
                 .replace(new RegExp("\\\\\\\\", "g"), "/")),
         );
+        */
+        app.serveStatic(req, res, path.resolve("./.next/service-worker.js"));
     });
-
 
     const robotsOptions = {
         root: `${__dirname}/static/`,
@@ -140,16 +171,6 @@ const createServer = () => {
     });
 
 
-    /*
-    server.get("/", (req, res) => {
-        // HTTP2 server push critical assets required for page to become user interactive
-        // Currently necessary to do .pageLink for every page but I hope to automate this somehow in the middleware
-        // Argument is relative to /pages directory
-        //res.pageLink("index.js");
-        handle(req, res);
-    });
-*/
-
     // This seems to need to be after manual routes
     server.use(routerHandler);
 
@@ -163,37 +184,27 @@ const createServer = () => {
         handle(req, res);
     });
 
-    // I forget what I was doing here.
-    // Consult  https://github.com/skriems/next-material
-    /*
-    server.get('*', (req, res) => {
 
-        if (process.env.LAMBDA) {
-            let host = req.headers.host;
-            let assetPrefix = 'https://' + host;
-            if (host.indexOf('amazonaws.com') != -1) {
-                // needs to match the stages defined in `serverless.yml`
-                let stage = dev ? '/dev' : '/prod'
-                assetPrefix += stage;
-            }
-            app.setAssetPrefix(assetPrefix);
-        }
-        handle(req, res)}
-    );
-    */
     return server;
 };
 
 const server = createServer();
 
 if (!process.env.LAMBDA) {
-    app.prepare()
-        .then(() => {
-            server.listen(port, (err) => {
-                if (err) throw err;
-                // eslint-disable-next-line
-                console.log(`> Ready on http://localhost:${port}`);
-            });
+// init i18next with serverside settings
+    // using i18next-express-middleware
+    i18n
+        .use(Backend)
+        .use(i18nextMiddleware.LanguageDetector)
+        .init(serverSideOptions, () => {
+            app.prepare()
+                .then(() => {
+                    server.listen(port, (err) => {
+                        if (err) throw err;
+                        // eslint-disable-next-line
+                        console.log(`> Ready on http://localhost:${port}`);
+                    });
+                });
         });
 }
 

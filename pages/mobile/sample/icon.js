@@ -5,8 +5,8 @@ import {
     WhiteSpace, WingBlank, Card, Icon,
 } from "antd-mobile";
 import {withRouter} from "next/dist/lib/router";
-import Layout from "../../components/consumer/mobile/Layout";
-import MenuBar from "../../components/consumer/mobile/MenuBar";
+import Layout from "../../../components/consumer/mobile/Layout";
+import MenuBar from "../../../components/consumer/mobile/MenuBar";
 
 
 const CustomIcon = ({
@@ -57,11 +57,11 @@ class Home extends Component {
                         <Card>
                             <Card.Header
                                 extra="Custom svg"
-                                thumb={<CustomIcon type={require("../../static/reload.svg")} />}
+                                thumb={<CustomIcon type={require("../../../static/reload.svg")} />}
                             />
                             <Card.Body>
                                 <code>
-                                    {"<CustomIcon type={require('../../static/reload.svg')} />"}
+                                    {"<CustomIcon type={require('../../../static/reload.svg')} />"}
                                 </code>
                             </Card.Body>
                         </Card>
@@ -71,7 +71,7 @@ class Home extends Component {
                                 extra="Fill color"
                                 thumb={
                                     <CustomIcon
-                                        type={require("../../static/reload.svg")}
+                                        type={require("../../../static/reload.svg")}
                                         style={{fill: "#108ee9"}}
                                     />
                                 }
@@ -79,7 +79,7 @@ class Home extends Component {
                             <Card.Body>
                                 <code>{`
                   <CustomIcon
-                    type={require('../../static/reload.svg')}
+                    type={require('../../../static/reload.svg')}
                     style={{ fill: '#108ee9' }}
                   />
                 `}</code>

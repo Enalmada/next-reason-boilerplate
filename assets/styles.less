@@ -1,19 +1,38 @@
 @import "./antd-custom.less";
-
+@import "./bootstraphack.css";
 
 * {
-  font-family: Menlo, Monaco, 'Lucida Console', 'Liberation Mono',
-  'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New',
-  monospace, serif;
+  margin: 0;
 }
-a {
-  color: #ED5565;
+html, body {
+  height: 100%;
 }
-p {
-  font-size: 14px;
-  line-height: 24px;
+#__next {
+  height: 100%;
 }
-article {
-  margin: 0 auto;
-  max-width: 650px;
+.ant-layout {
+  min-height: 100%;
+}
+
+.ant-layout-footer {
+  padding: 0px;
+}
+
+@media (min-width: 700px) {
+
+  .ant-layout-content {
+    min-height: 100%;
+    /* equal to footer height */
+    margin-bottom: -50px;
+  }
+
+  .ant-layout-content:after {
+    content: "";
+    display: block;
+  }
+
+  .ant-layout-footer, .ant-layout-content:after {
+    height: 50px;
+  }
+
 }

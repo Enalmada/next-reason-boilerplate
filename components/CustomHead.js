@@ -1,5 +1,8 @@
 /* eslint no-underscore-dangle: 0, prefer-destructuring: 0, no-console: 0, max-len: 0 */
 
+// All link references need crossorigin attribute for service worker to cache them without being opaque
+// https://github.com/zeit/next.js/pull/5150
+
 import React from "react";
 import {Head} from "next/document";
 

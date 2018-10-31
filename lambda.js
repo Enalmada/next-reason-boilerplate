@@ -3,6 +3,9 @@
 // If you are interested in serverless, please refer to this: https://github.com/skriems/next-material
 // WARNING: I have changed this from the next-material example as text/html shouldn't be binary
 // I think I did that so that it would go through their compression
+// Unfortunately this boilerplate has gone far over the 50m maximum size for lambda but you may choose to
+// eliminate huge assets like ant design that cause most of the bloat.
+// Hopefully someone will figure out how to do rollup with nextjs to produce reasonable size distributions eventually.
 
 const serverless = require("serverless-http");
 const {app, server} = require("./server");

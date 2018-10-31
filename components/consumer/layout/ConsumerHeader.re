@@ -7,11 +7,13 @@ let make = _children => {
   render: _self =>
     <div>
       <Next.Link href="/"> <a style=styles> {ReasonReact.string("Index")} </a> </Next.Link>
-      <Next.Link href="/about"> <a style=styles> {ReasonReact.string("About")} </a> </Next.Link>
+      <Next.Link href="/reducer"> <a style=styles> {ReasonReact.string("Reducer")} </a> </Next.Link>
       <Next.Link href="/test/sentry"> <a style=styles> {ReasonReact.string("Sentry")} </a> </Next.Link>
       <Next.Link href="/test/reasonApollo"> <a style=styles> {ReasonReact.string("Apollo (tbd)")} </a> </Next.Link>
       <Next.Link href="/test/antdExamples"> <a style=styles> {ReasonReact.string("Ant Desktop")} </a> </Next.Link>
-      <Next.Link href="/mobile/home"> <a style=styles> {ReasonReact.string("Ant Mobile")} </a> </Next.Link>
-      <Next.Link href="/test/agent"> <a style=styles> {ReasonReact.string("Agent")} </a> </Next.Link>
+      <Next.Link href="/mobile/styleguide/Button">
+        <a style=styles> {ReasonReact.string("Antd Mobile")} </a>
+      </Next.Link>
+      <Next.Link href="/health"> <a style=styles> {ReasonReact.string("Health")} </a> </Next.Link>
     </div>,
 };

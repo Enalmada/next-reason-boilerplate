@@ -21,7 +21,7 @@ type action =
   | ModalShow
   | ModalHide;
 
-let component = ReasonReact.reducerComponent("Index");
+let component = ReasonReact.reducerComponent("AntdExamples");
 
 /*
  let handleClick = (e) => {
@@ -196,11 +196,7 @@ let paginationText = "<Pagination defaultCurrent={1} total={50} />";
 let paginationExample = codeCollapse("Pagination", paginationCode, paginationText);
 
 let autocompleteCode =
-  <AutoComplete
-    dataSource=["bla"]
-    style={ReactDOMRe.Style.make(~width="200px", ())}
-    placeholder="input here"
-  />;
+  <AutoComplete dataSource=["bla"] style={ReactDOMRe.Style.make(~width="200px", ())} placeholder="input here" />;
 
 let autocompleteText = "<AutoComplete
    dataSource=[\"bla\"]
@@ -331,7 +327,7 @@ let calendarText = "<div style={ReactDOMRe.Style.make(~width=\"300\", ~border=\"
 let calendarExample = codeCollapse("Calendar", calendarCode, calendarText);
 
 let collapseCode =
-  <Collapse defaultActiveKey=["1"] >
+  <Collapse defaultActiveKey=["1"]>
     <Panel header="This is panel header 1" key="1"> <p> {ReasonReact.string("text 1")} </p> </Panel>
     <Panel header="This is panel header 2" key="2"> <p> {ReasonReact.string("text 2")} </p> </Panel>
   </Collapse>;
@@ -358,14 +354,7 @@ let listData = [
 let listHeader = <div> {ReasonReact.string("Header")} </div>;
 let listFooter = <div> {ReasonReact.string("Footer")} </div>;
 let listRender = item => <List.Item> item </List.Item>;
-let listCode =
-  <List
-    header=listHeader
-    footer=listFooter
-    bordered=true
-    dataSource=listData
-    renderItem=listRender
-  />;
+let listCode = <List header=listHeader footer=listFooter bordered=true dataSource=listData renderItem=listRender />;
 
 let listText = " <List
                     header=listHeader
@@ -487,11 +476,11 @@ let alertCode = <Alert message={ReasonReact.string("Success Text")} _type=`error
 let alertText = "<Alert message={ReasonReact.string(\"Success Text\")} _type=`error />";
 let alertExample = codeCollapse("Alert", alertCode, alertText);
 
-let handleModalShow = (self, event) => self.ReasonReact.send(ModalShow);
+let handleModalShow = (self, _event) => self.ReasonReact.send(ModalShow);
 
-let handleModalHide = (self, event) => self.ReasonReact.send(ModalHide);
+let handleModalHide = (self, _event) => self.ReasonReact.send(ModalHide);
 
-let messageInfo = event => Message.info(ReasonReact.string("Display normal message"), 1);
+let messageInfo = _event => Message.info(ReasonReact.string("Display normal message"), 1);
 
 let messageCode =
   <Button _type=`primary onClick=messageInfo> {ReasonReact.string("Display normal message")} </Button>;
@@ -507,7 +496,7 @@ let myNotificationData: Antd.Notification.options = {
   "description": ReasonReact.string("mydescription"),
 };
 
-let openNotification = event => {
+let openNotification = _event => {
   Js.log("openNotificationx");
   Notification.success(myNotificationData);
 };
@@ -616,6 +605,15 @@ let make = _children => {
             </Menu>
           </Layout.Sider>
           <Layout.Content style={ReactDOMRe.Style.make(~padding="0 24px", ~minHeight="280", ())}>
+            <h1> {ReasonReact.string("Reload Page")} </h1>
+            <p style={ReactDOMRe.Style.make(~marginBottom="20px", ())}>
+              {
+                ReasonReact.string(
+                  "Reload once after starting is necessary only in dev HMR only until a next.js css loading bug is fixed.
+              Production will work fine.",
+                )
+              }
+            </p>
             buttonExample
             iconExample
             gridExample
@@ -654,14 +652,14 @@ let make = _children => {
             <div id="Modal">
               <h1> {ReasonReact.string("Modal")} </h1>
               <div>
-                <Button _type=`primary onClick={event => self.send(ModalShow)}>
+                <Button _type=`primary onClick={_event => self.send(ModalShow)}>
                   {ReasonReact.string("Open Modal")}
                 </Button>
                 <Modal
                   title={ReasonReact.string("Basic Modal")}
                   visible={self.state.modalVisible}
-                  onOk={event => self.send(ModalHide)}
-                  onCancel={event => self.send(ModalHide)}>
+                  onOk={_event => self.send(ModalHide)}
+                  onCancel={_event => self.send(ModalHide)}>
                   <p> {ReasonReact.string("Some contents...")} </p>
                   <p> {ReasonReact.string("Some contents...")} </p>
                   <p> {ReasonReact.string("Some contents...")} </p>
@@ -680,7 +678,7 @@ let make = _children => {
         </Layout>
       </Layout.Content>
       <Layout.Footer style={ReactDOMRe.Style.make(~textAlign="center", ())}>
-        {ReasonReact.string("Created by Me")}
+        {ReasonReact.string("Gell.com ©2018 Created by Gell")}
       </Layout.Footer>
     </Layout>,
 };

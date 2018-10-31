@@ -18,7 +18,8 @@ let make = _children => {
   render: _self =>
     <ConsumerPage>
       <NextSeo config />
-      <p> {ReasonReact.string("Sentry Testing")} </p>
+      <h1> {ReasonReact.string("Sentry Testing")} </h1>
+      <p> {ReasonReact.string("(if you setup your sentry dsn in .env environment variables file)")} </p>
       <Button onClick={event => raiseError(event)} _type=`primary> {ReasonReact.string("Click for Error")} </Button>
     </ConsumerPage>,
 };

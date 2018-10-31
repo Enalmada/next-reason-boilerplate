@@ -8,16 +8,24 @@
     {
       "dir": "pages",
       "subdirs": true
-    },
-    {
-      "dir": "bindings",
-      "subdirs": true
     }
   ],
   "bs-dependencies": [
-    "reason-react",  "reason-apollo", "bs-ant-design-alt"
+    "reason-react",
+    "reason-apollo",
+    "bs-ant-design-alt",
+    "bs-ant-design-mobile",
+    "bs-css",
+    "bs-fontawesome",
+    "bs-react-useragent",
+    "bs-next-seo",
+    "bs-react-iframe",
+    "bs-react-i18next",
+    "bs-next-alt"
   ],
-  "ppx-flags": ["graphql_ppx/ppx"],
+  "ppx-flags": [
+    "graphql_ppx/ppx"
+  ],
   "reason": {
     "react-jsx": 2
   },

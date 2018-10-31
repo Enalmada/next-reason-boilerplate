@@ -1,25 +1,24 @@
 let component = ReasonReact.statelessComponent("About");
 
-
-
 [@bs.deriving abstract]
 type nextSeoConfig = {
   canonical: string,
-  title: string
+  title: string,
 };
 
-let config = nextSeoConfig(~canonical="https://www.example.com/about", ~title="About")
-
-
+let config = nextSeoConfig(~canonical="https://www.example.com/about", ~title="About");
 
 let make = _children => {
   ...component,
   render: _self =>
-    <Fragment>
-        <NextSeo config={config} />
+    <>
+      <NextSeo config />
       /* <ReactHelmet> <title> {ReasonReact.string("AboutPage")} </title> </ReactHelmet> */
-      <ConsumerPage> <p> {ReasonReact.string("About consumer is here!")} </p> <Counter /> </ConsumerPage>
-    </Fragment>,
+      <ConsumerPage>
+        <h1> {ReasonReact.string("Counter demonstrating reason reducer component")} </h1>
+        <Counter />
+      </ConsumerPage>
+    </>,
 };
 
 let default = ReasonReact.wrapReasonForJs(~component, _jsProps => make([||]));

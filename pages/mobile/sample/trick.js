@@ -3,8 +3,8 @@ import {
     WhiteSpace, List, Switch, Menu,
 } from "antd-mobile";
 import {withRouter} from "next/dist/lib/router";
-import Layout from "../../components/consumer/mobile/Layout";
-import MenuBar from "../../components/consumer/mobile/MenuBar";
+import Layout from "../../../components/consumer/mobile/Layout";
+import MenuBar from "../../../components/consumer/mobile/MenuBar";
 
 class Trick extends Component {
     static getInitialProps({req}) {

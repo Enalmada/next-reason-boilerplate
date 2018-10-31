@@ -12,10 +12,7 @@ let make = _children => {
   ...component,
   render: _self =>
     /* <ReactHelmet> <title> {ReasonReact.string("AboutPage")} </title> </ReactHelmet> */
-    <ConsumerPage> <NextSeo config /> <p> {ReasonReact.string("BS Test Apollo")} </p>
-
-
-     </ConsumerPage>,
+    <ConsumerPage> <NextSeo config /> <p> {ReasonReact.string("TODO - Reason-Apollo here")} </p> </ConsumerPage>,
 };
 
 let default = ReasonReact.wrapReasonForJs(~component, _jsProps => make([||]));

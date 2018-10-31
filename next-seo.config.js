@@ -1,3 +1,5 @@
+// See next-seo for more information
+
 export default {
     title: "Generic Title | MySite",
     description: "Site description",

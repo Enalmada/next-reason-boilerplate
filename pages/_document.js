@@ -2,7 +2,7 @@
 // _document is only rendered on the server side and not on the client side
 // Event handlers like onClick can't be added to this file
 
-// ./pages/_document.js
+// CustomHead/CustomNextScript overridden to add crossorigin until nextjs fixes that natively
 import Document, {Main} from "next/document";
 import React from "react";
 import Head from "../components/CustomHead";
@@ -32,24 +32,17 @@ const preConnect = [
     "https://www.googletagmanager.com",
 ];
 
-/* load woff2 files here to get browser downloading them while it waits for the css that normally loads them */
+/*
+load woff2 files here to get browser downloading them while it waits for the css that normally loads them
+Can't preload google font woff2 as that is dynamic but custom fonts could be appropriate here.
+*/
 const preLoad = [
 ];
 
-/*
-The new <link rel="preload"> standard enables us to load non-critical stylesheets asynchronously, without blocking rendering
-https://github.com/filamentgroup/loadCSS
-*/
-const cssPreload = [
-    "https://fonts.googleapis.com/css?family=Open+Sans",
-];
 
 // Notes:
 // you probably want to version the manifest file
-// cdn.polyfill.io was recommended in a next.js training video to eliminate issues with much older browsers
 // you need to fill in the icon placeholders with your own
-// note the "nomodule" on polyfill which only loads it on potentially troublesome browsers (no perf impact on new ones)
-
 export default class MyDocument extends Document {
     render() {
         return (
@@ -58,6 +51,7 @@ export default class MyDocument extends Document {
 
                     <link rel="manifest" href="/static/manifest/manifest.json"/>
 
+                    {/* nomodule only runs polyfill on older browsers more likely to need it */}
                     <script src="https://cdn.polyfill.io/v2/polyfill.min.js" noModule="nomodule"/>
 
                     <meta httpEquiv="Content-Type" content="text/html;charset=UTF-8"/>
@@ -69,8 +63,7 @@ export default class MyDocument extends Document {
                     {/* Performance */}
                     {dnsPrefetch.map(name => <link rel="dns-prefetch" href={name} key={name}/>)}
 
-                    {/* Look and feel
-                https://github.com/h5bp/mobile-boilerplate/blob/master/index.html */}
+                    {/* Look and feel - https://github.com/h5bp/mobile-boilerplate/blob/master/index.html */}
                     <meta name="MobileOptimized" content="320"/>
                     <meta name="HandheldFriendly" content="True"/>
                     {/* Removing user-scalable=no, maximum-scale due to accessibility notes in lighthouse */}
@@ -97,15 +90,20 @@ export default class MyDocument extends Document {
                     {preLoad.map(name => <link rel="preload" href={name} as="font" type="font/woff2" crossOrigin="anonymous"
                         key={name}/>)}
 
-                    {cssPreload.map(name => <React.Fragment key={name}>
-                        <link rel="preload" href={name} as="style"
-                            onLoad="this.onload=null;this.rel='stylesheet'" crossOrigin="anonymous"/>
-                        <noscript>
-                            <link rel="stylesheet" href={name} crossOrigin="anonymous"/>
-                        </noscript>
-                    </React.Fragment>)}
 
+                    {/*
+                        The new <link rel="preload"> standard enables us to load non-critical stylesheets asynchronously, without blocking rendering
+                        https://github.com/filamentgroup/loadCSS
+                        Hack right now to get loadCSS working.  onLoad attribute is removed without dangerouslySetInnerHTML and that is critical
+                        https://github.com/facebook/react/issues/12014
+                    */}
+                    <script dangerouslySetInnerHTML={{
+                        __html: `</script>
+                            <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans" as="style" onLoad="this.onload=null;this.rel='stylesheet'" crossOrigin="anonymous"/>
+                        <script>`,
+                    }}/>
 
+                    {/* Polyfill preload for browsers that don't support it - https://github.com/filamentgroup/loadCSS */}
                     <script dangerouslySetInnerHTML={{
                         __html: `
                         (function(a){a.loadCSS||(a.loadCSS=function(){});var c=loadCSS.relpreload={};c.support=function(){try{var b=a.document.createElement("link").relList.supports("preload")}catch(e){b=!1}return function(){return b}}();c.bindMediaToggle=function(b){function a(){b.media=c}var c=b.media||"all";b.addEventListener?b.addEventListener("load",a):b.attachEvent&&b.attachEvent("onload",a);setTimeout(function(){b.rel="stylesheet";b.media="only x"});setTimeout(a,3E3)};c.poly=function(){if(!c.support())for(var b=a.document.getElementsByTagName("link"),

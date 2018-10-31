@@ -5,8 +5,8 @@ import {
     Icon, NavBar, Pagination, Steps, WhiteSpace, WingBlank,
 } from "antd-mobile";
 import {withRouter} from "next/router";
-import Layout from "../../components/consumer/mobile/Layout";
-import MenuBar from "../../components/consumer/mobile/MenuBar";
+import Layout from "../../../components/consumer/mobile/Layout";
+import MenuBar from "../../../components/consumer/mobile/MenuBar";
 
 class Home extends Component {
     static getInitialProps({req}) {

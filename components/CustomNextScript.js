@@ -3,6 +3,9 @@ import htmlescape from "htmlescape";
 import {NextScript} from "next/document";
 import React from "react";
 
+// All link references need crossorigin attribute for service worker to cache them without being opaque
+// https://github.com/zeit/next.js/pull/5150
+
 const Fragment = React.Fragment || function Fragment({children}) {
     return <div>{children}</div>;
 };
