@@ -6,6 +6,7 @@ import enUS from "antd-mobile/lib/locale-provider/en_US";
 import Head from "next/head";
 import MobileHead from "./MobileHead";
 
+
 export default class Layout extends Component {
     render() {
         const {language, children} = this.props;
@@ -20,6 +21,7 @@ export default class Layout extends Component {
                     {children}
                 </LocaleProvider>
             </React.Fragment>
+
         );
     }
 }

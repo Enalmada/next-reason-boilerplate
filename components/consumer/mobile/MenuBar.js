@@ -12,7 +12,7 @@ export default class MenuBar extends Component {
         } = this.props;
 
         return (
-            <TabBar>
+            <TabBar instanceId="tabBar">
                 {tabBarData.map(({
                     title, icon, selectedIcon, link, dot, component: Component,
                 }) => (
@@ -20,6 +20,7 @@ export default class MenuBar extends Component {
                         key={link}
                         title={title}
                         icon={<Icon type={icon} />}
+                        instanceId={link}
                         selectedIcon={<Icon type={selectedIcon} />}
                         selected={pathname === link}
                         onPress={() => Router.push(link)}
@@ -37,18 +38,18 @@ const tabBarData = [
         title: "Home",
         icon: "up",
         selectedIcon: "up",
-        link: "/mobile/home",
+        link: "/mobile/sample/home",
     },
     {
         title: "Icon",
         icon: "check-circle-o",
         selectedIcon: "check-circle",
-        link: "/mobile/icon",
+        link: "/mobile/sample/icon",
     },
     {
         title: "Trick",
         icon: "cross-circle-o",
         selectedIcon: "cross-circle",
-        link: "/mobile/trick",
+        link: "/mobile/sample/trick",
     },
 ];
