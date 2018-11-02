@@ -32,7 +32,7 @@ const shrinkRay = require("shrink-ray-current");
 
 const env = process.env.ENV;
 
-const nextLink = require("next-link");
+const nextPreloadHeaders = require("next-preload-headers");
 const i18nextMiddleware = require("i18next-express-middleware");
 const Backend = require("i18next-node-fs-backend");
 const routes = require("./routes");
@@ -78,10 +78,10 @@ const buildId = !dev
 // Put the preload hints in head into response headers for proxy to turn into h2 push
 // Link headers are turned into h2 server push by most proxy which improves time to interactive latency.
 // Use Chrome lighthouse plugin to test
-const routerHandler = routes.getRequestHandler(app, ({
+const nextPreloadHeadersRouterHandler = routes.getRequestHandler(app, ({
     req, res, route, query,
 }) => {
-    nextLink(app, req, res, route.page, query);
+    nextPreloadHeaders(app, req, res, route.page, query);
 });
 
 const {
@@ -172,7 +172,7 @@ const createServer = () => {
 
 
     // This seems to need to be after manual routes
-    server.use(routerHandler);
+    server.use(nextPreloadHeadersRouterHandler);
 
     server.get("*", (req, res) => {
         // TODO: figure out how to add "no-cache" to only text/html pages so we can put CloudFront CDN

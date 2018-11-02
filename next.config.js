@@ -110,6 +110,13 @@ const nextConfig = {
             }));
         }
 
+        // Webpack 4 doesn't minify out of the box
+        // https://spectrum.chat/?t=9f9f43b8-ec8b-45e5-a8e3-5b57a62e9e67
+        if (config.mode === "production" && Array.isArray(config.optimization.minimizer)) {
+            const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+            config.optimization.minimizer.push(new OptimizeCSSAssetsPlugin({}));
+        }
+
         return config;
     },
 };
