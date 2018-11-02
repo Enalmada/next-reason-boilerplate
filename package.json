@@ -17,7 +17,8 @@
   "scripts": {
     "analyze": "cross-env ANALYZE=1 npm run build",
     "now": "now --public && now alias",
-    "bsb-watch": "bsb -clean-world -make-world -w",
+    "bsb-watch": "bsb  -make-world -w",
+    "bsb-clean-watch": "bsb -clean-world -make-world -w",
     "dev": "npm run lint-fix && node server.js",
     "dev-pure": "node server.js",
     "clean-cache": "rimraf -rf ./node_modules/.cache",
@@ -48,7 +49,9 @@
     "rollup": "NODE_ENV=production rollup -c",
     "next-pkg": "pkg . --out-dir dist --target node8-linux-x64",
     "modclean": "modclean",
-    "zip-clean": "zip -dq next-reason-boilerplate.zip \\*.map node_modules/antd/dist/\\* node_modules/aws-sdk/\\* node_modules/webpack-dev-middleware/\\* node_modules/webpack-hot-middleware/\\* "
+    "zip-clean": "zip -dq next-reason-boilerplate.zip \\*.map node_modules/antd/dist/\\* node_modules/aws-sdk/\\* node_modules/webpack-dev-middleware/\\* node_modules/webpack-hot-middleware/\\* ",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.7",
@@ -90,7 +93,7 @@
     "less": "^3.8.1",
     "next": "^7.0.2",
     "next-link": "^2.0.0",
-    "next-offline": "^3.0.3",
+    "next-offline": "^3.0.4",
     "next-routes": "^1.4.2",
     "next-rum": "^1.1.0",
     "next-seo": "^1.2.0",
@@ -127,13 +130,19 @@
     "eslint-plugin-react": "7.11.1",
     "eslint-watch": "4.0.2",
     "graphql_ppx": "^0.2.8",
-    "husky": "^1.1.2",
+    "husky": "^1.1.3",
     "lint-staged": "^8.0.4",
     "ngrok": "3.1.0",
     "pre-commit": "^1.2.2",
     "prettier": "1.14.3",
     "repack-zip-alt": "^0.2.9",
     "rimraf": "2.6.2",
-    "webpack-bundle-analyzer": "^3.0.3"
+    "webpack-bundle-analyzer": "^3.0.3",
+    "@storybook/react": "^4.0.2",
+    "@storybook/addon-actions": "^4.0.2",
+    "@storybook/addon-links": "^4.0.2",
+    "@storybook/addons": "^4.0.2",
+    "@babel/core": "^7.1.2",
+    "babel-loader": "^8.0.4"
   }
 }

@@ -64,6 +64,7 @@ on development I normally would import antd.less globally only in dev mode to ma
 * desktop/mobile conditional rendering based on device (react-useragent)
 * localization - react-i18next https://react.i18next.com 
 * next-routes - see routes.js.  Put every route in here to enable static assets added to link preload header
+* styleguide - npm run storybook  ()Needed some less fixes in .storybook/webpack.config.js)
 
 
 TODO: 
@@ -78,7 +79,6 @@ TODO:
 * improve desktop/mobile example to switch between antd mobile/desktop rather than just different words
 * next-stylus "nib" feature needs to only run during dev/build
 * i18next scripts and dependencies should be loaded from some external package
-* integrate with storybook or styleguide
 * auth (likely with AWS Amplify)
 * opengraph db (likely AWS AppSync)
 

@@ -248,3 +248,7 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/node,macos,linux,windows,webstorm,sublimetext,visualstudiocode
 /.bitmap
 /bit.json
+
+# Storybook
+.cache
+stories/*.rej
