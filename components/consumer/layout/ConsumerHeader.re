@@ -9,7 +9,7 @@ let make = _children => {
       <Next.Link href="/"> <a style=styles> {ReasonReact.string("Index")} </a> </Next.Link>
       <Next.Link href="/reducer"> <a style=styles> {ReasonReact.string("Reducer")} </a> </Next.Link>
       <Next.Link href="/test/sentry"> <a style=styles> {ReasonReact.string("Sentry")} </a> </Next.Link>
-      <Next.Link href="/test/reasonApollo"> <a style=styles> {ReasonReact.string("Apollo (tbd)")} </a> </Next.Link>
+      <Next.Link href="/apollo"> <a style=styles> {ReasonReact.string("Apollo")} </a> </Next.Link>
       <Next.Link href="/test/antdExamples"> <a style=styles> {ReasonReact.string("Ant Desktop")} </a> </Next.Link>
       <Next.Link href="/mobile/styleguide/Button">
         <a style=styles> {ReasonReact.string("Antd Mobile")} </a>

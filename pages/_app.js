@@ -14,7 +14,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import {NamespacesConsumer} from "react-i18next";
 import {UserAgentProvider} from "@quentin-sommer/react-useragent";
 import RUM from "next-rum";
-import withApolloClient from "../apollo/with-apollo-client";
+import withApollo from "../apollo/withApollo";
 // import your default seo configuration
 import SEO from "../next-seo.config";
 
@@ -129,4 +129,4 @@ class MyApp extends App {
     }
 }
 
-export default compose(withApolloClient)(MyApp);
+export default compose(withApollo)(MyApp);
