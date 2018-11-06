@@ -42,20 +42,13 @@ function moduleDir(m) {
 
 
 const nextConfig = {
+    purgeCss: {
+        whitelist: ["ant-layout"],
+        whitelistPatterns: [/^ant-/, /^fade-/, /^move-/, /^slide-/, /^zoom-/, /^svg-/, /^fa-/],
+        whitelistPatternsChildren: [/^ant-/, /^fade-/, /^move-/, /^slide-/, /^zoom-/, /^svg-/, /^fa-/],
+    },
     stylusLoaderOptions: {
         use: [nib()],
-    },
-    translation: {
-        // default / fallback language
-        defaultLanguage: "en",
-        localesPath: "./static/locales/",
-
-        // needed for serverside preload
-        allLanguages: ["en", "de"],
-
-        // optional settings needed for subpath (/de/page1) handling
-        enableSubpaths: true,
-        subpathsOnNonDefaultLanguageOnly: false, // only redirect to /lng/ if not default language
     },
     // devSwSrc: './static/js/service-worker.js',
     poweredByHeader: false,
@@ -72,7 +65,10 @@ const nextConfig = {
             {
                 urlPattern: /^https:\/\/fonts\.googleapis\.com/,
                 handler: "cacheFirst",
-                options: {cacheName: "google-fonts-stylesheets", expiration: {maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 * 30}},
+                options: {
+                    cacheName: "google-fonts-stylesheets",
+                    expiration: {maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 * 30},
+                },
             },
             {urlPattern: /^https?.*/, handler: "networkFirst"},
         ],
@@ -131,7 +127,9 @@ module.exports = (phase) => {
         const withLess = require("@zeit/next-less");
         const withCSS = require("@zeit/next-css");
         const withStylus = require("@zeit/next-stylus");
-        return withOffline(withStylus(withLess(withCSS(nextConfig))));
+        const withPurgeCss = require("next-purgecss");
+
+        return withOffline(withStylus(withLess(withCSS(withPurgeCss(nextConfig)))));
     }
     return withOffline(nextConfig);
 };

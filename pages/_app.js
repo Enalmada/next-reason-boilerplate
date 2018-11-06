@@ -14,7 +14,6 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import {UserAgentProvider} from "@quentin-sommer/react-useragent";
 import RUM from "next-rum";
 import {IntlProvider, addLocaleData} from "react-intl";
-import {FormattedMessage} from "react-intl";
 import withApollo from "../apollo/withApollo";
 // import your default seo configuration
 import SEO from "../next-seo.config";

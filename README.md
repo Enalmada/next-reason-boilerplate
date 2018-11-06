@@ -66,7 +66,7 @@ on development you would import antd.less globally only in dev mode to make hot 
 * next-routes - see routes.js.  Put every route in here to enable static assets added to link preload header
 * styleguide - npm run storybook  ()Needed some less fixes in .storybook/webpack.config.js)
 * reason-apollo - the reason-apollo example copied into a page and working
-
+* purge unused css - see next.config.js for whitelist (you would normally only add components you need)
 
 TODO: 
 * auth (likely with AWS Amplify)

@@ -1,5 +1,5 @@
 /* eslint no-shadow: "off", "no-console":  off, no-unused-vars: 0, no-param-reassign: 0,
-guard-for-in: 0, no-restricted-syntax: 0,  no-underscore-dangle: 0, global-require: 0 */
+guard-for-in: 0, no-restricted-syntax: 0,  no-underscore-dangle: 0, global-require: 0, import/no-dynamic-require */
 
 // Polyfill Node with `Intl` that has data for all locales.
 // See: https://formatjs.io/guides/runtime-environments/#server
@@ -192,8 +192,6 @@ const createServer = () => {
         // }
 
         const accept = accepts(req);
-        console.log(`here in * - ${accept.language(languages)}`);
-
         const locale = accept.language(languages) || "en";
         req.locale = locale;
         req.localeDataScript = getLocaleDataScript(locale);

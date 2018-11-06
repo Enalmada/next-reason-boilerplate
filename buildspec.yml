@@ -25,7 +25,13 @@ phases:
     - npm install babel-plugin-bucklescript
     - npm uninstall repack-zip-alt
     - npm install repack-zip-alt
-
+    - npm uninstall @zeit/next-css
+    - npm install @zeit/next-css
+    - npm uninstall @zeit/next-less
+    - npm install @zeit/next-less
+    - npm uninstall @zeit/next-stylus
+    - npm install @zeit/next-stylus
+    - npm uninstall bs-ant-design-alt bs-ant-design-mobile bs-css bs-fontawesome bs-next-alt bs-next-seo bs-react-iframe bs-react-intl bs-react-useragent
     - chmod +x codebuild.sh
     - chmod +x codebuildPrep.sh
     - ./codebuildPrep.sh
