@@ -1,5 +1,13 @@
 /* eslint no-shadow: "off", "no-console":  off, no-unused-vars: 0, no-param-reassign: 0,
 guard-for-in: 0, no-restricted-syntax: 0,  no-underscore-dangle: 0, global-require: 0 */
+
+// Polyfill Node with `Intl` that has data for all locales.
+// See: https://formatjs.io/guides/runtime-environments/#server
+const IntlPolyfill = require("intl");
+
+Intl.NumberFormat = IntlPolyfill.NumberFormat;
+Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat;
+
 const dev = process.env.NODE_ENV !== "production";
 if (dev) {
     const dotenv = require("dotenv");
@@ -16,6 +24,10 @@ if (process.env.SITE247_NODE_API && process.env.SITE247_NODE_APPNAME && process.
     });
 }
 
+const {readFileSync} = require("fs");
+const {basename} = require("path");
+const accepts = require("accepts");
+const glob = require("glob");
 const express = require("express");
 const next = require("next");
 const expressHealthcheck = require("express-healthcheck");
@@ -33,12 +45,7 @@ const shrinkRay = require("shrink-ray-current");
 const env = process.env.ENV;
 
 const nextPreloadHeaders = require("next-preload-headers");
-const i18nextMiddleware = require("i18next-express-middleware");
-const Backend = require("i18next-node-fs-backend");
 const routes = require("./routes");
-const config = require("./i18next/config");
-const i18n = require("./i18next/i18n");
-const getAllNamespaces = require("./i18next/lib/getAllNamespaces");
 
 const handle = app.getRequestHandler();
 
@@ -84,30 +91,31 @@ const nextPreloadHeadersRouterHandler = routes.getRequestHandler(app, ({
     nextPreloadHeaders(app, req, res, route.page, query);
 });
 
-const {
-    localesPath, allLanguages, defaultLanguage, enableSubpaths,
-} = config.translation;
 
-const serverSideOptions = {
-    fallbackLng: defaultLanguage,
-    preload: allLanguages, // preload all langages
-    ns: getAllNamespaces(`${localesPath}${defaultLanguage}`), // need to preload all the namespaces
-    backend: {
-        loadPath: path.join(__dirname, "/static/locales/{{lng}}/{{ns}}.json"),
-        addPath: path.join(__dirname, "/static/locales/{{lng}}/{{ns}}.missing.json"),
-    },
+// Get the supported languages by looking for translations in the `lang/` dir.
+const languages = glob.sync("./lang/*.json").map(f => basename(f, ".json"));
+
+// We need to expose React Intl's locale data on the request for the user's
+// locale. This function will also cache the scripts by lang in memory.
+const localeDataCache = new Map();
+const getLocaleDataScript = (locale) => {
+    const lang = locale.split("-")[0];
+    if (!localeDataCache.has(lang)) {
+        const localeDataFile = require.resolve(`react-intl/locale-data/${lang}`);
+        const localeDataScript = readFileSync(localeDataFile, "utf8");
+        localeDataCache.set(lang, localeDataScript);
+    }
+    return localeDataCache.get(lang);
 };
+
+// We need to load and expose the translations on the request for the user's
+// locale. These will only be used in production, in dev the `defaultMessage` in
+// each message description in the source code will be used.
+const getMessages = locale => require(`./lang/${locale}.json`);
+
 
 const createServer = () => {
     const server = express();
-
-    // enable middleware for i18next
-    server.use(i18nextMiddleware.handle(i18n));
-    // serve locales for client
-    server.use("/locales", express.static(path.join(__dirname, "/locales")));
-
-    // missing keys
-    server.post("/locales/add/:lng/:ns", i18nextMiddleware.missingKeyHandler(i18n));
 
 
     // Compressing all assets in dev slows things down.
@@ -172,7 +180,8 @@ const createServer = () => {
 
 
     // This seems to need to be after manual routes
-    server.use(nextPreloadHeadersRouterHandler);
+    // server.use(nextPreloadHeadersRouterHandler);
+    // server.use(routerHandler);
 
     server.get("*", (req, res) => {
         // TODO: figure out how to add "no-cache" to only text/html pages so we can put CloudFront CDN
@@ -181,6 +190,15 @@ const createServer = () => {
         // if (!cachable) {
         // res.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
         // }
+
+        const accept = accepts(req);
+        console.log(`here in * - ${accept.language(languages)}`);
+
+        const locale = accept.language(languages) || "en";
+        req.locale = locale;
+        req.localeDataScript = getLocaleDataScript(locale);
+        req.messages = getMessages(locale);
+
         handle(req, res);
     });
 
@@ -193,18 +211,14 @@ const server = createServer();
 if (!process.env.LAMBDA) {
 // init i18next with serverside settings
     // using i18next-express-middleware
-    i18n
-        .use(Backend)
-        .use(i18nextMiddleware.LanguageDetector)
-        .init(serverSideOptions, () => {
-            app.prepare()
-                .then(() => {
-                    server.listen(port, (err) => {
-                        if (err) throw err;
-                        // eslint-disable-next-line
+
+    app.prepare()
+        .then(() => {
+            server.listen(port, (err) => {
+                if (err) throw err;
+                // eslint-disable-next-line
                         console.log(`> Ready on http://localhost:${port}`);
-                    });
-                });
+            });
         });
 }
 

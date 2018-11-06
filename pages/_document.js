@@ -43,8 +43,23 @@ const preLoad = [
 // Notes:
 // you probably want to version the manifest file
 // you need to fill in the icon placeholders with your own
+// The document (which is SSR-only) needs to be customized to expose the locale
+// data for the user's locale for React Intl to work in the browser.
 export default class MyDocument extends Document {
+    static async getInitialProps(context) {
+        const props = await super.getInitialProps(context);
+        const {req: {locale, localeDataScript}} = context;
+        return {
+            ...props,
+            locale,
+            localeDataScript,
+        };
+    }
+
     render() {
+        // Polyfill Intl API for older browsers
+        const polyfill = `https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.${this.props.locale}`;
+
         return (
             <html lang="en" itemScope itemType="http://schema.org/WebPage">
                 <Head>
@@ -136,6 +151,12 @@ export default class MyDocument extends Document {
 
                     <Main/>
 
+                    <script src={polyfill} />
+                    <script
+                        dangerouslySetInnerHTML={{
+                            __html: this.props.localeDataScript,
+                        }}
+                    />
                     <NextScript/>
 
                 </body>

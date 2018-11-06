@@ -1,4 +1,4 @@
-/* eslint camelcase: "off", react/jsx-no-undef: 0,  no-unused-vars: 0, no-console: 0 */
+/* eslint camelcase: "off", react/jsx-no-undef: 0,  no-unused-vars: 0, no-console: 0, no-underscore-dangle: 0 */
 import App, {Container} from "next/app";
 import React from "react";
 import {ApolloProvider} from "react-apollo";
@@ -11,14 +11,13 @@ import {throttle} from "throttle-debounce";
 import {config, library as fontawesome} from "@fortawesome/fontawesome-svg-core";
 import {faComments} from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import {NamespacesConsumer} from "react-i18next";
 import {UserAgentProvider} from "@quentin-sommer/react-useragent";
 import RUM from "next-rum";
+import {IntlProvider, addLocaleData} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import withApollo from "../apollo/withApollo";
 // import your default seo configuration
 import SEO from "../next-seo.config";
-
-import i18n from "../i18next/i18n";
 
 
 config.autoAddCss = false;
@@ -50,6 +49,17 @@ function navigated(url, rum) {
     */
 }
 
+
+// Register React Intl's locale data for the user's locale in the browser. This
+// locale data was added to the page by `pages/_document.js`. This only happens
+// once, on initial page load in the browser.
+if (typeof window !== "undefined" && window.ReactIntlLocaleData) {
+    Object.keys(window.ReactIntlLocaleData).forEach((lang) => {
+        addLocaleData(window.ReactIntlLocaleData[lang]);
+    });
+}
+
+
 class MyApp extends App {
     /**
      * Don't reload with every single resize input, need to throttle or debounce.
@@ -59,7 +69,9 @@ class MyApp extends App {
     // TODO: only reload on platform (mobile/tablet/desktop) state change rather than any resize
     reloadPage() {
         // This works but I would prefer not to have to reload the whole page
-        window.location.reload();
+        if (process.browser) {
+            window.location.reload();
+        }
 
         // For some reason this does not work to switch user agent stuff
         // this.forceUpdate();
@@ -91,37 +103,39 @@ class MyApp extends App {
             ? ctx.req.headers["user-agent"]
             : navigator.userAgent;
 
-        const i18nProps = i18n.getInitialProps(ctx.req);
-        return {pageProps, i18nProps, ua};
+        // Get the `locale` and `messages` from the request object on the server.
+        // In the browser, use the same values that the server serialized.
+        const {req} = ctx;
+        const {locale, messages} = req || window.__NEXT_DATA__.props;
+
+        return {
+            pageProps, locale, messages, ua,
+        };
     }
 
+
     render() {
+        const t = string => string;
+
         const {
-            Component, pageProps, apolloClient, i18nProps, ua,
+            Component, pageProps, apolloClient, ua, locale, messages,
         } = this.props;
+        const now = Date.now();
+
         return (
             <Container>
                 <RUM navigated={navigated}>
 
                     <UserAgentProvider ua={ua}>
-                        <NamespacesConsumer
-                            {...pageProps}
-                            ns="common"
-                            i18n={(pageProps && pageProps.i18n) || i18n}
-                            wait={process.browser}
-                            initialI18nStore={i18nProps.initialI18nStore}
-                            initialLanguage={i18nProps.initialLanguage}
-                        >
-                            {t => (
-                                <LocaleProvider locale={en_US}>
-                                    <ApolloProvider client={apolloClient}>
-                                        {/* Here we call NextSeo and pass our default configuration to it  */}
-                                        <NextSeo config={SEO}/>
-                                        <Component t={t} {...pageProps} />
-                                    </ApolloProvider>
-                                </LocaleProvider>
-                            )}
-                        </NamespacesConsumer>
+                        <IntlProvider locale={locale} messages={messages} initialNow={now}>
+                            <LocaleProvider locale={en_US}>
+                                <ApolloProvider client={apolloClient}>
+                                    {/* Here we call NextSeo and pass our default configuration to it  */}
+                                    <NextSeo config={SEO}/>
+                                    <Component {...pageProps} />
+                                </ApolloProvider>
+                            </LocaleProvider>
+                        </IntlProvider>
                     </UserAgentProvider>
                 </RUM>
             </Container>

@@ -252,3 +252,6 @@ $RECYCLE.BIN/
 # Storybook
 .cache
 stories/*.rej
+
+# React Intl
+lang/.messages/

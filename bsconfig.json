@@ -20,7 +20,7 @@
     "bs-react-useragent",
     "bs-next-seo",
     "bs-react-iframe",
-    "bs-react-i18next",
+    "bs-react-intl",
     "bs-next-alt"
   ],
   "ppx-flags": [

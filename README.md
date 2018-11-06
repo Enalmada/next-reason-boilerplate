@@ -1,12 +1,10 @@
 # Next.js reason-react apollo production ready boilerplate 
 
-This project is to confirm nextjs can do everything I need it to do.
-This is still in active development but does contain some concepts worthy of consideration.
-Feel free to push anything here you think would benefit the community.
+This project is an attempt to provide a production ready starting point for your reason-react project.
+Feel free to propose anything in tickets or push anything you think would benefit the community.
 
-RAN is my starting point and I recommended contributing to it if you can: https://www.rantoolkit.com
-This project builds on it and I eventually will push things back that end up working/being a good idea.
-Also read this: https://goldbergyoni.com/checklist-best-practice-of-node-js-in-production/
+This project builds on the amazing foundation of RAN Toolkit https://www.rantoolkit.com
+If for some reason you don't want to use Next, consider https://github.com/ivan-aksamentov/reactlandia-bolerplate-lite
 
 Install it and run:
 
@@ -24,12 +22,14 @@ npm run start
 ```
 (after running production build locally, make sure to unregister service worker in chrome dev tools)
 
+## Production Prep
+* add .env to your .gitignore and remove from git: `git rm -r .env`.  It is only checked in to give you a starting point.
+
 ## KNOWN ISSUES
-* add .env to your .gitignore.  It is only there so you can have a local copy
-* ant design elements need hard reload on development - it will all run fine on production
+* ant design element pages need hard reload in development - it will all run fine on production
 Next.js v7 has a critical bug with less/css right now: https://spectrum.chat/?t=2183fc55-236d-42cb-92b9-3ab10acc6303
 The only workaround I could get going is not to load less/css files.  This impacts ant design hot reload because 
-on development I normally would import antd.less globally only in dev mode to make hot deploy work.
+on development you would import antd.less globally only in dev mode to make hot deploy work.
 * bs-moment warnings during build - known issue fixed waiting for next release
 
 ## This example features:
@@ -62,13 +62,15 @@ on development I normally would import antd.less globally only in dev mode to ma
 * babel legacy decorators make antd theming work (https://github.com/zeit/next.js/pull/5263)
 * bundle analyzer (npm run analyze)
 * desktop/mobile conditional rendering based on device (react-useragent)
-* localization - react-i18next https://react.i18next.com 
+* localization - react-intl (started with react-i18next which was a big mistake)
 * next-routes - see routes.js.  Put every route in here to enable static assets added to link preload header
 * styleguide - npm run storybook  ()Needed some less fixes in .storybook/webpack.config.js)
+* reason-apollo - the reason-apollo example copied into a page and working
 
 
 TODO: 
-* reason-apollo - perhaps the next.js "with-apollo" examples working in reason-react
+* auth (likely with AWS Amplify)
+* opengraph db (likely AWS AppSync)
 * health check hit critical stuff rather than just confirm ssr working (database, cdn, etc)
 * push notification (next-offline seems to support that but hard to demo without actual server)
 * best way to generate site map
@@ -78,9 +80,7 @@ TODO:
 * dotenv only runs on local machine (but still during local production build and local prod testing)
 * improve desktop/mobile example to switch between antd mobile/desktop rather than just different words
 * next-stylus "nib" feature needs to only run during dev/build
-* i18next scripts and dependencies should be loaded from some external package
-* auth (likely with AWS Amplify)
-* opengraph db (likely AWS AppSync)
+
 
 What else does every production next.js app need?
 

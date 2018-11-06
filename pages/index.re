@@ -1,6 +1,6 @@
-open I18next;
-
 let component = ReasonReact.statelessComponent("Index");
+
+open ReactIntl;
 
 [@bs.deriving abstract]
 type nextSeoConfig = {
@@ -9,8 +9,11 @@ type nextSeoConfig = {
 };
 
 let config = nextSeoConfig(~canonical="https://www.example.com/about", ~title="About");
+/*
+       <FormattedMessage id="greeting" defaultMessage="Hello, World!" />
 
-let make = (~t: i18next, _children) => {
+ */
+let make = _children => {
   ...component,
   render: _self =>
     /* <ReactHelmet> <title> {ReasonReact.string("AboutPage")} </title> </ReactHelmet> */
@@ -28,17 +31,24 @@ let make = (~t: i18next, _children) => {
               <p> {ReasonReact.string("This will be rendered on desktop!!")} </p>
         }
       </UserAgent>
-      <h2> {ReasonReact.string("i18next translations")} </h2>
-      <div> {t("integrates_react-i18next", Some(Js.Dict.fromList([("0", "yay")])))} </div>
-      <div>
-        <a title={toString(t("translations.takeString", None))}> {ReasonReact.string("title takes string")} </a>
-      </div>
-      <div> <Trans i18nKey="transComponent" values=[("0", "yay!")] /> </div>
-      <div> {ReasonReact.string("see i18next/example/nextjs for the most up to date example")} </div>
+      <h2> {ReasonReact.string("react-intl translations")} </h2>
+      <FormattedMessage id="greeting" defaultMessage="Hello, Default!" values={"0": "Person"} />
+      <ReactIntl.IntlInjector>
+        ...{
+             intl =>
+               <a
+                 href="#"
+                 title={
+                   intl.formatMessageWithValues(
+                     {"0": "Person"},
+                     {"id": "greeting", "defaultMessage": "Hello Default!"},
+                   )
+                 }>
+                 <div> {ReasonReact.string("Link with title using intl api for string")} </div>
+               </a>
+           }
+      </ReactIntl.IntlInjector>
     </ConsumerPage>,
 };
 
-[@bs.deriving abstract]
-type jsProps = {t: i18next};
-
-let default = ReasonReact.wrapReasonForJs(~component, jsProps => make(~t=jsProps->tGet, [||]));
+let default = ReasonReact.wrapReasonForJs(~component, _jsProps => make([||]));
