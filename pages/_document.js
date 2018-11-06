@@ -66,9 +66,6 @@ export default class MyDocument extends Document {
 
                     <link rel="manifest" href="/static/manifest/manifest.json"/>
 
-                    {/* nomodule only runs polyfill on older browsers more likely to need it */}
-                    <script src="https://cdn.polyfill.io/v2/polyfill.min.js" noModule="nomodule"/>
-
                     <meta httpEquiv="Content-Type" content="text/html;charset=UTF-8"/>
 
                     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -151,7 +148,8 @@ export default class MyDocument extends Document {
 
                     <Main/>
 
-                    <script src={polyfill} />
+                    {/* nomodule only runs polyfill on older browsers more likely to need it */}
+                    <script src={polyfill} noModule="nomodule" />
                     <script
                         dangerouslySetInnerHTML={{
                             __html: this.props.localeDataScript,
