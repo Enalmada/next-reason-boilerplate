@@ -1,5 +1,7 @@
 /* eslint no-shadow: "off", "no-console":  off, no-unused-vars: 0, no-param-reassign: 0,
-guard-for-in: 0, no-restricted-syntax: 0,  no-underscore-dangle: 0, global-require: 0, import/no-dynamic-require: 0 */
+guard-for-in: 0, no-restricted-syntax: 0,  no-underscore-dangle: 0, global-require: 0, import/no-dynamic-require: 0,
+prefer-destructuring: 0, no-bitwise: 0,  prefer-rest-params: 0, no-unused-expressions: 0, func-names: 0
+ */
 
 // Polyfill Node with `Intl` that has data for all locales.
 // See: https://formatjs.io/guides/runtime-environments/#server
@@ -23,6 +25,7 @@ if (process.env.SITE247_NODE_API && process.env.SITE247_NODE_APPNAME && process.
         port: process.env.SITE247_NODE_PORT,
     });
 }
+const tamper = require("tamper");
 
 const {readFileSync} = require("fs");
 const {basename} = require("path");
@@ -182,6 +185,24 @@ const createServer = () => {
             res.status(200).sendFile("robots-dev.txt", robotsOptions);
         }
     });
+
+    // TODO this is hack for _document.js loadCSS hack of empty script tag
+    // Remove this when react supports dangerous
+    // https://github.com/facebook/react/issues/12014
+    server.use(tamper((req, res) => {
+        // only want to modify html responses:
+        if (!res.getHeader("Content-Type").startsWith("text/html")) {
+            // continue as usual without performance impact
+            return;
+        }
+
+        // Return a function in order to capture and modify the response body:
+        return function (body) {
+            // The function may either return a Promise or a string
+            return body.replace("<script></script>", "");
+        };
+    }));
+
 
     // Put language and messages for react intl
     server.use(reactIntlLocaleMessages);

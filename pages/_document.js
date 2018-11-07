@@ -108,6 +108,7 @@ export default class MyDocument extends Document {
                         https://github.com/filamentgroup/loadCSS
                         Hack right now to get loadCSS working.  onLoad attribute is removed without dangerouslySetInnerHTML and that is critical
                         https://github.com/facebook/react/issues/12014
+                        This script hack is removed in server render
                     */}
                     <script dangerouslySetInnerHTML={{
                         __html: `</script>
