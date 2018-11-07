@@ -71,7 +71,7 @@ const corsOptions = {
         if (origin === undefined || whitelist.indexOf(origin) !== -1) {
             callback(null, true);
         } else {
-            callback(new Error("Not allowed by CORS"));
+            callback(new Error(`Not allowed by CORS - origin:${origin}`));
         }
     },
 };
@@ -107,11 +107,7 @@ const getMessages = locale => require(`./static/locale/${locale}.json`);
 // Put the preload hints in head into response headers for proxy to turn into h2 push
 // Link headers are turned into h2 server push by most proxy which improves time to interactive latency.
 // Use Chrome lighthouse plugin to test
-const nextPreloadHeadersRouterHandler = routes.getRequestHandler(app, ({
-    req, res, route, query,
-}) => {
-    nextPreloadHeaders(app, req, res, route.page, query);
-});
+const nextRoutesHandler = routes.getRequestHandler(app);
 
 const reactIntlLocaleMessages = function (req, res, next) {
     const accept = accepts(req);
@@ -203,12 +199,13 @@ const createServer = () => {
         };
     }));
 
+    server.use(nextPreloadHeaders);
 
     // Put language and messages for react intl
     server.use(reactIntlLocaleMessages);
 
     // This seems to need to be after manual routes
-    server.use(nextPreloadHeadersRouterHandler);
+    server.use(nextRoutesHandler);
 
     server.get("*", (req, res) => {
         // TODO: figure out how to add "no-cache" to only text/html pages so we can put CloudFront CDN

@@ -82,7 +82,7 @@
     "less": "^3.8.1",
     "next": "^7.0.2",
     "next-offline": "^3.0.4",
-    "next-preload-headers": "^2.0.0",
+    "next-preload-headers": "^3.0.0",
     "next-routes": "^1.4.2",
     "next-rum": "^1.1.0",
     "next-seo": "^1.2.0",
