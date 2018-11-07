@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {FormattedMessage, FormattedNumber, defineMessages} from "react-intl";
 import Head from "next/head";
 import Layout from "../../components/intl/Layout";
-import withIntl from "../../lib/withIntl";
+import withIntl from "../../util/withIntl";
 
 const {description} = defineMessages({
     description: {

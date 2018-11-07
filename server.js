@@ -1,5 +1,5 @@
 /* eslint no-shadow: "off", "no-console":  off, no-unused-vars: 0, no-param-reassign: 0,
-guard-for-in: 0, no-restricted-syntax: 0,  no-underscore-dangle: 0, global-require: 0, import/no-dynamic-require */
+guard-for-in: 0, no-restricted-syntax: 0,  no-underscore-dangle: 0, global-require: 0, import/no-dynamic-require: 0 */
 
 // Polyfill Node with `Intl` that has data for all locales.
 // See: https://formatjs.io/guides/runtime-environments/#server
@@ -38,7 +38,6 @@ const cors = require("cors");
 const port = parseInt(process.env.PORT, 10) || 3000;
 const app = next({dev});
 const path = require("path");
-const parseURL = require("url").parse;
 const helmet = require("helmet");
 const shrinkRay = require("shrink-ray-current");
 
@@ -48,9 +47,6 @@ const nextPreloadHeaders = require("next-preload-headers");
 const routes = require("./routes");
 
 const handle = app.getRequestHandler();
-
-const {CDN_URL} = process.env;
-const cdnPrefix = CDN_URL ? `${CDN_URL}` : "";
 
 // https://github.com/expressjs/express/issues/2456
 
@@ -77,23 +73,14 @@ const corsOptions = {
     },
 };
 
-
+/*
 const buildId = !dev
     ? fs.readFileSync("./.next/BUILD_ID", "utf8").toString()
     : "";
-
-// Put the preload hints in head into response headers for proxy to turn into h2 push
-// Link headers are turned into h2 server push by most proxy which improves time to interactive latency.
-// Use Chrome lighthouse plugin to test
-const nextPreloadHeadersRouterHandler = routes.getRequestHandler(app, ({
-    req, res, route, query,
-}) => {
-    nextPreloadHeaders(app, req, res, route.page, query);
-});
-
+*/
 
 // Get the supported languages by looking for translations in the `lang/` dir.
-const languages = glob.sync("./lang/*.json").map(f => basename(f, ".json"));
+const languages = glob.sync("./static/locale/*.json").map(f => basename(f, ".json"));
 
 // We need to expose React Intl's locale data on the request for the user's
 // locale. This function will also cache the scripts by lang in memory.
@@ -111,8 +98,26 @@ const getLocaleDataScript = (locale) => {
 // We need to load and expose the translations on the request for the user's
 // locale. These will only be used in production, in dev the `defaultMessage` in
 // each message description in the source code will be used.
-const getMessages = locale => require(`./lang/${locale}.json`);
+const getMessages = locale => require(`./static/locale/${locale}.json`);
 
+
+// Put the preload hints in head into response headers for proxy to turn into h2 push
+// Link headers are turned into h2 server push by most proxy which improves time to interactive latency.
+// Use Chrome lighthouse plugin to test
+const nextPreloadHeadersRouterHandler = routes.getRequestHandler(app, ({
+    req, res, route, query,
+}) => {
+    nextPreloadHeaders(app, req, res, route.page, query);
+});
+
+const reactIntlLocaleMessages = function (req, res, next) {
+    const accept = accepts(req);
+    const locale = accept.language(languages) || "en";
+    req.locale = locale;
+    req.localeDataScript = getLocaleDataScript(locale);
+    req.messages = getMessages(locale);
+    next();
+};
 
 const createServer = () => {
     const server = express();
@@ -178,10 +183,11 @@ const createServer = () => {
         }
     });
 
+    // Put language and messages for react intl
+    server.use(reactIntlLocaleMessages);
 
     // This seems to need to be after manual routes
-    // server.use(nextPreloadHeadersRouterHandler);
-    // server.use(routerHandler);
+    server.use(nextPreloadHeadersRouterHandler);
 
     server.get("*", (req, res) => {
         // TODO: figure out how to add "no-cache" to only text/html pages so we can put CloudFront CDN
@@ -190,13 +196,6 @@ const createServer = () => {
         // if (!cachable) {
         // res.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
         // }
-
-        const accept = accepts(req);
-        const locale = accept.language(languages) || "en";
-        req.locale = locale;
-        req.localeDataScript = getLocaleDataScript(locale);
-        req.messages = getMessages(locale);
-
         handle(req, res);
     });
 
