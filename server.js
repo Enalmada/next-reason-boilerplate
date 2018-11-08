@@ -187,7 +187,7 @@ const createServer = () => {
     // https://github.com/facebook/react/issues/12014
     server.use(tamper((req, res) => {
         // only want to modify html responses:
-        if (!res.getHeader("Content-Type").startsWith("text/html")) {
+        if (res.getHeader("Content-Type").indexOf("text/html") === -1) {
             // continue as usual without performance impact
             return;
         }
