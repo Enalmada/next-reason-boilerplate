@@ -182,6 +182,8 @@ const createServer = () => {
         }
     });
 
+    // I think I am getting some errors from this
+    /*
     // TODO this is hack for _document.js loadCSS hack of empty script tag
     // Remove this when react supports dangerous
     // https://github.com/facebook/react/issues/12014
@@ -198,6 +200,7 @@ const createServer = () => {
             return body.replace("<script></script>", "");
         };
     }));
+    */
 
     server.use(nextPreloadHeaders);
 
