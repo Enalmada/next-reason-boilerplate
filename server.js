@@ -50,6 +50,8 @@ const nextPreloadHeaders = require("next-preload-headers");
 const routes = require("./routes");
 
 const handle = app.getRequestHandler();
+const {CDN_URL} = process.env;
+const cdnPrefix = CDN_URL ? `${CDN_URL}` : "";
 
 // https://github.com/expressjs/express/issues/2456
 
@@ -157,14 +159,13 @@ const createServer = () => {
         res.set("Content-Type", "application/javascript");
         // prefix manifest precache links with cdn so they are not downloaded twice by the browser from different places
         // fix links with windows style slashes so windows can local test (todo: replace with normalize-paths)
-        /*
         res.send(
             Buffer.from(fs.readFileSync("./.next/service-worker.js", "utf8").toString()
                 .replace(new RegExp("\"url\": \"/_next", "g"), `"url": "${cdnPrefix}/_next`)
                 .replace(new RegExp("\"url\": \"static", "g"), `"url": "${cdnPrefix}/static`)
                 .replace(new RegExp("\\\\\\\\", "g"), "/")),
         );
-        */
+
         app.serveStatic(req, res, path.resolve("./.next/service-worker.js"));
     });
 
@@ -202,6 +203,24 @@ const createServer = () => {
     }));
     */
 
+    // Unfortunately play adds a jsx class to the script which stops this cleaning from working
+    // Just going to wait for final react fix i guess
+    /*
+    server.use(interceptor((req, res) => ({
+        // Only HTML responses will be intercepted
+        isInterceptable() {
+            return /text\/html/.test(res.get("Content-Type"));
+        },
+        // Appends a paragraph at the end of the response body
+        intercept(body, send) {
+            const bodyClean = body.replace("<script></script>", "");
+            send(bodyClean);
+        },
+    })));
+    */
+
+    // Middleware to add the static preload links next puts in head into the response header link which
+    // most proxy will turn into server push
     server.use(nextPreloadHeaders);
 
     // Put language and messages for react intl
