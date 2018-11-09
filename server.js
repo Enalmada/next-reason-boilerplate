@@ -16,6 +16,10 @@ if (dev) {
     dotenv.config();
 }
 
+// Allow https in dev mode
+const https = require("https");
+const devcert = require("devcert");
+
 // Performance Monitoring for Node.js Applications (small fee to enable)
 // https://www.site24x7.com/node-js-monitoring.html
 if (process.env.SITE247_NODE_API && process.env.SITE247_NODE_APPNAME && process.env.SITE247_NODE_PORT) {
@@ -66,8 +70,8 @@ if (process.env.SENTRY_DSN) {
     });
 }
 
-
-const whitelist = ["http://localhost:3000"];
+// Put every origin that would ever connect here.
+const whitelist = ["http://localhost:3000", "https://localhost:3000", "https://www.myweb.com:3000"];
 const corsOptions = {
     origin(origin, callback) {
         if (origin === undefined || whitelist.indexOf(origin) !== -1) {
@@ -246,16 +250,26 @@ const createServer = () => {
 const server = createServer();
 
 if (!process.env.LAMBDA) {
-// init i18next with serverside settings
-    // using i18next-express-middleware
-
     app.prepare()
         .then(() => {
-            server.listen(port, (err) => {
-                if (err) throw err;
-                // eslint-disable-next-line
-                        console.log(`> Ready on http://localhost:${port}`);
-            });
+            if (dev) {
+                // This will do a one time certificate password request the first time you start.
+                // It will also attempt to add your certificateFor domain to hosts.  If you
+                // get access errors, add "www.myweb.com 127.0.0.1" to hosts file manually.
+                devcert.certificateFor("www.myweb.com", {installCertutil: true}).then((ssl) => {
+                    https.createServer(ssl, server).listen(port, (err) => {
+                        if (err) throw err;
+                        // eslint-disable-next-line
+                        console.log(`> Ready on https://www.myweb.com:${port}`);
+                    });
+                });
+            } else {
+                server.listen(port, (err) => {
+                    if (err) throw err;
+                    // eslint-disable-next-line
+                    console.log(`> Ready on http://localhost:${port}`);
+                });
+            }
         });
 }
 

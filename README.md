@@ -13,6 +13,8 @@ npm install
 npm run bsb-watch
 (in another tab) npm run dev
 ```
+(Note that first time you run this devcert will ask for a certificate password to enable https in local dev mode.
+Run in a normal terminal...editor like Intellij may hide the one time password prompt from you.)
 
 Build and run:
 
@@ -67,6 +69,7 @@ on development you would import antd.less globally only in dev mode to make hot 
 * styleguide - npm run storybook  ()Needed some less fixes in .storybook/webpack.config.js)
 * reason-apollo - the reason-apollo example copied into a page and working
 * purge unused css - see next.config.js for whitelist (you would normally only add components you need)
+* https in dev - using devcert.  useful for service worker testing
 
 TODO: 
 * auth (likely with AWS Amplify)
