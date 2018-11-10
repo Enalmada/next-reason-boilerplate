@@ -1,15 +1,13 @@
 
 
-self.addEventListener("fetch", event => {
-    event.respondWith(handleRequest(event))
+self.addEventListener("fetch", (event) => {
+    event.respondWith(handleRequest(event));
 });
 
 async function handleRequest(event) {
-
     const response = await fetch(event.request);
 
     if (event.request.url.indexOf("https://fonts.googleapis.com/css") === 0 && response.status < 400) {
-
         const cache = await caches.open("google-fonts-stylesheets");
         const cacheResponse = await cache.match(event.request);
 
