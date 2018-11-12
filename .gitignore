@@ -255,3 +255,4 @@ stories/*.rej
 
 # React Intl
 lang/.messages/
+*.rej
