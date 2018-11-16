@@ -65,7 +65,7 @@ on development you would import antd.less globally only in dev mode to make hot 
 * bundle analyzer (npm run analyze)
 * desktop/mobile conditional rendering based on device (react-useragent)
 * localization - react-intl (started with react-i18next which was a big mistake)
-* next-routes - see routes.js.  Put every route in here to enable static assets added to link preload header
+* next-routes - see routes.js.  Note that this may not be advisable to use at scale.
 * styleguide - npm run storybook  ()Needed some less fixes in .storybook/webpack.config.js)
 * reason-apollo - the reason-apollo example copied into a page and working
 * purge unused css - see next.config.js for whitelist (you would normally only add components you need)
