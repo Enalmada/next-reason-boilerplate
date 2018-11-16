@@ -39,10 +39,10 @@ on development you would import antd.less globally only in dev mode to make hot 
 * Reason-React (https://github.com/zeit/next.js/tree/master/examples/with-reasonml)
 * CI testing: CodeBuild files currently deploying to AWS Beanstalk (but could go anywhere)
 * Deployment testing
-  * Beanstalk - config files, sumologic logging 
-  * Lambda - tested before antd made this dist file too big. Cold starts occasional issue even with warming enabled.
-    Avg response ~150ms vs beanstalk ~40ms (not a big deal but not )
-  * Now - recommended due to ease of deployments, superior compression (br), support for server push.
+  * Beanstalk - config files, sumologic logging.  What I personally use right now. 
+  * Lambda - tested before antd made this dist file too big. Cold starts even with scheduled warming.
+    Avg response ~150ms vs beanstalk ~40ms (not a big deal but fyi).
+  * Now - recommended due to ease of deployments, superior compression (br), auto support for server push with their cdn.
 * Ant Design - designed for react.  Note it is so huge we really need rollup (or equivalent) working
 * Font-Awesome - (no flicker) https://spectrum.chat/thread/56b0396d-8b7d-447d-9f46-24ba6192936e
 * Sentry - kinda works but SSR has known issues https://github.com/zeit/next.js/issues/1852 
