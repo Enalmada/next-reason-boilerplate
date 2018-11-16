@@ -64,7 +64,7 @@ on development you would import antd.less globally only in dev mode to make hot 
 * babel legacy decorators make antd theming work (https://github.com/zeit/next.js/pull/5263)
 * bundle analyzer (npm run analyze)
 * desktop/mobile conditional rendering based on device (react-useragent)
-* localization - react-intl (started with react-i18next which was a big mistake)
+* localization - react-intl (recommended for its formatjs feature set and existing reason bindings)
 * next-routes - see routes.js.  Note that this may not be advisable to use at scale.
 * styleguide - npm run storybook  ()Needed some less fixes in .storybook/webpack.config.js)
 * reason-apollo - the reason-apollo example copied into a page and working
