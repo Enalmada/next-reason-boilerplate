@@ -149,6 +149,21 @@ const createServer = () => {
 
     server.options("*", cors()); // include before other routes
 
+    // Workaround to this bug
+    // https://github.com/zeit/next-plugins/issues/243
+    if (!dev) {
+        server.get(
+            /^\/_next\/static\/css\//,
+            (_, res, handle) => {
+                res.setHeader(
+                    "Cache-Control",
+                    "public, max-age=31536000, immutable",
+                );
+                handle();
+            },
+        );
+    }
+
     server.use("/health", expressHealthcheck());
 
     server.get("/favicon.ico", (req, res) => {
