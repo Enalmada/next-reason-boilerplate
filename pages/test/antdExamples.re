@@ -4,12 +4,6 @@ open Antd.Grid;
 [%bs.raw {|require("antd/lib/notification/style")|}];
 [%bs.raw {|require("antd/lib/message/style")|}];
 
-[@bs.deriving abstract]
-type nextSeoConfig = {
-  canonical: string,
-  title: string,
-};
-
 type state = {
   current: string,
   something: string,
@@ -41,8 +35,6 @@ let component = ReasonReact.reducerComponent("AntdExamples");
  Js.log("keyx:" ++ clickParams##key);
  }
  */
-
-let config = nextSeoConfig(~canonical="https://www.example.com/antDesign", ~title="Ant Design");
 
 let styles = ReactDOMRe.Style.make(~lineHeight="64px", ());
 

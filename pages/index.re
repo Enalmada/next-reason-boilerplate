@@ -2,23 +2,12 @@ let component = ReasonReact.statelessComponent("Index");
 
 open ReactIntl;
 
-[@bs.deriving abstract]
-type nextSeoConfig = {
-  canonical: string,
-  title: string,
-};
-
-let config = nextSeoConfig(~canonical="https://www.example.com/about", ~title="About");
-/*
-       <FormattedMessage id="greeting" defaultMessage="Hello, World!" />
-
- */
 let make = _children => {
   ...component,
   render: _self =>
     /* <ReactHelmet> <title> {ReasonReact.string("AboutPage")} </title> </ReactHelmet> */
     <ConsumerPage>
-      <NextSeo config />
+      <NextSeo title="index" />
       <h1> {ReasonReact.string("nextjs reason-react boilerplate demonstrating some concepts")} </h1>
       <h2> {ReasonReact.string("Font awesome icon loaded without flicker")} </h2>
       <FontAwesomeIcon icon=["fas", "comments"] className="fa-5x" />
