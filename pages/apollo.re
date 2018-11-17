@@ -6,14 +6,12 @@ type nextSeoConfig = {
   title: string,
 };
 
-let config = nextSeoConfig(~canonical="https://www.example.com/about", ~title="About");
-
 let make = _children => {
   ...component,
   render: _self =>
     /* <ReactHelmet> <title> {ReasonReact.string("AboutPage")} </title> </ReactHelmet> */
     <ConsumerPage>
-      <NextSeo config />
+      <NextSeo title="apollo" />
       <div>
         <h1> {ReasonReact.string("Star Wars")} </h1>
         <Persons />
