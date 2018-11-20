@@ -6,6 +6,12 @@ Feel free to propose anything in tickets or push anything you think would benefi
 This project builds on the amazing foundation of RAN Toolkit https://www.rantoolkit.com
 If for some reason you don't want to use Next, consider https://github.com/ivan-aksamentov/reactlandia-bolerplate-lite
 
+Setup:
+- devcert will ask for a certificate password to enable https in local dev mode.
+Run the first `npm run dev` in a normal terminal...editor like Intellij may hide the one time password prompt from you.
+- you need to run this for reason-apollo typesafe query checks: `yarn send-introspection-query https://api.graph.cool/simple/v1/cj5geu3slxl7t0127y8sity9r
+` 
+
 Install it and run:
 
 ```bash
@@ -13,8 +19,7 @@ npm install
 npm run bsb-watch
 (in another tab) npm run dev
 ```
-(Note that first time you run this devcert will ask for a certificate password to enable https in local dev mode.
-Run in a normal terminal...editor like Intellij may hide the one time password prompt from you.)
+
 
 Build and run:
 
@@ -70,9 +75,10 @@ on development you would import antd.less globally only in dev mode to make hot 
 * reason-apollo - the reason-apollo example copied into a page and working
 * purge unused css - see next.config.js for whitelist (you would normally only add components you need)
 * https in dev - using devcert.  useful for service worker testing
+* auth (patterned from nextjs/examples/with-apollo-auth)
+
 
 TODO: 
-* auth (likely with AWS Amplify)
 * opengraph db (likely AWS AppSync)
 * health check hit critical stuff rather than just confirm ssr working (database, cdn, etc)
 * push notification (next-offline seems to support that but hard to demo without actual server)
@@ -83,7 +89,7 @@ TODO:
 * dotenv only runs on local machine (but still during local production build and local prod testing)
 * improve desktop/mobile example to switch between antd mobile/desktop rather than just different words
 * next-stylus "nib" feature needs to only run during dev/build
-
+* how to run "send-introspection-query" with npm...doesn't seem to work
 
 What else does every production next.js app need?
 

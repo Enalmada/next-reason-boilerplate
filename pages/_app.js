@@ -17,6 +17,7 @@ import {IntlProvider, addLocaleData} from "react-intl";
 import withApollo from "../util/withApollo";
 // import your default seo configuration
 import SEO from "../next-seo.config";
+import checkLoggedIn from "../util/checkLoggedIn";
 
 
 config.autoAddCss = false;
@@ -106,6 +107,9 @@ class MyApp extends App {
         // In the browser, use the same values that the server serialized.
         const {req} = ctx;
         const {locale, messages} = req || window.__NEXT_DATA__.props;
+
+        // const { loggedInUser } = await checkLoggedIn(ctx.apolloClient);
+
 
         return {
             pageProps, locale, messages, ua,

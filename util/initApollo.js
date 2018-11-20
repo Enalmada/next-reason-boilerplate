@@ -14,13 +14,14 @@ if (!process.browser) {
 
 function create(initialState, {getToken}) {
     const httpLink = createHttpLink({
-        uri: "https://api.graph.cool/simple/v1/cjdgba1jw4ggk0185ig4bhpsn",
+        uri: "https://api.graph.cool/simple/v1/cj5geu3slxl7t0127y8sity9r", // with-apollo-auth
+        // uri: "https://api.graph.cool/simple/v1/cjdgba1jw4ggk0185ig4bhpsn", // Reason-Apollo
+        // uri: process.env.GRAPHQL_API,  // yours
         credentials: "same-origin",
     });
 
     const authLink = setContext((_, {headers}) => {
-        // const token = getToken()
-        const token = "$123";
+        const token = getToken();
         return {
             headers: {
                 ...headers,

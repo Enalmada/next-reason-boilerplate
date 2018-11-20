@@ -1,12 +1,14 @@
 // UNCOMMENT THIS AFTER FORK
 .env
 
+/.graphql_ppx_cache
 bs
 .merlin
 lib/bs
 *.bs.js
 .serverless
 /dist
+*.rej
 
 # Editor
 .idea

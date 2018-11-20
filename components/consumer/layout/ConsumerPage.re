@@ -5,12 +5,32 @@ open Antd;
 
 /* https://stackoverflow.com/questions/49039433/how-to-add-a-copyright-symbol-in-reason-react-component */
 let copy = [%raw {|'\u00a9'|}];
+let linkStyles = ReactDOMRe.Style.make(~marginRight="10px", ());
+
+/*
+ <MyProfileModule />
+ */
 
 let make = children => {
   ...component,
   render: _self =>
     <Layout>
-      <Layout.Header> <ConsumerHeader /> </Layout.Header>
+      <Layout.Header>
+        <div>
+          <Next.Link href="/"> <a style=linkStyles> {ReasonReact.string("Index")} </a> </Next.Link>
+          <Next.Link href="/reducer"> <a style=linkStyles> {ReasonReact.string("Reducer")} </a> </Next.Link>
+          <Next.Link href="/test/sentry"> <a style=linkStyles> {ReasonReact.string("Sentry")} </a> </Next.Link>
+          <Next.Link href="/test/antdExamples">
+            <a style=linkStyles> {ReasonReact.string("Ant Desktop")} </a>
+          </Next.Link>
+          <Next.Link href="/mobile/styleguide/Button">
+            <a style=linkStyles> {ReasonReact.string("Antd Mobile")} </a>
+          </Next.Link>
+          <Next.Link href="/health"> <a style=linkStyles> {ReasonReact.string("Health")} </a> </Next.Link>
+          <Next.Link href="/intl"> <a style=linkStyles> {ReasonReact.string("intl")} </a> </Next.Link>
+          <div className="float-right"> <ProfileModule /> </div>
+        </div>
+      </Layout.Header>
       <Layout.Content> <AppRe> ...children </AppRe> </Layout.Content>
       <Layout.Footer>
         <div
