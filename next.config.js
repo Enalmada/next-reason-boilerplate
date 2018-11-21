@@ -6,8 +6,8 @@ const {
 } = require("next/constants");
 const path = require("path");
 const fs = require("fs");
-const requireHacker = require("require-hacker");
 const nib = require("nib"); // TODO: this should be only used during dev/build
+const withTM = require("next-plugin-transpile-modules");
 
 const {ANALYZE} = process.env;
 
@@ -18,30 +18,18 @@ if (typeof require !== "undefined") {
 }
 
 
-function setupRequireHacker() {
-    const webjs = ".web.js";
-    const webModules = ["antd-mobile", "rmc-picker"].map(m => path.join("node_modules", m));
-
-    requireHacker.hook("js", (filename) => {
-        if (filename.endsWith(webjs) || webModules.every(p => !filename.includes(p))) return;
-
-        const webFilename = filename.replace(/\.js$/, webjs);
-        if (!fs.existsSync(webFilename)) return;
-
-        return fs.readFileSync(webFilename, {encoding: "utf8"});
-    });
-
-    requireHacker.hook("svg", filename => requireHacker.to_javascript_module_source(`#${path.parse(filename).name}`));
-}
-
-setupRequireHacker();
-
-function moduleDir(m) {
-    return path.dirname(require.resolve(`${m}/package.json`));
-}
-
-
 const nextConfig = {
+    transpileModules: ["bs-platform", "reason-react",
+        "reason-apollo",
+        "bs-ant-design-alt",
+        "bs-ant-design-mobile",
+        "bs-css",
+        "bs-fontawesome",
+        "bs-react-useragent",
+        "bs-next-seo",
+        "bs-react-iframe",
+        "bs-react-intl",
+        "bs-next-alt"],
     purgeCss: {
         whitelist: ["ant-layout"],
         whitelistPatterns: [/^ant-/, /^fade-/, /^move-/, /^slide-/, /^zoom-/, /^svg-/, /^fa-/],
@@ -81,28 +69,6 @@ const nextConfig = {
         clientsClaim: true,
     },
     webpack: (config, {dev}) => {
-        config.module.rules.push(
-            {
-                test: /\.(svg)$/i,
-                loader: "emit-file-loader",
-                options: {
-                    name: "dist/[path][name].[ext]",
-                },
-                include: [
-                    moduleDir("antd-mobile"),
-                    __dirname,
-                ],
-            },
-            {
-                test: /\.(svg)$/i,
-                loader: "svg-sprite-loader",
-                include: [
-                    moduleDir("antd-mobile"),
-                    __dirname,
-                ],
-            },
-        );
-
         if (ANALYZE) {
             const {BundleAnalyzerPlugin} = require("webpack-bundle-analyzer");
 
@@ -136,7 +102,7 @@ module.exports = (phase) => {
         const withStylus = require("@zeit/next-stylus");
         const withPurgeCss = require("next-purgecss");
 
-        return withOffline(withStylus(withLess(withCSS(withPurgeCss(nextConfig)))));
+        return withOffline(withStylus(withLess(withCSS(withPurgeCss(withTM(nextConfig))))));
     }
     return withOffline(nextConfig);
 };

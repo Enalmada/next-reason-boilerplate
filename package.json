@@ -82,6 +82,7 @@
     "less": "^3.8.1",
     "next": "^7.0.2",
     "next-offline": "^3.2.1",
+    "next-plugin-transpile-modules": "^0.1.3",
     "next-preload-headers": "^3.0.2",
     "next-routes": "^1.4.2",
     "next-rum": "^1.1.0",
