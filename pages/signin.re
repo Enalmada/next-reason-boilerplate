@@ -1,7 +1,5 @@
 let component = ReasonReact.statelessComponent("Index");
 
-open ReactIntl;
-
 /*
  type user = {
    name: string
