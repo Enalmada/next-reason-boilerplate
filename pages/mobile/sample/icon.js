@@ -4,7 +4,7 @@ import React, {Component} from "react";
 import {
     WhiteSpace, WingBlank, Card, Icon,
 } from "antd-mobile";
-import {withRouter} from "next/dist/lib/router";
+import {withRouter} from "next/router";
 import Layout from "../../../components/consumer/mobile/Layout";
 import MenuBar from "../../../components/consumer/mobile/MenuBar";
 
