@@ -8,6 +8,7 @@ const path = require("path");
 const fs = require("fs");
 const nib = require("nib"); // TODO: this should be only used during dev/build
 const withTM = require("next-plugin-transpile-modules");
+// const TargetsPlugin = require("targets-webpack-plugin");
 
 const {ANALYZE} = process.env;
 
@@ -69,6 +70,17 @@ const nextConfig = {
         clientsClaim: true,
     },
     webpack: (config, {dev}) => {
+        // Experimental plugin to ensure code works for googlebot
+        // https://github.com/zeit/next.js/pull/5727#issuecomment-440795436
+        // Note: may need to build with "cross-env NODE_OPTIONS=--max_old_space_size=4096 next build"
+        /*
+        if (!dev) {
+            config.plugins.push(new TargetsPlugin({
+                browsers: ["last 2 versions", "chrome >= 41"]
+            }))
+        }
+        */
+
         if (ANALYZE) {
             const {BundleAnalyzerPlugin} = require("webpack-bundle-analyzer");
 
@@ -89,8 +101,6 @@ const nextConfig = {
         return config;
     },
 };
-
-
 //  apparently next-less, next-css, etc only need require duing dev/build
 // https://github.com/zeit/next.js/issues/4248#issuecomment-386038283
 // Obviously having css, less, and stylus at same time is overkill but there were cases where I needed them
