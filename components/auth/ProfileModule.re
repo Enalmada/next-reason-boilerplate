@@ -17,7 +17,7 @@ module GetProfileUserQuery = ReasonApollo.CreateQuery(GetProfileUser);
   ...{
        ({result}) =>
          switch (result) {
-         | Error(e) => ReasonReact.string("Sign In")
+         | Error(_e) => ReasonReact.string("Sign In")
          | Loading => ReasonReact.string("Sign In")
          | Data(response) =>
            switch (response##user) {
@@ -51,7 +51,7 @@ let make = _children => {
         ...{
              ({result}) =>
                switch (result) {
-               | Error(e) => signIn
+               | Error(_e) => signIn
                | Loading => signIn
                | Data(response) =>
                  switch (response##user) {
