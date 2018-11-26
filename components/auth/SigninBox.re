@@ -39,11 +39,14 @@ let make = _children => {
            apolloClient =>
              <SignInMutation
                onCompleted={
-                 () => {
+                 data => {
                    Js.log(
                      "onCompleted",
                      /* Force a reload of all the current queries now that the user is logged in */
                    );
+
+                   %bs.raw
+                   {| document.cookie = require("cookie").serialize('token', data.signinUser.token, { maxAge: 30 * 24 * 60 * 60 }) |};
 
                    %bs.raw
                    {| apolloClient.cache.reset().then(() => {require("next/router").default.replace("/")} ) |};

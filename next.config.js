@@ -72,6 +72,8 @@ const nextConfig = {
     webpack: (config, {dev}) => {
         // Experimental plugin to ensure code works for googlebot
         // https://github.com/zeit/next.js/pull/5727#issuecomment-440795436
+        // https://github.com/zeit/next.js/issues/3205#issuecomment-384673971
+        // possibly https://github.com/zeit/next.js/pull/3181#issuecomment-393643297
         // Note: may need to build with "cross-env NODE_OPTIONS=--max_old_space_size=4096 next build"
         /*
         if (!dev) {
