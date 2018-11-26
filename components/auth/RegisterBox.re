@@ -1,43 +1,50 @@
 let ste = ReasonReact.string;
 
-module SignIn = [%graphql
+module CreateUser = [%graphql
   {|
-     mutation Signin($email: String!, $password: String!) {
-            signinUser(email: { email: $email, password: $password}) {
-                token
-            }
-        }
+      mutation Create($name: String!, $email: String!, $password: String!) {
+             createUser(name: $name, authProvider: { email: { email: $email, password: $password }}) {
+                 id
+             }
+             signinUser(email: { email: $email, password: $password }) {
+                 token
+         }
+     }
 |}
 ];
 
 type state = {
-  username: string,
+  name: string,
+  email: string,
   password: string,
 };
 
 type action =
-  | ChangeUsername(string)
+  | ChangeName(string)
+  | ChangeEmail(string)
   | ChangePassword(string);
 
-let component = ReasonReact.reducerComponent("SigninBox");
+let component = ReasonReact.reducerComponent("RegisterBox");
 
-module SignInMutation = ReasonApollo.CreateMutation(SignIn);
+module CreateUserMutation = ReasonApollo.CreateMutation(CreateUser);
 let formStyle = ReactDOMRe.Style.make(~width="200px", ~marginBottom="10px", ());
 
 let make = _children => {
   ...component,
-  initialState: () => {username: "", password: ""},
+  initialState: () => {name: "", email: "", password: ""},
   reducer: (action, state) =>
     switch (action) {
-    | ChangeUsername(username) => ReasonReact.Update({...state, username})
+    | ChangeName(name) => ReasonReact.Update({...state, name})
+    | ChangeEmail(email) => ReasonReact.Update({...state, email})
     | ChangePassword(password) => ReasonReact.Update({...state, password})
     },
   render: self => {
-    let signInMutation = SignIn.make(~email=self.state.username, ~password=self.state.password, ());
+    let createUserMutation =
+      CreateUser.make(~name=self.state.name, ~email=self.state.email, ~password=self.state.password, ());
     <ApolloConsumer>
       ...{
            apolloClient =>
-             <SignInMutation
+             <CreateUserMutation
                onCompleted={
                  data => {
                    %bs.raw
@@ -52,13 +59,23 @@ let make = _children => {
                ...{
                     (mutation, {result}) =>
                       <div>
-                        <h1> {"Sign In!" |> ste} </h1>
+                        <h1> {"Create User!" |> ste} </h1>
+                        <div>
+                          <Antd_Input
+                            placeholder="name"
+                            value={self.ReasonReact.state.name}
+                            onChange={
+                              event => self.ReasonReact.send(ChangeName(ReactEvent.Form.target(event)##value))
+                            }
+                            style=formStyle
+                          />
+                        </div>
                         <div>
                           <Antd_Input
                             placeholder="email"
-                            value={self.ReasonReact.state.username}
+                            value={self.ReasonReact.state.email}
                             onChange={
-                              event => self.ReasonReact.send(ChangeUsername(ReactEvent.Form.target(event)##value))
+                              event => self.ReasonReact.send(ChangeEmail(ReactEvent.Form.target(event)##value))
                             }
                             style=formStyle
                           />
@@ -78,7 +95,7 @@ let make = _children => {
                           style={ReactDOMRe.Style.make(~marginTop="10px", ())}
                           onClick={
                             _ => {
-                              mutation(~variables=signInMutation##variables, ()) |> ignore;
+                              mutation(~variables=createUserMutation##variables, ()) |> ignore;
                               Js.log("SEND");
                             }
                           }>
@@ -104,7 +121,7 @@ let make = _children => {
                         </span>
                       </div>
                   }
-             </SignInMutation>
+             </CreateUserMutation>
          }
     </ApolloConsumer>;
   },

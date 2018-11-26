@@ -1,4 +1,4 @@
-let component = ReasonReact.statelessComponent("SignIn");
+let component = ReasonReact.statelessComponent("CreateAccount");
 
 /*
  type user = {
@@ -25,10 +25,10 @@ let make = _children => {
   render: _self =>
     /* <ReactHelmet> <title> {ReasonReact.string("AboutPage")} </title> </ReactHelmet> */
     <ConsumerPage>
-      <NextSeo title="Sign In" />
-      <SigninBox />
-      {ReasonReact.string("New? ")}
-      <Next.Link prefetch=true href="/createAccount"> <a> {ReasonReact.string(" Create account")} </a> </Next.Link>
+      <NextSeo title="Create User" />
+      <RegisterBox />
+      {ReasonReact.string("Already have an account? ")}
+      <Next.Link prefetch=true href="/signin"> <a> {ReasonReact.string(" sign in")} </a> </Next.Link>
     </ConsumerPage>,
 };
 

@@ -6,7 +6,7 @@ import checkLoggedIn from "../util/checkLoggedIn";
 
 import RegisterBox from "../components/auth/RegisterBox";
 
-export default class CreateAccount extends React.Component {
+export default class CreateAccountjs extends React.Component {
     static async getInitialProps(context) {
         const {loggedInUser} = await checkLoggedIn(context.apolloClient);
 
