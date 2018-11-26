@@ -75,6 +75,7 @@ const nextConfig = {
         // https://github.com/zeit/next.js/issues/3205#issuecomment-384673971
         // possibly https://github.com/zeit/next.js/pull/3181#issuecomment-393643297
         // Note: may need to build with "cross-env NODE_OPTIONS=--max_old_space_size=4096 next build"
+
         /*
         if (!dev) {
             config.plugins.push(new TargetsPlugin({
@@ -82,6 +83,7 @@ const nextConfig = {
             }))
         }
         */
+
 
         if (ANALYZE) {
             const {BundleAnalyzerPlugin} = require("webpack-bundle-analyzer");
@@ -95,6 +97,7 @@ const nextConfig = {
 
         // Webpack 4 doesn't minify out of the box
         // https://spectrum.chat/?t=9f9f43b8-ec8b-45e5-a8e3-5b57a62e9e67
+        // I believe this is fixed in canary next-css now
         if (config.mode === "production" && Array.isArray(config.optimization.minimizer)) {
             const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
             config.optimization.minimizer.push(new OptimizeCSSAssetsPlugin({}));
