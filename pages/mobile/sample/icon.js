@@ -8,18 +8,6 @@ import {withRouter} from "next/dist/lib/router";
 import Layout from "../../../components/consumer/mobile/Layout";
 import MenuBar from "../../../components/consumer/mobile/MenuBar";
 
-
-const CustomIcon = ({
-    type, className = "", size = "md", ...restProps
-}) => (
-    <svg
-        className={`am-icon am-icon-reload am-icon-${size} ${className}`}
-        {...restProps}
-    >
-        <use xlinkHref={`#${type.default.id}`} />
-    </svg>
-);
-
 class Home extends Component {
     static getInitialProps({req}) {
         const language = req ? req.headers["accept-language"] : navigator.language;
@@ -54,37 +42,8 @@ class Home extends Component {
                             </Card.Body>
                         </Card>
                         <WhiteSpace />
-                        <Card>
-                            <Card.Header
-                                extra="Custom svg"
-                                thumb={<CustomIcon type={require("../../../static/reload.svg")} />}
-                            />
-                            <Card.Body>
-                                <code>
-                                    {"<CustomIcon type={require('../../../static/reload.svg')} />"}
-                                </code>
-                            </Card.Body>
-                        </Card>
-                        <WhiteSpace />
-                        <Card>
-                            <Card.Header
-                                extra="Fill color"
-                                thumb={
-                                    <CustomIcon
-                                        type={require("../../../static/reload.svg")}
-                                        style={{fill: "#108ee9"}}
-                                    />
-                                }
-                            />
-                            <Card.Body>
-                                <code>{`
-                  <CustomIcon
-                    type={require('../../../static/reload.svg')}
-                    style={{ fill: '#108ee9' }}
-                  />
-                `}</code>
-                            </Card.Body>
-                        </Card>
+
+
                         <style jsx>{`
               code {
                 color: gray;
