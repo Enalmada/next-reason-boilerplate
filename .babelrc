@@ -4,13 +4,27 @@
   ],
   "plugins": [
     "babel-plugin-bucklescript",
-    ["@babel/plugin-proposal-decorators", { "decoratorsBeforeExport": true }],
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "decoratorsBeforeExport": true
+      }
+    ],
     [
       "import",
       {
-        "libraryName": "antd-mobile",
+        "libraryName": "antd",
         "style": true
-      }
+      },
+      "antd"
+    ],
+    [
+      "import",
+      {
+        "libraryName": "ant-mobile",
+        "style": true
+      },
+      "ant-mobile"
     ]
   ],
   "env": {
@@ -21,9 +35,12 @@
     },
     "production": {
       "plugins": [
-        ["react-intl", {
-          "messagesDir": "lang/.messages/"
-        }]
+        [
+          "react-intl",
+          {
+            "messagesDir": "lang/.messages/"
+          }
+        ]
       ]
     }
   }
