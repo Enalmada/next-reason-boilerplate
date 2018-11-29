@@ -42,6 +42,7 @@ on development you would import antd.less globally only in dev mode to make hot 
 ## This example features:
 
 * Reason-React (https://github.com/zeit/next.js/tree/master/examples/with-reasonml)
+* prefetch getInitialProps on hover (see index page example link.  Next.js prefetch doesn't do data)
 * CI testing: CodeBuild files currently deploying to AWS Beanstalk (but could go anywhere)
 * Deployment testing
   * Beanstalk - config files, sumologic logging.  What I personally use right now. 
@@ -55,7 +56,6 @@ on development you would import antd.less globally only in dev mode to make hot 
 * cors whitelist - necessary for service-worker preload to cache response correctly (see server.js)
 * healthcheck - "express-healthcheck" 
 * helmet - basic ssr security best practices enabled in server.js
-* next-link - server push of critical assets for minimum "time to interactive" latency 
 * offline support - next-offline. See server.js manifest prefix with assetPrefix hack 
 * robots.txt - see server.js
 * SEO - see next-seo
@@ -65,20 +65,22 @@ on development you would import antd.less globally only in dev mode to make hot 
 * non-critical css loaded async - see loadCSS in _document.js (hacked this version to handle crossorigin)
 * RUM (Real User Monitoring) via next-rum (see _app.js) or site24x7 (see end of _document.js) 
 * Node Performance Monitoring via site24x7 (see top of server.js)
-* br compression - you should disable this if your proxy already supports br (ie cloudflare)
+* br compression - you should disable this in server.js if your proxy already supports br (ie cloudflare)
 * babel legacy decorators make antd theming work (https://github.com/zeit/next.js/pull/5263)
 * bundle analyzer (npm run analyze)
-* desktop/mobile conditional rendering based on device (react-useragent)
+* desktop/mobile conditional rendering - based on device using react-useragent
 * localization - react-intl (recommended for its formatjs feature set and existing reason bindings)
-* next-routes - see routes.js.  Note that this may not be advisable to use at scale.
-* styleguide - npm run storybook  ()Needed some less fixes in .storybook/webpack.config.js)
-* reason-apollo - the reason-apollo example copied into a page and working
+* next-routes - see routes.js.  Note that some next team members say this may not be advisable to use at scale.
+* styleguide - npm run storybook  (Needed some less fixes in .storybook/webpack.config.js)
+* reason-apollo - signin / out components using the pattern
 * purge unused css - see next.config.js for whitelist (you would normally only add components you need)
 * https in dev - using devcert.  useful for service worker testing
 * auth (patterned from nextjs/examples/with-apollo-auth)
 
 
 TODO: 
+* order the features by importance rather than implementation order
+* prefetch on hover support into its own component 
 * opengraph db (likely AWS AppSync)
 * health check hit critical stuff rather than just confirm ssr working (database, cdn, etc)
 * push notification (next-offline seems to support that but hard to demo without actual server)
@@ -90,6 +92,7 @@ TODO:
 * improve desktop/mobile example to switch between antd mobile/desktop rather than just different words
 * next-stylus "nib" feature needs to only run during dev/build
 * how to run "send-introspection-query" with npm...doesn't seem to work
+* next-preload-headers - server push of critical assets for minimum "time to interactive" latency.  Fix production send headers error
 
 What else does every production next.js app need?
 

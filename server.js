@@ -242,7 +242,8 @@ const createServer = () => {
 
     // Middleware to add the static preload links next puts in head into the response header link which
     // most proxy will turn into server push
-    server.use(nextPreloadHeaders);
+    // Need to check into this in prod "UnhandledPromiseRejectionWarning: Error: Can't set headers after they are sent."
+    // server.use(nextPreloadHeaders);
 
     // Put language and messages for react intl
     server.use(reactIntlLocaleMessages);
