@@ -11,7 +11,8 @@ Intl.NumberFormat = IntlPolyfill.NumberFormat;
 Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat;
 
 const dev = process.env.NODE_ENV !== "production";
-if (dev) {
+// use "npm run start-dev" to enable local dotenv in production mode for testing
+if (dev || process.env.LOCAL_ENV) {
     const dotenv = require("dotenv");
     dotenv.config();
 }
@@ -149,8 +150,9 @@ const createServer = () => {
 
     server.options("*", cors()); // include before other routes
 
-    // Workaround to this bug
-    // https://github.com/zeit/next-plugins/issues/243
+    // Workaround to these bugs
+    // https://github.com/zeit/next-plugins/issues/243 (fixed in canary next-css)
+    // https://github.com/zeit/next.js/pull/5675
     if (!dev) {
         server.get(
             /^\/_next\/static\/css\//,

@@ -1,8 +1,9 @@
 import React from "react";
 import {destroyCookie} from "nookies";
-import redirect from "../util/redirect";
-import checkLoggedIn from "../util/checkLoggedIn";
+import redirect from "../../util/redirect";
+import checkLoggedIn from "../../util/checkLoggedIn";
 
+// TODO: make this reason-react
 export default class Index extends React.Component {
     static async getInitialProps(context) {
         const {loggedInUser} = await checkLoggedIn(context.apolloClient);

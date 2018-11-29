@@ -8,6 +8,10 @@
     {
       "dir": "pages",
       "subdirs": true
+    },
+    {
+      "dir": "bindings",
+      "subdirs": true
     }
   ],
   "bs-dependencies": [
