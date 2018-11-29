@@ -60,17 +60,9 @@ let make = _children => {
       <h2> {ReasonReact.string("Auth")} </h2>
       {ReasonReact.string("Hello ")}
       <h2> {ReasonReact.string("Preload getInitialProps on hover (* only in production)")} </h2>
-      <Next.Link href="/preload">
-        <a
-          onMouseOver={
-            event => {
-              Js.log(event->ReactEvent.Mouse.target##href);
-              Prefetch.prefetch(event->ReactEvent.Mouse.target##href);
-            }
-          }>
-          {ReasonReact.string("hover me")}
-        </a>
-      </Next.Link>
+      <Link href="/preload" withHover=true style={ReactDOMRe.Style.make(~marginTop="10px", ())}>
+        {ReasonReact.string("hover me")}
+      </Link>
     </ConsumerPage>,
 };
 

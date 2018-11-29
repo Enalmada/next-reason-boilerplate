@@ -5,7 +5,6 @@ import Router from "next/router";
 import {format, resolve, parse} from "url";
 
 const prefetch = async (href) => {
-    console.log("prefetch start");
     // if  we're running server side do nothing
     if (typeof window === "undefined") return;
 
@@ -23,12 +22,10 @@ const prefetch = async (href) => {
 
     // get component reference
     const Component = await Router.prefetch(parsedHref);
-    console.log(`prefetch ${parsedHref} ${Component}`);
 
     // fetch the component props
     // and cache locally, handled within getInitialProps
     if (Component && Component.getInitialProps) {
-        console.log("prefetch getInitialProps");
         const ctx = {pathname: href, query, isVirtualCall: true};
         await Component.getInitialProps(ctx);
     }
