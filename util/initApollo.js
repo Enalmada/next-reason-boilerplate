@@ -4,6 +4,9 @@ import {ApolloClient, InMemoryCache} from "apollo-boost";
 import {createHttpLink} from "apollo-link-http";
 import {setContext} from "apollo-link-context";
 import fetch from "isomorphic-unfetch";
+import getConfig from "next/config";
+
+const {publicRuntimeConfig} = getConfig();
 
 let apolloClient = null;
 
@@ -12,11 +15,12 @@ if (!process.browser) {
     global.fetch = fetch;
 }
 
+// using publicRuntimeConfig because env variable has to be available to apollo on the client side
 function create(initialState, {getToken}) {
     const httpLink = createHttpLink({
         uri: "https://api.graph.cool/simple/v1/cj5geu3slxl7t0127y8sity9r", // with-apollo-auth
         // uri: "https://api.graph.cool/simple/v1/cjdgba1jw4ggk0185ig4bhpsn", // Reason-Apollo
-        // uri: process.env.GRAPHQL_API,  // yours
+        // uri: publicRuntimeConfig.graphApi, // set as process.env.GRAPHQL_API
         credentials: "same-origin",
     });
 
