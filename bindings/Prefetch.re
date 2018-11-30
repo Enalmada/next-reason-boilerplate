@@ -1,1 +1,1 @@
-[@bs.module "./prefetch"] external prefetch: string => unit = "default";
+[@bs.module "../util/prefetch"] external prefetch: string => unit = "default";
