@@ -123,7 +123,7 @@
     "babel-eslint": "10.0.1",
     "babel-loader": "^8.0.4",
     "babel-plugin-bucklescript": "^0.5.3",
-    "bs-ant-design-alt": "^1.0.7",
+    "bs-ant-design-alt": "^1.0.8",
     "bs-ant-design-mobile": "^1.0.4",
     "bs-css": "^7.5.0",
     "bs-fontawesome": "^1.0.0",
