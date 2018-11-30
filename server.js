@@ -135,7 +135,8 @@ const createServer = () => {
     server.use(helmet.hsts({includeSubDomains: false})); // Lets not force our summary domain to https
 
     // https://github.com/zeit/next.js/pull/5727#issuecomment-441181614
-    // server.use(Sentry.Handlers.requestHandler());
+    // Must only use on node 8 for now ... https://github.com/zeit/next.js/pull/5727#issuecomment-443279483
+    server.use(Sentry.Handlers.requestHandler());
 
     server.use(cookieParser());
     server.use((req, res, next) => {
@@ -175,7 +176,8 @@ const createServer = () => {
     // The error handler must be before any other error middleware
     // Unfortunately Next error handler is in front blocking this but that is being looked into.
     // https://github.com/zeit/next.js/pull/5727#issuecomment-441181614
-    // server.use(Sentry.Handlers.errorHandler());
+    // Must only use on node 8 for now ... https://github.com/zeit/next.js/pull/5727#issuecomment-443279483
+    server.use(Sentry.Handlers.errorHandler());
 
     server.options("*", cors()); // include before other routes
 

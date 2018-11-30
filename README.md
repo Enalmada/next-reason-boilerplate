@@ -33,6 +33,7 @@ npm run start
 * add .env to your .gitignore and remove from git: `git rm -r .env`.  It is only checked in to give you a starting point.
 
 ## KNOWN ISSUES
+* sentry requires node 8.x (10.x has a memory leak) https://github.com/zeit/next.js/pull/5727#issuecomment-443279483
 * ant design element pages need hard reload in development - it will all run fine on production
 Next.js v7 has a critical bug with less/css right now: https://spectrum.chat/?t=2183fc55-236d-42cb-92b9-3ab10acc6303
 The only workaround I could get going is not to load less/css files.  This impacts ant design hot reload because 
