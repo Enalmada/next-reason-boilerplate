@@ -7,8 +7,8 @@ const {
 const path = require("path");
 const fs = require("fs");
 const nib = require("nib"); // TODO: this should be only used during dev/build
-const withTM = require("next-plugin-transpile-modules");
 // const TargetsPlugin = require("targets-webpack-plugin");
+const webpack = require("webpack");
 
 const {ANALYZE} = process.env;
 
@@ -20,6 +20,11 @@ if (typeof require !== "undefined") {
 
 
 const nextConfig = {
+    publicRuntimeConfig: { // Will be available on both server and client
+        GRAPHQL_API: process.env.GRAPHQL_API, // Pass through env variables
+        SENTRY_DSN: process.env.SENTRY_DSN,
+        ENV: process.env.ENV,
+    },
     transpileModules: ["bs-platform", "reason-react",
         "reason-apollo",
         "bs-ant-design-alt",
@@ -52,7 +57,7 @@ const nextConfig = {
     workboxOpts: {
         runtimeCaching: [
             {
-                urlPattern: /^https:\/\/fonts\.googleapis\.com/,
+                urlPattern: /^https:\/\/fonts\.(googleapis|gstatic)\.com/,
                 handler: "cacheFirst",
                 options: {
                     cacheName: "google-fonts-stylesheets",
@@ -69,13 +74,12 @@ const nextConfig = {
         skipWaiting: true,
         clientsClaim: true,
     },
-    webpack: (config, {dev}) => {
+    webpack: (config, {dev, isServer, buildId}) => {
         // Experimental plugin to ensure code works for googlebot
         // https://github.com/zeit/next.js/pull/5727#issuecomment-440795436
         // https://github.com/zeit/next.js/issues/3205#issuecomment-384673971
         // possibly https://github.com/zeit/next.js/pull/3181#issuecomment-393643297
         // Note: may need to build with "cross-env NODE_OPTIONS=--max_old_space_size=4096 next build"
-
         /*
         if (!dev) {
             config.plugins.push(new TargetsPlugin({
@@ -83,6 +87,20 @@ const nextConfig = {
             }))
         }
         */
+
+
+        // https://github.com/zeit/next.js/pull/5727/files
+        if (!dev) {
+            config.plugins.push(
+                new webpack.DefinePlugin({
+                    "process.env.SENTRY_RELEASE": JSON.stringify(buildId),
+                }),
+            );
+        }
+
+        if (!isServer) {
+            config.resolve.alias["@sentry/node"] = "@sentry/browser";
+        }
 
 
         if (ANALYZE) {
@@ -116,8 +134,10 @@ module.exports = (phase) => {
         const withCSS = require("@zeit/next-css");
         const withStylus = require("@zeit/next-stylus");
         const withPurgeCss = require("next-purgecss");
+        const nextSourceMaps = require("@zeit/next-source-maps")();
+        const withTM = require("next-plugin-transpile-modules");
 
-        return withOffline(withStylus(withLess(withCSS(withPurgeCss(withTM(nextConfig))))));
+        return withOffline(withStylus(withLess(withCSS(withPurgeCss(nextSourceMaps(withTM(nextConfig)))))));
     }
     return withOffline(nextConfig);
 };

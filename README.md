@@ -51,7 +51,8 @@ on development you would import antd.less globally only in dev mode to make hot 
   * Now - recommended due to ease of deployments, superior compression (br), auto support for server push with their cdn.
 * Ant Design - designed for react.  Note it is so huge we really need rollup (or equivalent) working
 * Font-Awesome - (no flicker) https://spectrum.chat/thread/56b0396d-8b7d-447d-9f46-24ba6192936e
-* Sentry - kinda works but SSR has known issues https://github.com/zeit/next.js/issues/1852 
+* Sentry - quite a mess but functional: https://github.com/zeit/next.js/pull/5727
+* Source Maps - next-source-maps (mostly for sentry, see server.js)
 * next-less/next-css/next-styl only loading during dev/build.  See "phase" in next.config.js
 * cors whitelist - necessary for service-worker preload to cache response correctly (see server.js)
 * healthcheck - "express-healthcheck" 

@@ -19,7 +19,7 @@ let make = children => {
         <div>
           <Next.Link href="/"> <a style=linkStyles> {ReasonReact.string("Index")} </a> </Next.Link>
           <Next.Link href="/reducer"> <a style=linkStyles> {ReasonReact.string("Reducer")} </a> </Next.Link>
-          <Next.Link href="/test/sentry"> <a style=linkStyles> {ReasonReact.string("Sentry")} </a> </Next.Link>
+          <Next.Link href="/sentry"> <a style=linkStyles> {ReasonReact.string("Sentry")} </a> </Next.Link>
           <Next.Link href="/test/antdExamples">
             <a style=linkStyles> {ReasonReact.string("Ant Desktop")} </a>
           </Next.Link>

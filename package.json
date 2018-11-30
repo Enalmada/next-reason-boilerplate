@@ -61,6 +61,7 @@
     "@quentin-sommer/react-useragent": "^2.0.0",
     "@sentry/browser": "^4.4.0",
     "@sentry/node": "^4.4.0",
+    "@zeit/next-source-maps": "0.0.4-canary.0",
     "accepts": "^1.3.5",
     "antd": "^3.10.9",
     "antd-mobile": "^2.2.6",
@@ -104,7 +105,10 @@
     "stylus": "^0.54.5",
     "svg-sprite-loader": "^4.1.3",
     "tamper": "^1.0.0",
-    "throttle-debounce": "^2.0.1"
+    "throttle-debounce": "^2.0.1",
+    "cookie-parser": "^1.4.3",
+    "js-cookie": "^2.2.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",

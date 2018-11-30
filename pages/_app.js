@@ -17,8 +17,7 @@ import {IntlProvider, addLocaleData} from "react-intl";
 import withApollo from "../util/withApollo";
 // import your default seo configuration
 import SEO from "../next-seo.config";
-import checkLoggedIn from "../util/checkLoggedIn";
-
+import {captureException} from "../util/sentry";
 
 config.autoAddCss = false;
 fontawesome.add(faComments);
@@ -95,8 +94,14 @@ class MyApp extends App {
     static async getInitialProps({Component, router, ctx}) {
         let pageProps = {};
 
-        if (Component.getInitialProps) {
-            pageProps = await Component.getInitialProps(ctx);
+        // https://github.com/zeit/next.js/pull/5727/files
+        try {
+            if (Component.getInitialProps) {
+                pageProps = await Component.getInitialProps(ctx);
+            }
+        } catch (e) {
+            captureException(e, ctx);
+            throw e; // you can also skip re-throwing and set property on pageProps
         }
 
         const ua = ctx.req
@@ -116,6 +121,11 @@ class MyApp extends App {
         };
     }
 
+    // This reports errors thrown while rendering components
+    componentDidCatch(error, errorInfo) {
+        captureException(error, {extra: errorInfo});
+        super.componentDidCatch(error, errorInfo);
+    }
 
     render() {
         const {

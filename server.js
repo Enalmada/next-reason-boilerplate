@@ -39,7 +39,6 @@ const glob = require("glob");
 const express = require("express");
 const next = require("next");
 const expressHealthcheck = require("express-healthcheck");
-const Sentry = require("@sentry/node");
 const fs = require("fs");
 const cors = require("cors");
 
@@ -51,25 +50,18 @@ const shrinkRay = require("shrink-ray-current");
 
 const env = process.env.ENV;
 
-const nextPreloadHeaders = require("next-preload-headers");
-const routes = require("./routes");
+const nextPreloadHeaders = require("next-preload-headers"); // need to fix
 
 const handle = app.getRequestHandler();
 const {CDN_URL} = process.env;
 const cdnPrefix = CDN_URL ? `${CDN_URL}` : "";
 
-// https://github.com/expressjs/express/issues/2456
+const cookieParser = require("cookie-parser");
+const Sentry = require("@sentry/node");
+const uuidv4 = require("uuid/v4");
+const routes = require("./routes");
+require("./util/sentry");
 
-// VERSION_PLACEHOLDER swapped out during build
-// Note this part here only catches errors from server.js
-// Sentry is a big mess on next: https://github.com/zeit/next.js/issues/1852
-if (process.env.SENTRY_DSN) {
-    Sentry.init({
-        dsn: process.env.SENTRY_DSN,
-        environment: env || "development",
-        release: "VERSION_PLACEHOLDER",
-    });
-}
 
 // Put every origin that would ever connect here.
 const whitelist = ["http://localhost:3000", "https://localhost:3000", "https://www.myweb.com:3000"];
@@ -142,11 +134,48 @@ const createServer = () => {
     server.use(helmet.dnsPrefetchControl({allow: true})); // Performance desired in this case
     server.use(helmet.hsts({includeSubDomains: false})); // Lets not force our summary domain to https
 
-    server.use(Sentry.Handlers.requestHandler());
+    // https://github.com/zeit/next.js/pull/5727#issuecomment-441181614
+    // server.use(Sentry.Handlers.requestHandler());
+
+    server.use(cookieParser());
+    server.use((req, res, next) => {
+        const htmlPage = !req.path.match(/^\/(_next|static)/)
+            && !req.path.match(/\.(js|map)$/)
+            && req.accepts("text/html", "text/css", "image/png") === "text/html";
+
+        if (!htmlPage) {
+            next();
+            return;
+        }
+
+        if (!req.cookies.sid || req.cookies.sid.length === 0) {
+            req.cookies.sid = uuidv4();
+            res.cookie("sid", req.cookies.sid);
+        }
+
+        next();
+    });
+
+    // In production we don't want to serve sourcemaps for anyone
+    if (!dev) {
+        const hasSentryToken = !!process.env.SENTRY_TOKEN;
+        server.get(/\.map$/, (req, res, next) => {
+            if (hasSentryToken && req.headers["x-sentry-token"] !== process.env.SENTRY_TOKEN) {
+                res
+                    .status(401)
+                    .send(
+                        "Authentication access token is required to access the source map.",
+                    );
+                return;
+            }
+            next();
+        });
+    }
 
     // The error handler must be before any other error middleware
     // Unfortunately Next error handler is in front blocking this but that is being looked into.
-    server.use(Sentry.Handlers.errorHandler());
+    // https://github.com/zeit/next.js/pull/5727#issuecomment-441181614
+    // server.use(Sentry.Handlers.errorHandler());
 
     server.options("*", cors()); // include before other routes
 
