@@ -15,7 +15,8 @@ export default class Index extends React.Component {
 
         destroyCookie(context, "token");
 
-        context.apolloClient.cache.reset().then(() => {
+        /* https://www.apollographql.com/docs/react/recipes/authentication.html#login-logout */
+        context.apolloClient.resetStore().then(() => {
             redirect({}, "/");
         });
 

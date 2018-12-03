@@ -43,8 +43,9 @@ let make = _children => {
                    %bs.raw
                    {| document.cookie = require("cookie").serialize('token', data.signinUser.token, { maxAge: 30 * 24 * 60 * 60 }) |};
 
+                   /* https://www.apollographql.com/docs/react/recipes/authentication.html#login-logout */
                    %bs.raw
-                   {| apolloClient.cache.reset().then(() => {require("next/router").default.replace("/")} ) |};
+                   {| apolloClient.resetStore().then(() => {require("next/router").default.replace("/")} ) |};
                    /* I can't get this working for some reason */
                    /* Next_Router.replace("/"); */
                  }
