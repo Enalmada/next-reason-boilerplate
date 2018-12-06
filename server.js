@@ -43,6 +43,7 @@ const fs = require("fs");
 const cors = require("cors");
 
 const port = parseInt(process.env.PORT, 10) || 3000;
+const devSslPort = parseInt(process.env.SSL_PORT, 10) || 3443;
 const app = next({dev});
 const path = require("path");
 const helmet = require("helmet");
@@ -64,7 +65,7 @@ require("./util/sentry");
 
 
 // Put every origin that would ever connect here.
-const whitelist = ["http://localhost:3000", "https://localhost:3000", "https://www.myweb.com:3000"];
+const whitelist = [`http://localhost:${port}`, `https://www.myweb.com:${devSslPort}`];
 const corsOptions = {
     origin(origin, callback) {
         if (origin === undefined || whitelist.indexOf(origin) !== -1) {
@@ -302,14 +303,21 @@ if (!process.env.LAMBDA) {
     app.prepare()
         .then(() => {
             if (dev) {
+                server.listen(port, (err) => {
+                    if (err) throw err;
+                    // eslint-disable-next-line
+                    console.log(`> Ready on http://localhost:${port}`);
+                });
+
                 // This will do a one time certificate password request the first time you start.
                 // It will also attempt to add your certificateFor domain to hosts.  If you
                 // get access errors, add "www.myweb.com 127.0.0.1" to hosts file manually.
+                // devcert.certificateFor("www.myweb.com", {installCertutil: true}).then((ssl) => {
                 devcert.certificateFor("www.myweb.com", {installCertutil: true}).then((ssl) => {
-                    https.createServer(ssl, server).listen(port, (err) => {
+                    https.createServer(ssl, server).listen(devSslPort, (err) => {
                         if (err) throw err;
                         // eslint-disable-next-line
-                        console.log(`> Ready on https://www.myweb.com:${port}`);
+                        console.log(`> Ready on https://www.myweb.com:${devSslPort}`);
                     });
                 });
             } else {
