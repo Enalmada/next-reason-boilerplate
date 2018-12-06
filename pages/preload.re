@@ -12,7 +12,7 @@ let make = _children => {
     </ConsumerPage>,
 };
 
-let default = ReasonReact.wrapReasonForJs(~component, jsProps => make([||]));
+let default = ReasonReact.wrapReasonForJs(~component, _jsProps => make([||]));
 
 let getInitialProps = context => {
   let isVirtualCall =
