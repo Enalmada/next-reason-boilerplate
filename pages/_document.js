@@ -58,7 +58,8 @@ export default class MyDocument extends Document {
 
     render() {
         // Polyfill Intl API for older browsers
-        const polyfill = `https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.${this.props.locale}`;
+        // NOTE: default added here so that we benefit from non-intl polyfill in older browsers too
+        const polyfill = `https://cdn.polyfill.io/v2/polyfill.min.js?features=default,Intl.~locale.${this.props.locale}`;
 
         return (
             <html lang="en" itemScope itemType="http://schema.org/WebPage">
@@ -149,7 +150,7 @@ export default class MyDocument extends Document {
 
                     <Main/>
 
-                    {/* nomodule only runs polyfill on older browsers more likely to need it */}
+                    {/* Note: nomodule skips running script in newer browsers unlikely to need it */}
                     <script src={polyfill} noModule="nomodule" />
                     <script
                         dangerouslySetInnerHTML={{
