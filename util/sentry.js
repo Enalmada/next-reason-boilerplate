@@ -30,7 +30,9 @@ if (publicRuntimeConfig.SENTRY_DSN) {
     });
 }
 
-function captureException(err, {req, res, extra}) {
+function captureException(err, {
+    req, res, errorInfo, query, pathname,
+}) {
     Sentry.configureScope((scope) => {
         if (err.message) {
             // De-duplication currently doesn't work correctly for SSR / browser errors
@@ -48,6 +50,8 @@ function captureException(err, {req, res, extra}) {
 
         if (process.browser) {
             scope.setTag("ssr", false);
+            scope.setExtra("query", query);
+            scope.setExtra("pathname", pathname);
 
             // On client-side we use js-cookie package to fetch it
             const sessionId = Cookie.get("sid");
@@ -57,9 +61,10 @@ function captureException(err, {req, res, extra}) {
         } else {
             scope.setTag("ssr", true);
             scope.setExtra("url", req.url);
+            scope.setExtra("method", req.method);
+            scope.setExtra("headers", req.headers);
             scope.setExtra("params", req.params);
             scope.setExtra("query", req.query);
-            scope.setExtra("headers", req.headers);
 
             // On server-side we take session cookie directly from request
             if (req.cookies.sid) {
@@ -67,10 +72,8 @@ function captureException(err, {req, res, extra}) {
             }
         }
 
-        if (extra) {
-            Object.keys(extra).forEach((key) => {
-                scope.setExtra(key, extra[key]);
-            });
+        if (errorInfo) {
+            scope.setExtra("componentStack", errorInfo.componentStack);
         }
     });
 
