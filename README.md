@@ -50,6 +50,9 @@ on development you would import antd.less globally only in dev mode to make hot 
   * Lambda - tested before antd made this dist file too big. Cold starts even with scheduled warming.
     Avg response ~150ms vs beanstalk ~40ms (not a big deal but fyi).
   * Now - recommended due to ease of deployments, superior compression (br), auto support for server push with their cdn.
+* Apollo
+  * Hermes cache (higher performance than default for avg objects with "id" attribute)
+  * offline retry with apollo-link-retry  
 * Ant Design - designed for react.  Note it is so huge we really need rollup (or equivalent) working
 * Font-Awesome - (no flicker) https://spectrum.chat/thread/56b0396d-8b7d-447d-9f46-24ba6192936e
 * Sentry - quite a mess but functional: https://github.com/zeit/next.js/pull/5727

@@ -67,6 +67,7 @@
     "antd-mobile": "^2.2.6",
     "apminsight": "^1.2.0",
     "apollo-boost": "^0.1.22",
+    "apollo-cache-hermes": "^0.8.6",
     "apollo-link-context": "^1.0.10",
     "apollo-link-retry": "^2.2.6",
     "apollo-upload-client": "^9.1.0",

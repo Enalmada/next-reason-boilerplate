@@ -1,11 +1,12 @@
 /* eslint no-unused-vars: 0 */
 
-import {ApolloClient, InMemoryCache} from "apollo-boost";
+import {ApolloClient} from "apollo-boost";
 import {createHttpLink} from "apollo-link-http";
 import {setContext} from "apollo-link-context";
 import fetch from "isomorphic-unfetch";
 import {concat} from "apollo-link";
 import {RetryLink} from "apollo-link-retry";
+import {Hermes} from "apollo-cache-hermes";
 
 import getConfig from "next/config";
 
@@ -47,7 +48,7 @@ function create(initialState, {getToken}) {
         connectToDevTools: process.browser,
         ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
         link: authLink.concat(link),
-        cache: new InMemoryCache().restore(initialState || {}),
+        cache: new Hermes().restore(initialState || {}),
     });
 }
 
