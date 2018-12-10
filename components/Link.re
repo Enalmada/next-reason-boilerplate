@@ -1,9 +1,11 @@
 let component = ReasonReact.statelessComponent("DataPrefetchLinkHover");
-
+/*
+ For some reason it doesn't see this as string
+ onMouseOver={event => Prefetch.prefetch(event->ReactEvent.Mouse.target##href) */
 let make =
     (
-      ~href: string,
-      ~prefetch=false,
+      ~href: string="",
+      ~prefetch=true,
       ~replace=false,
       ~shallow=false,
       ~passHref=false,
@@ -16,13 +18,15 @@ let make =
     ) => {
   ...component,
   render: _self =>
-    <Next.Link href prefetch replace shallow passHref>
-      {
-        withHover ?
-          <a id className style title onMouseOver={event => Prefetch.prefetch(event->ReactEvent.Mouse.target##href)}>
-            ...children
-          </a> :
-          <a id className style title> ...children </a>
+    <ApolloConsumer>
+      ...{apolloClient =>
+        <NextRoutesLink route=href prefetch replace shallow passHref>
+          {withHover ?
+             <a id className style title onMouseEnter={_event => Prefetch.prefetch(href, apolloClient, true)}>
+               ...children
+             </a> :
+             <a id className style title> ...children </a>}
+        </NextRoutesLink>
       }
-    </Next.Link>,
+    </ApolloConsumer>,
 };

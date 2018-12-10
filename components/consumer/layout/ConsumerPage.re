@@ -17,34 +17,28 @@ let make = children => {
     <Layout>
       <Layout.Header>
         <div>
-          <Next.Link href="/"> <a style=linkStyles> {ReasonReact.string("Index")} </a> </Next.Link>
-          <Next.Link href="/reducer"> <a style=linkStyles> {ReasonReact.string("Reducer")} </a> </Next.Link>
-          <Next.Link href="/sentry"> <a style=linkStyles> {ReasonReact.string("Sentry")} </a> </Next.Link>
-          <Next.Link href="/test/antdExamples">
-            <a style=linkStyles> {ReasonReact.string("Ant Desktop")} </a>
-          </Next.Link>
-          <Next.Link href="/mobile/styleguide/Button">
-            <a style=linkStyles> {ReasonReact.string("Antd Mobile")} </a>
-          </Next.Link>
-          <Next.Link href="/health"> <a style=linkStyles> {ReasonReact.string("Health")} </a> </Next.Link>
-          <Next.Link href="/intl"> <a style=linkStyles> {ReasonReact.string("intl")} </a> </Next.Link>
+          <Link href="/" style=linkStyles> {ReasonReact.string("Index")} </Link>
+          <Link href="/reducer" style=linkStyles> {ReasonReact.string("Reducer")} </Link>
+          <Link href="/sentry" style=linkStyles> {ReasonReact.string("Sentry")} </Link>
+          <Link href="/test/antdExamples" style=linkStyles> {ReasonReact.string("Ant Desktop")} </Link>
+          <Link href="/mobile/styleguide/Button" style=linkStyles> {ReasonReact.string("Antd Mobile")} </Link>
+          <Link href="/health" style=linkStyles> {ReasonReact.string("Health")} </Link>
+          <Link href="/intl" style=linkStyles> {ReasonReact.string("intl")} </Link>
           <div className="float-right"> <ProfileModule /> </div>
         </div>
       </Layout.Header>
       <Layout.Content> <AppRe> ...children </AppRe> </Layout.Content>
       <Layout.Footer>
         <div
-          style={
-            ReactDOMRe.Style.make(
-              ~height="50px",
-              ~color="lightgrey",
-              ~backgroundColor="black",
-              ~display="flex",
-              ~justifyContent="center",
-              ~alignItems="center",
-              (),
-            )
-          }>
+          style={ReactDOMRe.Style.make(
+            ~height="50px",
+            ~color="lightgrey",
+            ~backgroundColor="black",
+            ~display="flex",
+            ~justifyContent="center",
+            ~alignItems="center",
+            (),
+          )}>
           {ReasonReact.string("Sticky Footer Example ")}
           copy
           {ReasonReact.string(" 2018")}

@@ -298,11 +298,11 @@ const createServer = () => {
 };
 
 const server = createServer();
-
 if (!process.env.LAMBDA) {
     app.prepare()
         .then(() => {
-            if (dev) {
+            if (dev || process.env.LOCAL_ENV) {
+                // Always support localhost as it is what people expect
                 server.listen(port, (err) => {
                     if (err) throw err;
                     // eslint-disable-next-line

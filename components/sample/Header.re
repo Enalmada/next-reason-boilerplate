@@ -6,16 +6,16 @@ let make = _children => {
   ...component,
   render: _self =>
     <div>
-      <Next.Link href="/sample"> <a style=styles> {ReasonReact.string("Home")} </a> </Next.Link>
-      <Next.Link href="/sample/sampleAbout"> <a style=styles> {ReasonReact.string("About")} </a> </Next.Link>
-      <Next.Link href="/sample/shared"> <a style=styles> {ReasonReact.string("HomeShared")} </a> </Next.Link>
-      <Next.Link href="/sample/shared/about"> <a style=styles> {ReasonReact.string("AboutShared")} </a> </Next.Link>
-      <Next.Link href="/sample/indexApollo"> <a style=styles> {ReasonReact.string("IndexApollo")} </a> </Next.Link>
-      <Next.Link href="/sample/aboutApollo"> <a style=styles> {ReasonReact.string("AboutApollo")} </a> </Next.Link>
-      <Next.Link href="/sample/ant"> <a style=styles> {ReasonReact.string("Ant")} </a> </Next.Link>
-      <Next.Link href="/sample/ant/calendar"> <a style=styles> {ReasonReact.string("Ant Calendar")} </a> </Next.Link>
-      <Next.Link href="/sample/ant/card"> <a style=styles> {ReasonReact.string("Ant Card")} </a> </Next.Link>
-      <Next.Link href="/sample/test"> <a style=styles> {ReasonReact.string("Test")} </a> </Next.Link>
+      <Link href="/sample" style=styles> {ReasonReact.string("Home")} </Link>
+      <Link href="/sample/sampleAbout" style=styles> {ReasonReact.string("About")} </Link>
+      <Link href="/sample/shared" style=styles> {ReasonReact.string("HomeShared")} </Link>
+      <Link href="/sample/shared/about" style=styles> {ReasonReact.string("AboutShared")} </Link>
+      <Link href="/sample/indexApollo" style=styles> {ReasonReact.string("IndexApollo")} </Link>
+      <Link href="/sample/aboutApollo" style=styles> {ReasonReact.string("AboutApollo")} </Link>
+      <Link href="/sample/ant" style=styles> {ReasonReact.string("Ant")} </Link>
+      <Link href="/sample/ant/calendar" style=styles> {ReasonReact.string("Ant Calendar")} </Link>
+      <Link href="/sample/ant/card" style=styles> {ReasonReact.string("Ant Card")} </Link>
+      <Link href="/sample/test" style=styles> {ReasonReact.string("Test")} </Link>
     </div>,
 };
 
