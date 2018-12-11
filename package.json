@@ -119,7 +119,7 @@
     "@storybook/addon-links": "^4.0.12",
     "@storybook/addons": "^4.0.12",
     "@storybook/react": "^4.0.12",
-    "@zeit/next-css": "^1.0.1",
+    "@zeit/next-css": "1.0.2-canary.2",
     "@zeit/next-less": "^1.0.1",
     "@zeit/next-stylus": "^1.0.1",
     "babel-eslint": "10.0.1",

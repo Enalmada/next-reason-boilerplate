@@ -51,7 +51,7 @@ const shrinkRay = require("shrink-ray-current");
 
 const env = process.env.ENV;
 
-const nextPreloadHeaders = require("next-preload-headers"); // need to fix
+// const nextPreloadHeaders = require("next-preload-headers"); // need to fix
 
 const handle = app.getRequestHandler();
 const {CDN_URL} = process.env;
@@ -185,6 +185,7 @@ const createServer = () => {
     // Workaround to these bugs
     // https://github.com/zeit/next-plugins/issues/243 (fixed in canary next-css)
     // https://github.com/zeit/next.js/pull/5675
+    /*
     if (!dev) {
         server.get(
             /^\/_next\/static\/css\//,
@@ -197,6 +198,7 @@ const createServer = () => {
             },
         );
     }
+    */
 
     server.use("/health", expressHealthcheck());
 
