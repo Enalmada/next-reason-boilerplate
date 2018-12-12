@@ -1,6 +1,6 @@
 // https://shaleenjain.com/blog/nextjs-apollo-prefetch/
-import {format, resolve} from "url";
-import nextRoutes, {Router} from "../routes";
+import {format, parse, resolve} from "url";
+import Router from "next/router";
 
 const prefetch = async (href, apolloClient, withData = true) => {
     // if  we're running server side do nothing
@@ -14,14 +14,14 @@ const prefetch = async (href, apolloClient, withData = true) => {
 
     const parsedHref = resolve(pathname, url);
 
-    /* From original
+    /* From original */
     const {query} = typeof href !== "string"
         ? href
         : parse(url, true);
-        */
+
 
     // get component reference
-    const Component = await Router.prefetchRoute(parsedHref);
+    const Component = await Router.prefetch(parsedHref);
 
 
     // fetch the component props
@@ -29,10 +29,10 @@ const prefetch = async (href, apolloClient, withData = true) => {
     if (withData && Component && Component.getInitialProps) {
         // Get query from next-routes as it is blank in prefetch
         // TODO: look at original query and do this if it is blank
-        const nextRoutesQuery = nextRoutes.match(parsedHref).query;
+        // const nextRoutesQuery = nextRoutes.match(parsedHref).query;
 
         const ctx = {
-            pathname: href, query: nextRoutesQuery, isVirtualCall: true, apolloClient,
+            pathname: href, query, isVirtualCall: true, apolloClient,
         };
         await Component.getInitialProps(ctx);
     }

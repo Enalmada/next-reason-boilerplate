@@ -5,6 +5,7 @@ let component = ReasonReact.statelessComponent("DataPrefetchLinkHover");
 let make =
     (
       ~href: string="",
+      ~_as: string="",
       ~prefetch=true,
       ~replace=false,
       ~shallow=false,
@@ -20,13 +21,13 @@ let make =
   render: _self =>
     <ApolloConsumer>
       ...{apolloClient =>
-        <NextRoutesLink route=href prefetch replace shallow passHref>
+        <Next.Link href _as prefetch replace shallow passHref>
           {withHover ?
              <a id className style title onMouseEnter={_event => Prefetch.prefetch(href, apolloClient, true)}>
                ...children
              </a> :
              <a id className style title> ...children </a>}
-        </NextRoutesLink>
+        </Next.Link>
       }
     </ApolloConsumer>,
 };

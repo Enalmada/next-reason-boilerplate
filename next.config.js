@@ -14,8 +14,8 @@ const {ANALYZE} = process.env;
 
 // styled jsx will fail without it
 if (typeof require !== "undefined") {
-    require.extensions[".less"] = () => {
-    };
+    require.extensions[".less"] = () => {};
+    require.extensions[".css"] = () => {};
 }
 
 

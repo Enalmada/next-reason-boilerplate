@@ -60,7 +60,7 @@ const cdnPrefix = CDN_URL ? `${CDN_URL}` : "";
 const cookieParser = require("cookie-parser");
 const Sentry = require("@sentry/node");
 const uuidv4 = require("uuid/v4");
-const routes = require("./routes");
+// const routes = require("./routes");
 require("./util/sentry");
 
 
@@ -107,7 +107,7 @@ const getMessages = locale => require(`./static/locale/${locale}.json`);
 // Put the preload hints in head into response headers for proxy to turn into h2 push
 // Link headers are turned into h2 server push by most proxy which improves time to interactive latency.
 // Use Chrome lighthouse plugin to test
-const nextRoutesHandler = routes.getRequestHandler(app);
+// const nextRoutesHandler = routes.getRequestHandler(app);
 
 const reactIntlLocaleMessages = function (req, res, next) {
     const accept = accepts(req);
@@ -283,7 +283,12 @@ const createServer = () => {
     server.use(reactIntlLocaleMessages);
 
     // This seems to need to be after manual routes
-    server.use(nextRoutesHandler);
+    // server.use(nextRoutesHandler);
+
+    server.get("/mobile/iframePage/:slug", (req, res) => app.render(req, res, "/mobile/iframePage", {slug: req.params.slug}));
+
+    server.get("/mobile/styleguide/:slug", (req, res) => app.render(req, res, "/mobile/styleguide", {slug: req.params.slug}));
+
 
     server.get("*", (req, res) => {
         // TODO: figure out how to add "no-cache" to only text/html pages so we can put CloudFront CDN

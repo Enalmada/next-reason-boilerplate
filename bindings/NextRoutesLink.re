@@ -1,5 +1,5 @@
 /* [@bs.module "../routes"] external link: ReasonReact.reactClass = "default"; */
-[@bs.module "../routes"] external myJSReactClass: ReasonReact.reactClass = "Link";
+[@bs.module "next/link"] external myJSReactClass: ReasonReact.reactClass = "Link";
 
 let make =
     (

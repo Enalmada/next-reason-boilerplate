@@ -75,7 +75,7 @@ on development you would import antd.less globally only in dev mode to make hot 
 * bundle analyzer (npm run analyze)
 * desktop/mobile conditional rendering - based on device using react-useragent
 * localization - react-intl (recommended for its formatjs feature set and existing reason bindings)
-* next-routes - see routes.js.  Note that some next team members say this may not be advisable to use at scale.
+* paramaterized routes - see server.js (next team members advise against next-routes at scale)
 * styleguide - npm run storybook  (Needed some less fixes in .storybook/webpack.config.js)
 * reason-apollo - signin / out components using the pattern
 * purge unused css - see next.config.js for whitelist (you would normally only add components you need)
