@@ -5,7 +5,6 @@ import {ApolloProvider} from "react-apollo";
 import NextSeo from "next-seo";
 import {LocaleProvider} from "antd";
 import en_US from "antd/lib/locale-provider/en_US";
-import {compose} from "recompose";
 import {throttle} from "throttle-debounce";
 
 import {config, library as fontawesome} from "@fortawesome/fontawesome-svg-core";
@@ -60,9 +59,10 @@ if (typeof window !== "undefined" && window.ReactIntlLocaleData) {
 
 
 class MyApp extends App {
-    /**
-     * Don't reload with every single resize input, need to throttle or debounce.
-     */
+    /*
+
+      // Don't reload with every single resize input, need to throttle or debounce.
+
     reloadPageThrottled = throttle(500, this.reloadPage);
 
     // TODO: only reload on platform (mobile/tablet/desktop) state change rather than any resize
@@ -76,20 +76,19 @@ class MyApp extends App {
         // this.forceUpdate();
     }
 
-    /**
-     * componentDidMount is only executed client side
-     * https://github.com/zeit/next.js/issues/2473#issuecomment-313190903
-     */
+
+     //componentDidMount is only executed client side
+     //  https://github.com/zeit/next.js/issues/2473#issuecomment-313190903
+
     componentDidMount() {
         window.addEventListener("resize", this.reloadPageThrottled.bind(this));
     }
 
-    /**
-     * Remove event listener
-     */
+    //
     componentWillUnmount() {
         window.removeEventListener("resize", this.reloadPageThrottled.bind(this));
     }
+    */
 
     static async getInitialProps({Component, router, ctx}) {
         let pageProps = {};
@@ -154,4 +153,4 @@ class MyApp extends App {
     }
 }
 
-export default compose(withApollo)(MyApp);
+export default withApollo(MyApp);

@@ -1,7 +1,6 @@
 /* eslint no-console: 0 */
 import React from "react";
 import cookie from "cookie";
-import PropTypes from "prop-types";
 import {getDataFromTree} from "react-apollo";
 import Head from "next/head";
 
@@ -15,12 +14,6 @@ function parseCookies(req, options = {}) {
 }
 
 export default App => class WithData extends React.Component {
-    static displayName = `WithData(${App.displayName})`
-
-    static propTypes = {
-        apolloState: PropTypes.object.isRequired,
-    }
-
     static async getInitialProps(ctx) {
         const {Component, router, ctx: {req, res}} = ctx;
         const apollo = initApollo({}, {

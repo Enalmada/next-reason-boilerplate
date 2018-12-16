@@ -4,14 +4,15 @@ import React from "react";
 import Link from "next/link";
 
 class Index extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {raiseError: false, raiseErrorInUpdate: false, raiseErrorInRender: false};
+    }
+
     static getInitialProps({query}) {
         if (query.raiseError) {
             throw new Error("Error in getInitialProps");
         }
-    }
-
-    state = {
-        raiseError: false,
     }
 
     componentDidUpdate() {
@@ -19,10 +20,6 @@ class Index extends React.Component {
             throw new Error("Error in componentDidUpdate");
         }
     }
-
-    raiseErrorInUpdate = () => this.setState({raiseErrorInUpdate: "1"})
-
-    raiseErrorInRender = () => this.setState({raiseErrorInRender: "1"})
 
     render() {
         if (this.state.raiseErrorInRender) {
@@ -33,8 +30,8 @@ class Index extends React.Component {
             <div>
                 <h2>Index page</h2>
                 <ul>
-                    <li><a href="#" onClick={this.raiseErrorInRender}>Raise the error in render</a></li>
-                    <li><a href="#" onClick={this.raiseErrorInUpdate}>Raise the error in componentDidUpdate</a></li>
+                    <li><a href="#" onClick={() => this.setState({raiseErrorInUpdate: "1"})}>Raise the error in render</a></li>
+                    <li><a href="#" onClick={() => this.setState({raiseErrorInRender: "1"})}>Raise the error in componentDidUpdate</a></li>
                     <li>
                         <Link href={{pathname: "/sentry", query: {raiseError: "1"}}}>
                             <a>Raise error in getInitialProps of client-loaded page</a>
