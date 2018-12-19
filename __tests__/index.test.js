@@ -3,15 +3,8 @@
 import {shallow} from "enzyme";
 import React from "react";
 import {MockedProvider} from "react-apollo/test-utils";
-import {config, library as fontawesome} from "@fortawesome/fontawesome-svg-core";
-import {faComments} from "@fortawesome/free-solid-svg-icons";
-import createComponentWithIntl from "../util/test/createComponentWithIntl";
+import createComponentWithPrerequisites from "../util/test/createComponentWithPrerequisites";
 import App from "../pages/index.bs";
-import "@fortawesome/fontawesome-svg-core/styles.css";
-
-config.autoAddCss = false;
-fontawesome.add(faComments);
-
 
 // The component AND the query need to be exported
 const mocks = [];
@@ -27,7 +20,7 @@ describe("With Enzyme", () => {
 
 describe("With Snapshot Testing", () => {
     it("App shows \"Hello world!\"", () => {
-        const component = createComponentWithIntl(<MockedProvider mocks={mocks} addTypename={false}>
+        const component = createComponentWithPrerequisites(<MockedProvider mocks={mocks} addTypename={false}>
             <App/></MockedProvider>);
         const tree = component.toJSON();
         expect(tree).toMatchSnapshot();

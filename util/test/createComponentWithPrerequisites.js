@@ -11,10 +11,17 @@ import {UserAgentProvider} from "@quentin-sommer/react-useragent";
 
 import Router from "next/router";
 
+import {config, library as fontawesome} from "@fortawesome/fontawesome-svg-core";
+import {faComments} from "@fortawesome/free-solid-svg-icons";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+
 const mockedRouter = {push: () => {}, prefetch: () => {}};
 Router.router = mockedRouter;
 
-const createComponentWithIntl = (children, props = {locale: "en"}) => renderer.create(
+config.autoAddCss = false;
+fontawesome.add(faComments);
+
+const createComponentWithPrerequisites = (children, props = {locale: "en"}) => renderer.create(
     <UserAgentProvider ua="Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0">
         <IntlProvider {...props}>
             {children}
@@ -22,4 +29,4 @@ const createComponentWithIntl = (children, props = {locale: "en"}) => renderer.c
     </UserAgentProvider>,
 );
 
-export default createComponentWithIntl;
+export default createComponentWithPrerequisites;
