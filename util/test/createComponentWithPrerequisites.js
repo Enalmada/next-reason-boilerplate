@@ -8,7 +8,6 @@ import React from "react";
 import renderer from "react-test-renderer";
 import {IntlProvider} from "react-intl";
 import {UserAgentProvider} from "@quentin-sommer/react-useragent";
-
 import Router from "next/router";
 
 import {config, library as fontawesome} from "@fortawesome/fontawesome-svg-core";
