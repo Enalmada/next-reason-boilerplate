@@ -1,0 +1,224 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`With Snapshot Testing App shows "Hello world!" 1`] = `
+<div
+  className="ant-layout"
+>
+  <div
+    className="ant-layout-header"
+  >
+    <div>
+      <a
+        className=""
+        href="/"
+        id=""
+        onClick={[Function]}
+        style={
+          Object {
+            "marginRight": "10px",
+          }
+        }
+        title=""
+      >
+        Index
+      </a>
+      <a
+        className=""
+        href="/reducer"
+        id=""
+        onClick={[Function]}
+        style={
+          Object {
+            "marginRight": "10px",
+          }
+        }
+        title=""
+      >
+        Reducer
+      </a>
+      <a
+        className=""
+        href="/sentry"
+        id=""
+        onClick={[Function]}
+        style={
+          Object {
+            "marginRight": "10px",
+          }
+        }
+        title=""
+      >
+        Sentry
+      </a>
+      <a
+        className=""
+        href="/test/antdExamples"
+        id=""
+        onClick={[Function]}
+        style={
+          Object {
+            "marginRight": "10px",
+          }
+        }
+        title=""
+      >
+        Ant Desktop
+      </a>
+      <a
+        className=""
+        href="/mobile/styleguide/Button"
+        id=""
+        onClick={[Function]}
+        style={
+          Object {
+            "marginRight": "10px",
+          }
+        }
+        title=""
+      >
+        Antd Mobile
+      </a>
+      <a
+        className=""
+        href="/health"
+        id=""
+        onClick={[Function]}
+        style={
+          Object {
+            "marginRight": "10px",
+          }
+        }
+        title=""
+      >
+        Health
+      </a>
+      <a
+        className=""
+        href="/intl"
+        id=""
+        onClick={[Function]}
+        style={
+          Object {
+            "marginRight": "10px",
+          }
+        }
+        title=""
+      >
+        intl
+      </a>
+      <div
+        className="float-right"
+      >
+        <div>
+          <a
+            className=""
+            href="/auth/signin"
+            id=""
+            onClick={[Function]}
+            style={
+              Object {
+                "color": "red",
+              }
+            }
+            title=""
+          >
+            Sign in
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="ant-layout-content"
+  >
+    <main
+      className="container"
+    >
+      <h1>
+        nextjs reason-react boilerplate demonstrating some concepts
+      </h1>
+      <h2>
+        Font awesome icon loaded without flicker
+      </h2>
+      <svg
+        aria-hidden="true"
+        className="svg-inline--fa fa-comments fa-w-18 fa-5x"
+        data-icon="comments"
+        data-prefix="fas"
+        role="img"
+        style={Object {}}
+        viewBox="0 0 576 512"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M416 192c0-88.4-93.1-160-208-160S0 103.6 0 192c0 34.3 14.1 65.9 38 92-13.4 30.2-35.5 54.2-35.8 54.5-2.2 2.3-2.8 5.7-1.5 8.7S4.8 352 8 352c36.6 0 66.9-12.3 88.7-25 32.2 15.7 70.3 25 111.3 25 114.9 0 208-71.6 208-160zm122 220c23.9-26 38-57.7 38-92 0-66.9-53.5-124.2-129.3-148.1.9 6.6 1.3 13.3 1.3 20.1 0 105.9-107.7 192-240 192-10.8 0-21.3-.8-31.7-1.9C207.8 439.6 281.8 480 368 480c41 0 79.1-9.2 111.3-25 21.8 12.7 52.1 25 88.7 25 3.2 0 6.1-1.9 7.3-4.8 1.3-2.9.7-6.3-1.5-8.7-.3-.3-22.4-24.2-35.8-54.5z"
+          fill="currentColor"
+          style={Object {}}
+        />
+      </svg>
+      <h2>
+        rendering based on user agent (use chrome devtools pass iphone, etc)
+      </h2>
+      <p>
+        This will be rendered on desktop!!
+      </p>
+      <h2>
+        react-intl translations
+      </h2>
+      <span>
+        Hello, Default!
+      </span>
+      <a
+        href="#"
+        title="Hello Default!"
+      >
+        <div>
+          Link with title using intl api for string
+        </div>
+      </a>
+      <h2>
+        Auth
+      </h2>
+      Hello 
+      <h2>
+        Preload getInitialProps on hover (* only in production)
+      </h2>
+      <a
+        className=""
+        href="/preload"
+        id=""
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+        style={
+          Object {
+            "marginTop": "10px",
+          }
+        }
+        title=""
+      >
+        hover me
+      </a>
+    </main>
+  </div>
+  <div
+    className="ant-layout-footer"
+  >
+    <div
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "black",
+          "color": "lightgrey",
+          "display": "flex",
+          "height": "50px",
+          "justifyContent": "center",
+        }
+      }
+    >
+      Sticky Footer Example 
+      ©
+       2018
+    </div>
+  </div>
+</div>
+`;

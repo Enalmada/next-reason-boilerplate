@@ -47,131 +47,143 @@ let t = text => ReasonReact.string(text);
 
 let placeHolder =
   <div
-    style={
-      ReactDOMRe.Style.make(
-        ~backgroundColor="#ebebef",
-        ~color="#bbb",
-        ~textAlign="center",
-        ~height="30px",
-        ~lineHeight="30px",
-        ~width="100%",
-        (),
-      )
-    }>
+    style={ReactDOMRe.Style.make(
+      ~backgroundColor="#ebebef",
+      ~color="#bbb",
+      ~textAlign="center",
+      ~height="30px",
+      ~lineHeight="30px",
+      ~width="100%",
+      (),
+    )}>
     {t("Block")}
   </div>;
 
-module PlaceHolder = {
-  module PlaceHolderStyles = {
-    open Css;
+/*
+ module PlaceHolder = {
+   module PlaceHolderStyles = {
+     open Css;
 
-    let inlineRaw = [
-      backgroundColor(hex("ebebef")),
-      color(hex("bbb")),
-      textAlign(center),
-      height(px(30)),
-      lineHeight(px(30)),
-      width(pct(100.)),
-    ];
+     let inlineRaw = [
+       backgroundColor(hex("ebebef")),
+       color(hex("bbb")),
+       textAlign(center),
+       height(px(30)),
+       lineHeight(px(30)),
+       width(pct(100.)),
+     ];
 
-    let style = (overrides: list(Css.rule)) => style(merge([overrides, inlineRaw]));
-  };
+     let style = (overrides: list(Css.rule)) => style(merge([overrides, inlineRaw]));
+   };
 
-  let finalClassName = className =>
-    switch (className) {
-    | None => PlaceHolderStyles.style([])
-    | Some(actualClassName) => actualClassName
-    };
-  let pComponent = ReasonReact.statelessComponent("PlaceHolder");
+   let finalClassName = className =>
+     switch (className) {
+     | None => PlaceHolderStyles.style([])
+     | Some(actualClassName) => actualClassName
+     };
+   let pComponent = ReasonReact.statelessComponent("PlaceHolder");
 
-  let make = (~className=?, ~_style=?, _children) => {
-    ...pComponent,
-    render: _self => <div className={finalClassName(className)}> {t("Block")} </div>,
-  };
-};
+   let make = (~className=?, ~_style=?, _children) => {
+     ...pComponent,
+     render: _self => <div className={finalClassName(className)}> {t("Block")} </div>,
+   };
+ };
+ */
 
-module FlexStyles = {
-  open Css;
+/*
+ module FlexStyles = {
+   open Css;
 
-  let inlineRaw = [important(width(px(80))), margin4(~top=px(9), ~right=px(9), ~bottom=px(9), ~left=px(0))];
-  let inline = style(inlineRaw);
-  let smallRaw = [important(height(px(20))), important(lineHeight(px(20)))];
-  let small = style(smallRaw);
-  let inlineSmallRaw = merge([smallRaw, inlineRaw]);
-  let inlineSmall = style(inlineSmallRaw);
+   let inlineRaw = [important(width(px(80))), margin4(~top=px(9), ~right=px(9), ~bottom=px(9), ~left=px(0))];
+   let inline = style(inlineRaw);
+   let smallRaw = [important(height(px(20))), important(lineHeight(px(20)))];
+   let small = style(smallRaw);
+   let inlineSmallRaw = merge([smallRaw, inlineRaw]);
+   let inlineSmall = style(inlineSmallRaw);
 
-  let subTitle = style([color(rgb(187, 187, 187))]);
-};
+   let subTitle = style([color(rgb(187, 187, 187))]);
+ };
 
-let inline = ReactDOMRe.Style.make(~width="80px!important", ~margin="9px 9px 9px 0", ());
-let small = ReactDOMRe.Style.make(~height="20px!important", ~lineHeight="20px!important", ());
-let subTitle = ReactDOMRe.Style.make(~color="#888", ~fontSize="14px", ~padding="30px 0 18px 0", ());
-
+ let inline = ReactDOMRe.Style.make(~width="80px!important", ~margin="9px 9px 9px 0", ());
+ let small = ReactDOMRe.Style.make(~height="20px!important", ~lineHeight="20px!important", ());
+ let subTitle = ReactDOMRe.Style.make(~color="#888", ~fontSize="14px", ~padding="30px 0 18px 0", ());
+ */
 let flexExample =
   <div className="flex-container" style={ReactDOMRe.Style.make(~margin="0 15px", ())}>
-    <div className="sub-title" style=subTitle> {t("Basic")} </div>
-    <Flex> <Flex.Item> <PlaceHolder /> </Flex.Item> <Flex.Item> <PlaceHolder /> </Flex.Item> </Flex>
-    <WhiteSpace size=`lg />
-    <Flex>
-      <Flex.Item> <PlaceHolder /> </Flex.Item>
-      <Flex.Item> <PlaceHolder /> </Flex.Item>
-      <Flex.Item> <PlaceHolder /> </Flex.Item>
-    </Flex>
-    <WhiteSpace size=`lg />
-    <Flex>
-      <Flex.Item> <PlaceHolder /> </Flex.Item>
-      <Flex.Item> <PlaceHolder /> </Flex.Item>
-      <Flex.Item> <PlaceHolder /> </Flex.Item>
-      <Flex.Item> <PlaceHolder /> </Flex.Item>
-    </Flex>
-    <WhiteSpace size=`lg />
-    <div className="sub-title" style=subTitle> {t("Wrap")} </div>
-    <Flex wrap=`wrap>
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
-    </Flex>
-    <WhiteSpace size=`lg />
-    <div className="sub-title" style=subTitle> {t("Align")} </div>
-    <Flex justify=`center>
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
-    </Flex>
-    <WhiteSpace />
-    <Flex justify=`flexEnd>
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
-    </Flex>
-    <WhiteSpace />
-    <Flex justify=`between>
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
-    </Flex>
-    <WhiteSpace />
-    <Flex align=`start>
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineSmallRaw)} />
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
-    </Flex>
-    <WhiteSpace />
-    <Flex align=`flexEnd>
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineSmallRaw)} />
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
-    </Flex>
-    <WhiteSpace />
-    <Flex align=`baseline>
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineSmallRaw)} />
-      <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
-    </Flex>
+    {ReasonReact.string("commented out")}
+  </div>;
+/*
+ let flexExample =
+   <div className="flex-container" style={ReactDOMRe.Style.make(~margin="0 15px", ())}>
+     <div className="sub-title" style=subTitle> {t("Basic")} </div>
+     <Flex> <Flex.Item> <PlaceHolder /> </Flex.Item> <Flex.Item> <PlaceHolder /> </Flex.Item> </Flex>
+     <WhiteSpace size=`lg />
+     <Flex>
+       <Flex.Item> <PlaceHolder /> </Flex.Item>
+       <Flex.Item> <PlaceHolder /> </Flex.Item>
+       <Flex.Item> <PlaceHolder /> </Flex.Item>
+     </Flex>
+     <WhiteSpace size=`lg />
+     <Flex>
+       <Flex.Item> <PlaceHolder /> </Flex.Item>
+       <Flex.Item> <PlaceHolder /> </Flex.Item>
+       <Flex.Item> <PlaceHolder /> </Flex.Item>
+       <Flex.Item> <PlaceHolder /> </Flex.Item>
+     </Flex>
+     <WhiteSpace size=`lg />
+     <div className="sub-title" style=subTitle> {t("Wrap")} </div>
+     <Flex wrap=`wrap>
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
+     </Flex>
+     <WhiteSpace size=`lg />
+     <div className="sub-title" style=subTitle> {t("Align")} </div>
+     <Flex justify=`center>
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
+     </Flex>
+     <WhiteSpace />
+     <Flex justify=`flexEnd>
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
+     </Flex>
+     <WhiteSpace />
+     <Flex justify=`between>
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
+     </Flex>
+     <WhiteSpace />
+     <Flex align=`start>
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineSmallRaw)} />
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
+     </Flex>
+     <WhiteSpace />
+     <Flex align=`flexEnd>
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineSmallRaw)} />
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
+     </Flex>
+     <WhiteSpace />
+     <Flex align=`baseline>
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineSmallRaw)} />
+       <PlaceHolder className={PlaceHolder.PlaceHolderStyles.style(FlexStyles.inlineRaw)} />
+     </Flex>
+   </div>;
+   */
+
+let wingBlankExample =
+  <div className="flex-container" style={ReactDOMRe.Style.make(~margin="0 15px", ())}>
+    {ReasonReact.string("commented out")}
   </div>;
 
 let wingBlankExample =
@@ -184,41 +196,45 @@ let wingBlankExample =
   </div>;
 
 let whiteSpaceExample =
-  <div>
-    <WhiteSpace size=`xs />
-    <PlaceHolder />
-    <WhiteSpace size=`sm />
-    <PlaceHolder />
-    <WhiteSpace />
-    <PlaceHolder />
-    <WhiteSpace size=`lg />
-    <PlaceHolder />
-    <WhiteSpace size=`xl />
-    <PlaceHolder />
+  <div className="flex-container" style={ReactDOMRe.Style.make(~margin="0 15px", ())}>
+    {ReasonReact.string("commented out")}
   </div>;
+/*
+ let whiteSpaceExample =
+   <div>
+     <WhiteSpace size=`xs />
+     <PlaceHolder />
+     <WhiteSpace size=`sm />
+     <PlaceHolder />
+     <WhiteSpace />
+     <PlaceHolder />
+     <WhiteSpace size=`lg />
+     <PlaceHolder />
+     <WhiteSpace size=`xl />
+     <PlaceHolder />
+   </div>;
+   */
 
 let sideBar =
   <List>
-    {
-      ListLabels.map(
-        ~f=
-          x =>
-            if (x === 0) {
-              <List.Item
-                key={string_of_int(x)}
-                thumb="https://zos.alipayobjects.com/rmsportal/eOZidTabPoEbPeU.png"
-                multipleLine=true>
-                {t("Category")}
-              </List.Item>;
-            } else {
-              <List.Item key={string_of_int(x)} thumb="https://zos.alipayobjects.com/rmsportal/eOZidTabPoEbPeU.png">
-                {t("Category")}
-                {t(string_of_int(x))}
-              </List.Item>;
-            },
-        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
-      )
-    }
+    {ListLabels.map(
+       ~f=
+         x =>
+           if (x === 0) {
+             <List.Item
+               key={string_of_int(x)}
+               thumb="https://zos.alipayobjects.com/rmsportal/eOZidTabPoEbPeU.png"
+               multipleLine=true>
+               {t("Category")}
+             </List.Item>;
+           } else {
+             <List.Item key={string_of_int(x)} thumb="https://zos.alipayobjects.com/rmsportal/eOZidTabPoEbPeU.png">
+               {t("Category")}
+               {t(string_of_int(x))}
+             </List.Item>;
+           },
+       [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+     )}
   </List>;
 
 let sideBar2 =
@@ -306,11 +322,9 @@ let listExample = (disabled, onClick) =>
         {t("Multiple line and long text will wrap. Long Text Long Text Long Text")}
       </List.Item>
       <List.Item extra={t("no arrow")} arrow=`empty className="spe" wrap=true>
-        {
-          t(
-            "In rare cases, the text of right side will wrap in the single line with long text. long text long text long text",
-          )
-        }
+        {t(
+           "In rare cases, the text of right side will wrap in the single line with long text. long text long text long text",
+         )}
       </List.Item>
     </List>
     <List renderHeader="Other" className="my-list">
@@ -385,14 +399,13 @@ let gridExample =
     <Grid
       data=gridData1
       columnNum=3
-      renderItem={
-        dataItem =>
-          <div style=gridStyle>
-            <img src=dataItem##icon style={ReactDOMRe.Style.make(~width="75px", ~height="75px", ())} alt="" />
-            <div style={ReactDOMRe.Style.make(~color="#888", ~fontSize="14px", ~marginTop="12px", ())}>
-              <span> {t("I am title..")} </span>
-            </div>
+      renderItem={dataItem =>
+        <div style=gridStyle>
+          <img src=dataItem##icon style={ReactDOMRe.Style.make(~width="75px", ~height="75px", ())} alt="" />
+          <div style={ReactDOMRe.Style.make(~color="#888", ~fontSize="14px", ~marginTop="12px", ())}>
+            <span> {t("I am title..")} </span>
           </div>
+        </div>
       }
     />
     <div className="sub-title"> {t("Custom GridCell Style")} </div>
@@ -460,16 +473,14 @@ let popoverExample = (visible, handleVisibleChange, handleSelect) =>
           onVisibleChange=handleVisibleChange
           onSelect=handleSelect>
           <div
-            style={
-              ReactDOMRe.Style.make(
-                ~height="100%",
-                ~padding="0 15px",
-                ~marginRight="-15px",
-                ~display="flex",
-                ~alignItems="center",
-                (),
-              )
-            }>
+            style={ReactDOMRe.Style.make(
+              ~height="100%",
+              ~padding="0 15px",
+              ~marginRight="-15px",
+              ~display="flex",
+              ~alignItems="center",
+              (),
+            )}>
             <Icon _type=`ellipsis />
           </div>
         </Popover>,
@@ -548,8 +559,16 @@ let tabsExample =
   <Tabs
     tabs=tabsData
     initialPage=1
-    onChange={(_tab, _index) => [%bs.raw {| 'console.log("onChange", index, tab)' |}]}
-    onTabClick={(_tab, _index) => [%bs.raw {| 'console.log("onTabClick", index, tab)' |}]}>
+    onChange={(_tab, _index) => {
+      %bs.raw
+      {| 'console.log("onChange", index, tab)' |};
+      Js.log("here");
+    }}
+    onTabClick={(_tab, _index) => {
+      %bs.raw
+      {| 'console.log("onTabClick", index, tab)' |};
+      Js.log("here");
+    }}>
     <div style=tabStyle> {t("Content of first tab")} </div>
     <div style=tabStyle> {t("Content of second tab")} </div>
     <div style=tabStyle> {t("Content of third tab")} </div>
@@ -958,59 +977,57 @@ let make = (~which, _children) => {
     /* <LayoutRe language="en"> <Button> {t("Button Mobile")} </Button> </LayoutRe>, */
     <LayoutRe language="en">
       <div>
-        {
-          switch (which) {
-          /* Layout */
-          | "Flex" => flexExample
-          | "WingBlank" => wingBlankExample
-          | "WhiteSpace" => whiteSpaceExample
+        {switch (which) {
+         /* Layout */
+         | "Flex" => flexExample
+         | "WingBlank" => wingBlankExample
+         | "WhiteSpace" => whiteSpaceExample
 
-          /* Navigation */
-          | "Drawer" => drawerExample(self.state.drawerOpen, _event => self.send(DrawerClick))
-          | "Menu" => menuExample
-          | "NavBar" => navbarExample
-          | "Popover" =>
-            popoverExample(
-              self.state.popoverVisible,
-              popoverVisible => self.send(PopoverVisible(popoverVisible)),
-              _event => self.send(PopoverClick),
-            )
-          | "Pagination" => paginationExample
-          | "SegmentedControl" => segmentedControlExample(segmentedOnChange, segmentedOnValueChange)
-          | "Tabs" => tabsExample
-          | "TabBar" => tabBarExample(self.state.selectedTab, selectedTab => self.send(TabBarClick(selectedTab)))
+         /* Navigation */
+         | "Drawer" => drawerExample(self.state.drawerOpen, _event => self.send(DrawerClick))
+         | "Menu" => menuExample
+         | "NavBar" => navbarExample
+         | "Popover" =>
+           popoverExample(
+             self.state.popoverVisible,
+             popoverVisible => self.send(PopoverVisible(popoverVisible)),
+             _event => self.send(PopoverClick),
+           )
+         | "Pagination" => paginationExample
+         | "SegmentedControl" => segmentedControlExample(segmentedOnChange, segmentedOnValueChange)
+         | "Tabs" => tabsExample
+         | "TabBar" => tabBarExample(self.state.selectedTab, selectedTab => self.send(TabBarClick(selectedTab)))
 
-          /* Data Entry */
-          | "Button" => buttonExample
-          | "Checkbox" => checkboxExample
-          | "Radio" => radioExample
-          | "Switch" => switchExample(self.state.switchChecked, _selectedTab => self.send(SwitchClick))
-          | "SearchBar" => searchBarExample
-          | "TextareaItem" => textareaItemExample
+         /* Data Entry */
+         | "Button" => buttonExample
+         | "Checkbox" => checkboxExample
+         | "Radio" => radioExample
+         | "Switch" => switchExample(self.state.switchChecked, _selectedTab => self.send(SwitchClick))
+         | "SearchBar" => searchBarExample
+         | "TextareaItem" => textareaItemExample
 
-          /* Data Display */
-          | "Badge" => badgeExample
-          | "Card" => cardExample
-          | "Grid" => gridExample
-          | "Icon" => iconExample
-          | "List" => listExample(self.state.listDisabled, _event => self.send(DisableList))
-          | "NoticeBar" => noticeBarExample
+         /* Data Display */
+         | "Badge" => badgeExample
+         | "Card" => cardExample
+         | "Grid" => gridExample
+         | "Icon" => iconExample
+         | "List" => listExample(self.state.listDisabled, _event => self.send(DisableList))
+         | "NoticeBar" => noticeBarExample
 
-          /* Feedback */
-          | "ActivityIndicator" => activityIndicatorExample
-          | "Modal" =>
-            modalExample(
-              self.state.modal1,
-              self.state.modal2,
-              _event => self.send(ShowModal1),
-              _event => self.send(HideModal1),
-              _event => self.send(ShowModal2),
-              _event => self.send(HideModal2),
-            )
-          | "Toast" => toastExample
-          | _ => buttonExample
-          }
-        }
+         /* Feedback */
+         | "ActivityIndicator" => activityIndicatorExample
+         | "Modal" =>
+           modalExample(
+             self.state.modal1,
+             self.state.modal2,
+             _event => self.send(ShowModal1),
+             _event => self.send(HideModal1),
+             _event => self.send(ShowModal2),
+             _event => self.send(HideModal2),
+           )
+         | "Toast" => toastExample
+         | _ => buttonExample
+         }}
       </div>
     </LayoutRe>,
 };
