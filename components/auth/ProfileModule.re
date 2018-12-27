@@ -34,7 +34,7 @@ module GetProfileUserQuery = ReasonApollo.CreateQuery(GetProfileUser);
 let component = ReasonReact.statelessComponent("ProfileModule");
 
 let signIn =
-  <Link prefetch=true href="/auth/signin" style={ReactDOMRe.Style.make(~color="red", ())}>
+  <Link prefetch=true href="/auth/signin" style={ReactDOMRe.Style.make(~color="white", ())}>
     {ReasonReact.string("Sign in")}
   </Link>;
 let signOut =

@@ -7,7 +7,7 @@ let make = _children => {
   ...component,
   render: _self =>
     /* <ReactHelmet> <title> {ReasonReact.string("AboutPage")} </title> </ReactHelmet> */
-    <ConsumerPage>
+    <ConsumerPage nav=`form>
       <NextSeo title="form" />
       <p> {ReasonReact.string("BS Index here - next7")} </p>
       <Form layout=`Inline> <Form.Item> <Input prefix=formPrefix placeholder="Username" /> </Form.Item> </Form>

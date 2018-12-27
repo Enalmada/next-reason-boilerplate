@@ -6,7 +6,7 @@ let nav = `index;
 let make = _children => {
   ...component,
   render: _self =>
-    <ConsumerPage>
+    <ConsumerPage nav=`preload>
       <NextSeo title="index" />
       <h1> {ReasonReact.string("getInitialProps preload example")} </h1>
     </ConsumerPage>,

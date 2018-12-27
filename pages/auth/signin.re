@@ -24,7 +24,7 @@ let make = _children => {
   ...component,
   render: _self =>
     /* <ReactHelmet> <title> {ReasonReact.string("AboutPage")} </title> </ReactHelmet> */
-    <ConsumerPage>
+    <ConsumerPage nav=`signin>
       <NextSeo title="Sign In" />
       <SigninBox />
       {ReasonReact.string("New? ")}

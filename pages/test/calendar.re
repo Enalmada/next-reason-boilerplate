@@ -5,7 +5,7 @@ let make = _children => {
   ...component,
   render: _self =>
     /* <ReactHelmet> <title> {ReasonReact.string("AboutPage")} </title> </ReactHelmet> */
-    <ConsumerPage>
+    <ConsumerPage nav=`calendar>
       <NextSeo title="calendar" />
       <p> {ReasonReact.string("BS Index here - next7")} </p>
       <Calendar />
