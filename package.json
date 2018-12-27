@@ -53,7 +53,7 @@
     "zip-clean": "zip -dq next-reason-boilerplate.zip \\*.map node_modules/antd/dist/\\* node_modules/aws-sdk/\\* node_modules/webpack-dev-middleware/\\* node_modules/webpack-hot-middleware/\\* ",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "test": "jest"
+    "test": "bsb -make-world && jest"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.12",
@@ -62,7 +62,7 @@
     "@quentin-sommer/react-useragent": "^2.0.0",
     "@sentry/browser": "^4.4.2",
     "@sentry/node": "^4.4.2",
-    "@zeit/next-source-maps": "0.0.4-canary.0",
+    "@zeit/next-source-maps": "0.0.4-canary.1",
     "accepts": "^1.3.5",
     "antd": "3.11.2",
     "antd-mobile": "^2.2.6",
