@@ -135,9 +135,9 @@ module.exports = (phase) => {
         const withStylus = require("@zeit/next-stylus");
         const withPurgeCss = require("next-purgecss");
         const nextSourceMaps = require("@zeit/next-source-maps")();
-        const withTM = require("next-plugin-transpile-modules");
+        // const withTM = require("next-plugin-transpile-modules");
 
-        return withOffline(withStylus(withLess(withCSS(withPurgeCss(nextSourceMaps(withTM(nextConfig)))))));
+        return withOffline(withStylus(withLess(withCSS(withPurgeCss(nextSourceMaps(nextConfig))))));
     }
     return withOffline(nextConfig);
 };
