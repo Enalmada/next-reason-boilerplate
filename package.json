@@ -24,7 +24,7 @@
     "dev-pure": "node server.js",
     "clean-cache": "rimraf -rf ./node_modules/.cache",
     "lint": "eslint --ext .js pages components util server.js",
-    "lint-fix": "eslint --fix --ext .js pages components util server.js",
+    "lint-fix": "eslint --fix --ext .js pages util server.js",
     "lint:watch": "esw -w --fix components libraries server",
     "precommit": "lint-staged",
     "lint-staged": "lint-staged",

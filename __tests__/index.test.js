@@ -9,14 +9,16 @@ import App from "../pages/index";
 // The component AND the query need to be exported
 const mocks = [];
 
-
+/*
 describe("With Enzyme", () => {
     it("App shows \"Split Test Fail Example\"", () => {
-        const app = shallow(<App/>).dive();
+        const app = shallow(<App/>);
 
         expect(app.find("h1").text()).toEqual("Split Test Fail Example");
     });
 });
+*/
+
 
 describe("With Snapshot Testing", () => {
     it("App shows \"Split Test Fail Example\"", () => {
