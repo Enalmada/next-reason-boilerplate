@@ -158,7 +158,6 @@
     "pre-commit": "^1.2.2",
     "prettier": "^1.15.3",
     "react-addons-test-utils": "^15.6.2",
-    "react-test-renderer": "^16.7.0",
     "repack-zip-alt": "^0.2.9",
     "rimraf": "^2.6.2",
     "targets-webpack-plugin": "^2.0.0",

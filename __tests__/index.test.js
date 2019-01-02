@@ -22,7 +22,6 @@ describe("With Snapshot Testing", () => {
     it("App shows \"Hello world!\"", () => {
         const component = createComponentWithPrerequisites(<MockedProvider mocks={mocks} addTypename={false}>
             <App/></MockedProvider>);
-        const tree = component.toJSON();
-        expect(tree).toMatchSnapshot();
+        expect(component.text()).toMatchSnapshot();
     });
 });
