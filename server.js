@@ -65,7 +65,7 @@ require("./util/sentry");
 
 
 // Put every origin that would ever connect here.
-const whitelist = [`http://localhost:${port}`, `https://www.myweb.com:${devSslPort}`];
+const whitelist = [`http://localhost:${port}`, `https://www.myweb.com:${devSslPort}`, "https://next-reason-boilerplate.now.sh"];
 const corsOptions = {
     origin(origin, callback) {
         if (origin === undefined || whitelist.indexOf(origin) !== -1) {

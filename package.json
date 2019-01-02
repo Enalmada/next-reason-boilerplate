@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "license": "UNLICENSED",
   "private": true,
-  "now": {
-    "alias": "now.example.com"
-  },
   "pre-commit": "lint-staged",
   "lint-staged": {
     "*.js": [
@@ -53,6 +50,7 @@
     "zip-clean": "zip -dq next-reason-boilerplate.zip \\*.map node_modules/antd/dist/\\* node_modules/aws-sdk/\\* node_modules/webpack-dev-middleware/\\* node_modules/webpack-hot-middleware/\\* ",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
+    "release": "now && now alias && now rm next-reason-boilerplate --safe --yes",
     "test": "bsb -make-world && jest"
   },
   "dependencies": {
