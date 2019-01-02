@@ -5,7 +5,7 @@ import {ApolloProvider} from "react-apollo";
 import NextSeo from "next-seo";
 import {LocaleProvider} from "antd";
 import en_US from "antd/lib/locale-provider/en_US";
-import {throttle} from "throttle-debounce";
+// import {throttle} from "throttle-debounce";
 
 import {config, library as fontawesome} from "@fortawesome/fontawesome-svg-core";
 import {faComments} from "@fortawesome/free-solid-svg-icons";
