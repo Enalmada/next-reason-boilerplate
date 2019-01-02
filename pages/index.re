@@ -59,6 +59,10 @@ let make = (~onServer, _children) => {
       </Link>
       <h2> {ReasonReact.string("getInitialProps")} </h2>
       {ReasonReact.string("onServer: " ++ string_of_bool(onServer))}
+      <h2> {ReasonReact.string("Context")} </h2>
+      <SiteContext.Consumer>
+        ...{context => ReasonReact.string(string_of_int(context##someValue))}
+      </SiteContext.Consumer>
     </ConsumerPage>,
 };
 

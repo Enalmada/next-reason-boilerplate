@@ -12,20 +12,28 @@ import {render} from "enzyme";
 
 import {config, library as fontawesome} from "@fortawesome/fontawesome-svg-core";
 import {fas} from "@fortawesome/free-solid-svg-icons";
+import SiteContext from "../context";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
-const mockedRouter = {push: () => {}, prefetch: () => {}};
+const mockedRouter = {
+    push: () => {
+    },
+    prefetch: () => {
+    },
+};
 Router.router = mockedRouter;
 
 config.autoAddCss = false;
 fontawesome.add(fas);
 
 const createComponentWithPrerequisites = (children, props = {locale: "en"}) => render(
-    <UserAgentProvider ua="Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0">
-        <IntlProvider {...props}>
-            {children}
-        </IntlProvider>
-    </UserAgentProvider>,
+    <SiteContext.Provider value={{someValue: 1000}}>
+        <UserAgentProvider
+            ua="Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0">
+            <IntlProvider {...props}>
+                {children}
+            </IntlProvider>
+        </UserAgentProvider></SiteContext.Provider>,
 );
 
 export default createComponentWithPrerequisites;

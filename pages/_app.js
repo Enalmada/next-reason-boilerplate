@@ -17,6 +17,7 @@ import withApollo from "../util/withApollo";
 // import your default seo configuration
 import SEO from "../next-seo.config";
 import {captureException} from "../util/sentry";
+import SiteContext from "../util/context";
 
 config.autoAddCss = false;
 fontawesome.add(faComments);
@@ -135,18 +136,19 @@ class MyApp extends App {
         return (
             <Container>
                 <RUM navigated={navigated}>
-
-                    <UserAgentProvider ua={ua}>
-                        <IntlProvider locale={locale} messages={messages} initialNow={now}>
-                            <LocaleProvider locale={en_US}>
-                                <ApolloProvider client={apolloClient}>
-                                    {/* Here we call NextSeo and pass our default configuration to it  */}
-                                    <NextSeo config={SEO}/>
-                                    <Component {...pageProps} />
-                                </ApolloProvider>
-                            </LocaleProvider>
-                        </IntlProvider>
-                    </UserAgentProvider>
+                    <SiteContext.Provider value={{someValue: 1000}}>
+                        <UserAgentProvider ua={ua}>
+                            <IntlProvider locale={locale} messages={messages} initialNow={now}>
+                                <LocaleProvider locale={en_US}>
+                                    <ApolloProvider client={apolloClient}>
+                                        {/* Here we call NextSeo and pass our default configuration to it  */}
+                                        <NextSeo config={SEO}/>
+                                        <Component {...pageProps} />
+                                    </ApolloProvider>
+                                </LocaleProvider>
+                            </IntlProvider>
+                        </UserAgentProvider>
+                    </SiteContext.Provider>
                 </RUM>
             </Container>
         );

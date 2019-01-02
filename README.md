@@ -62,6 +62,7 @@ npm run start
 * purge unused css - see next.config.js for whitelist (you would normally only add components you need)
 * https in dev - using devcert.  useful for service worker testing
 * jest testing
+* react context - sample variable in _app.js used in index
 
 What else does every production next.js app need?
 
