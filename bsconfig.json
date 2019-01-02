@@ -24,8 +24,7 @@
     "bs-react-useragent",
     "bs-next-seo",
     "bs-react-iframe",
-    "bs-react-intl",
-    "bs-next-alt"
+    "bs-react-intl"
   ],
   "ppx-flags": [
     "graphql_ppx/ppx"

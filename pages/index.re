@@ -22,7 +22,7 @@ open ReactIntl;
 
  */
 
-let make = _children => {
+let make = (~onServer, _children) => {
   ...component,
   render: _self =>
     /* <ReactHelmet> <title> {ReasonReact.string("AboutPage")} </title> </ReactHelmet> */
@@ -57,14 +57,36 @@ let make = _children => {
       <Link href="/preload" withHover=true style={ReactDOMRe.Style.make(~marginTop="10px", ())}>
         {ReasonReact.string("hover me")}
       </Link>
+      <h2> {ReasonReact.string("getInitialProps")} </h2>
+      {ReasonReact.string("onServer: " ++ string_of_bool(onServer))}
     </ConsumerPage>,
 };
 
-/*
- [@bs.deriving abstract]
- type jsProps = {myname: string};
+let default = ReasonReact.wrapReasonForJs(~component, jsProps => make(~onServer=jsProps##onServer, [||]));
 
- let default = ReasonReact.wrapReasonForJs(~component, jsProps => make(~myname=jsProps->mynameGet, [||]));
+/* The way to do getInitialProps: https://github.com/zeit/next.js/issues/4202#issuecomment-439175214 */
+let getInitialProps = context =>
+  Js.Promise.make((~resolve, ~reject as _) => {
+    let onServer =
+      switch (Js.Nullable.toOption(context##req)) {
+      | None => false
+      | Some(_) => true
+      };
+    resolve(. {"onServer": onServer});
+  });
+
+/* In 7.0.2 canary, you must remove the Js.Promise.make wrapper */
+/*
+ let getInitialProps = context => {
+   let onServer =
+     switch (Js.Nullable.toOption(context##req)) {
+     | None => false
+     | Some(_) => true
+     };
+   {"onServer": onServer};
+ };
  */
 
-let default = ReasonReact.wrapReasonForJs(~component, _jsProps => make([||]));
+let inject = [%bs.raw {| (cls, fn) => cls.getInitialProps = fn |}];
+
+inject(default, getInitialProps);
