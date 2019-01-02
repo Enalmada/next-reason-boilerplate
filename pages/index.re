@@ -54,7 +54,7 @@ let make = (~onServer, _children) => {
       <h2> {ReasonReact.string("Auth")} </h2>
       {ReasonReact.string("Hello ")}
       <h2> {ReasonReact.string("Preload getInitialProps on hover (* only in production)")} </h2>
-      <Link href="/preload" withHover=true style={ReactDOMRe.Style.make(~marginTop="10px", ())}>
+      <Link href="/preload" withHover=true withData=true style={ReactDOMRe.Style.make(~marginTop="10px", ())}>
         {ReasonReact.string("hover me")}
       </Link>
       <h2> {ReasonReact.string("getInitialProps")} </h2>
