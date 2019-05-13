@@ -5,7 +5,7 @@
 // https://github.com/react-component/menu/issues/232
 
 import React from "react";
-import {IntlProvider} from "react-intl";
+import {IntlProvider} from "@4c/react-intl";
 import {UserAgentProvider} from "@quentin-sommer/react-useragent";
 import Router from "next/router";
 import {render} from "enzyme";

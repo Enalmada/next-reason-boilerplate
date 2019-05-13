@@ -47,7 +47,7 @@ const devSslPort = parseInt(process.env.SSL_PORT, 10) || 3443;
 const app = next({dev});
 const path = require("path");
 const helmet = require("helmet");
-const shrinkRay = require("shrink-ray-current");
+// const shrinkRay = require("shrink-ray-current");
 
 const env = process.env.ENV;
 
@@ -91,7 +91,7 @@ const localeDataCache = new Map();
 const getLocaleDataScript = (locale) => {
     const lang = locale.split("-")[0];
     if (!localeDataCache.has(lang)) {
-        const localeDataFile = require.resolve(`react-intl/locale-data/${lang}`);
+        const localeDataFile = require.resolve(`@4c/react-intl/locale-data/${lang}`);
         const localeDataScript = readFileSync(localeDataFile, "utf8");
         localeDataCache.set(lang, localeDataScript);
     }
@@ -124,9 +124,9 @@ const createServer = () => {
 
     // Compressing all assets in dev slows things down.
     // Only use this in production if your assets are cdn cached and proxy doesn't do br natively
-    if (!dev) {
-        server.use(shrinkRay());
-    }
+    // if (!dev) {
+    //    server.use(shrinkRay());
+    // }
 
     // It is important to have real cors value so service worker caches proper response code
     server.use(cors(corsOptions));

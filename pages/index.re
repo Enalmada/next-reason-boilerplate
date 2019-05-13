@@ -1,6 +1,5 @@
-let component = ReasonReact.statelessComponent("Index");
-
 open ReactIntl;
+let ste = React.string;
 
 /*
  type user = {
@@ -21,54 +20,84 @@ open ReactIntl;
 
 
  */
+[@react.component]
+let make = (~onServer) => {
+  /* let intl = ReactIntl.useIntl(); */
+  /* <ReactHelmet> <title> {ReasonReact.string("AboutPage")} </title> </ReactHelmet> */
+  <ConsumerPage nav=`index>
+    /*<NextSeo title="index" /> */
 
-let make = (~onServer, _children) => {
-  ...component,
-  render: _self =>
-    /* <ReactHelmet> <title> {ReasonReact.string("AboutPage")} </title> </ReactHelmet> */
-    <ConsumerPage nav=`index>
-      <NextSeo title="index" />
-      <h1> {ReasonReact.string("nextjs reason-react boilerplate demonstrating some concepts")} </h1>
-      <h2> {ReasonReact.string("Font awesome icon loaded without flicker")} </h2>
-      <FontAwesomeIcon icon=["fas", "comments"] className="fa-5x" />
-      <h2> {ReasonReact.string("rendering based on user agent (use chrome devtools pass iphone, etc)")} </h2>
-      <UserAgent mobile=true tablet=true>
+      <h1>
+        {ReasonReact.string(
+           "nextjs reason-react boilerplate demonstrating some concepts",
+         )}
+      </h1>
+      <h2>
+        {ReasonReact.string("Font awesome icon loaded without flicker")}
+      </h2>
+      <FontAwesomeIcon icon=[|"fas", "comments"|] className="fa-5x" />
+      <h2>
+        {ReasonReact.string(
+           "rendering based on user agent (use chrome devtools pass iphone, etc)",
+         )}
+      </h2>
+      <UserAgent mobile={Some(true)} tablet={Some(true)}>
         {(uaIsMobile, uaIsTablet) =>
-           uaIsMobile || uaIsTablet ?
-             <p> {ReasonReact.string("This will ONLY be rendered on mobile/tablet!!")} </p> :
-             <p> {ReasonReact.string("This will be rendered on desktop!!")} </p>}
+           uaIsMobile || uaIsTablet
+             ? <p>
+                 {ste("This will ONLY be rendered on mobile/tablet!!")}
+               </p>
+             : <p> {ste("This will be rendered on desktop!!")} </p>}
       </UserAgent>
-      <h2> {ReasonReact.string("react-intl translations")} </h2>
-      <FormattedMessage id="greeting" defaultMessage="Hello, Default!" values={"0": "Person"} />
-      <ReactIntl.IntlInjector>
-        ...{intl =>
-          <a
-            href="#"
-            title={
-              intl.formatMessageWithValues({"0": "Person"}, {"id": "greeting", "defaultMessage": "Hello Default!"})
-            }>
-            <div> {ReasonReact.string("Link with title using intl api for string")} </div>
-          </a>
-        }
-      </ReactIntl.IntlInjector>
+      <h2> {ste("react-intl translations")} </h2>
+      /*
+       <FormattedMessage
+         id="greeting"
+         defaultMessage="Hello, Default!"
+         values={"0": "Person"}
+       />
+       */
+      /*
+       <a
+         href="#"
+         title={
+           intl->Intl.formatMessageWithValues(
+             {"id": "greeting", "defaultMessage": "Hello Default!"},
+             {"0": "Person"},
+           )
+         }>
+         <div>
+           {ReasonReact.string("Link with title using intl api for string")}
+         </div>
+       </a>
+       */
       <h2> {ReasonReact.string("Auth")} </h2>
       {ReasonReact.string("Hello ")}
-      <h2> {ReasonReact.string("Preload getInitialProps on hover (* only in production)")} </h2>
-      <Link href="/preload" withHover=true withData=true style={ReactDOMRe.Style.make(~marginTop="10px", ())}>
+      <h2>
+        {ReasonReact.string(
+           "Preload getInitialProps on hover (* only in production)",
+         )}
+      </h2>
+      <Link
+        href="/preload"
+        withHover=true
+        withData=true
+        style={ReactDOMRe.Style.make(~marginTop="10px", ())}>
         {ReasonReact.string("hover me")}
       </Link>
       <h2> {ReasonReact.string("getInitialProps")} </h2>
       {ReasonReact.string("onServer: " ++ string_of_bool(onServer))}
       <h2> {ReasonReact.string("Context")} </h2>
-      <SiteContext.Consumer>
-        ...{context => ReasonReact.string(string_of_int(context##someValue))}
-      </SiteContext.Consumer>
-    </ConsumerPage>,
+    </ConsumerPage>;
+    /*
+     <SiteContext.Consumer>
+       ...{context => ReasonReact.string(string_of_int(context##someValue))}
+     </SiteContext.Consumer>
+     */
 };
 
-let default = ReasonReact.wrapReasonForJs(~component, jsProps => make(~onServer=jsProps##onServer, [||]));
+let default = make;
 
-/* The way to do getInitialProps: https://github.com/zeit/next.js/issues/4202#issuecomment-439175214 */
 let getInitialProps = context =>
   Js.Promise.make((~resolve, ~reject as _) => {
     let onServer =
@@ -79,18 +108,13 @@ let getInitialProps = context =>
     resolve(. {"onServer": onServer});
   });
 
-/* In 7.0.2 canary, you must remove the Js.Promise.make wrapper */
-/*
- let getInitialProps = context => {
-   let onServer =
-     switch (Js.Nullable.toOption(context##req)) {
-     | None => false
-     | Some(_) => true
-     };
-   {"onServer": onServer};
- };
- */
-
-let inject = [%bs.raw {| (cls, fn) => cls.getInitialProps = fn |}];
+let inject:
+  (
+    Js.t('a) => React.element,
+    {. "req": Js.Nullable.t(Js.t('a))} => Js.Promise.t(Js.t('a))
+  ) =>
+  unit = [%bs.raw
+  {| (cls, fn) => cls.getInitialProps = fn |}
+];
 
 inject(default, getInitialProps);

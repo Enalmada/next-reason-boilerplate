@@ -3,10 +3,9 @@
 // Event handlers like onClick can't be added to this file
 
 // CustomHead/CustomNextScript overridden to add crossorigin until nextjs fixes that natively
-import Document, {Main} from "next/document";
+import Document, {Main, Head, NextScript} from "next/document";
 import React from "react";
-import Head from "../components/CustomHead";
-import NextScript from "../components/CustomNextScript";
+
 
 const facebookId = "<YOUR_ID>";
 

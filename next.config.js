@@ -18,6 +18,19 @@ if (typeof require !== "undefined") {
     require.extensions[".css"] = () => {};
 }
 
+/*
+"reason-react",
+        "reason-apollo",
+        "bs-ant-design-alt",
+        "bs-ant-design-mobile",
+        "bs-css",
+        "bs-fontawesome",
+        "bs-react-useragent",
+        "bs-next-seo",
+        "bs-react-iframe",
+        "bs-react-intl",
+        "bs-next-alt"
+ */
 
 const nextConfig = {
     publicRuntimeConfig: { // Will be available on both server and client
@@ -121,6 +134,11 @@ const nextConfig = {
             config.optimization.minimizer.push(new OptimizeCSSAssetsPlugin({}));
         }
 
+        // Temporary until react-intl supports hooks
+        // https://github.com/alexfedoseev/bs-react-intl/pull/20
+        config.resolve.alias["react-intl"] = "@4c/react-intl";
+
+
         return config;
     },
 };
@@ -135,9 +153,9 @@ module.exports = (phase) => {
         const withStylus = require("@zeit/next-stylus");
         const withPurgeCss = require("next-purgecss");
         const nextSourceMaps = require("@zeit/next-source-maps")();
-        // const withTM = require("next-plugin-transpile-modules");
+        const withTM = require("next-transpile-modules");
 
-        return withOffline(withStylus(withLess(withCSS(withPurgeCss(nextSourceMaps(nextConfig))))));
+        return withOffline(withStylus(withLess(withCSS(withPurgeCss(nextSourceMaps(withTM(nextConfig)))))));
     }
     return withOffline(nextConfig);
 };

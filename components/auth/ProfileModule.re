@@ -1,4 +1,4 @@
-let ste = ReasonReact.string;
+let ste = React.string;
 
 module GetProfileUser = [%graphql
   {|
@@ -31,46 +31,52 @@ module GetProfileUserQuery = ReasonApollo.CreateQuery(GetProfileUser);
   }
 </GetProfileUserQuery>;
 
-let component = ReasonReact.statelessComponent("ProfileModule");
-
 let signIn =
-  <Link prefetch=true href="/auth/signin" style={ReactDOMRe.Style.make(~color="white", ())}>
+  <Next.Link
+    prefetch={Some(true)}
+    href="/auth/signin"
+    style={Some(ReactDOMRe.Style.make(~color="white", ()))}>
     {ReasonReact.string("Sign in")}
-  </Link>;
+  </Next.Link>;
 let signOut =
-  <Link prefetch=true href="/auth/signout" style={ReactDOMRe.Style.make(~color="red", ())}>
+  <Next.Link
+    prefetch={Some(true)}
+    href="/auth/signout"
+    style={Some(ReactDOMRe.Style.make(~color="red", ()))}>
     {ReasonReact.string("Sign out")}
-  </Link>;
+  </Next.Link>;
 
-let make = _children => {
-  ...component,
-  render: _self =>
-    <div>
-      <GetProfileUserQuery>
-        ...{({result}) =>
-          switch (result) {
-          | Error(_e) => signIn
-          | Loading => signIn
-          | Data(response) =>
-            switch (response##user) {
-            | Some(user) =>
-              switch (user##name) {
-              | Some(name) =>
-                <div>
-                  <div
-                    style={ReactDOMRe.Style.make(~color="white", ~marginRight="20px", ~display="inline-block", ())}>
-                    {ReasonReact.string(name)}
-                  </div>
-                  signOut
+[@react.component]
+let make = () => {
+  <div>
+    <GetProfileUserQuery>
+      ...{({result}) =>
+        switch (result) {
+        | Error(_e) => signIn
+        | Loading => signIn
+        | Data(response) =>
+          switch (response##user) {
+          | Some(user) =>
+            switch (user##name) {
+            | Some(name) =>
+              <div>
+                <div
+                  style={ReactDOMRe.Style.make(
+                    ~color="white",
+                    ~marginRight="20px",
+                    ~display="inline-block",
+                    (),
+                  )}>
+                  {ReasonReact.string(name)}
                 </div>
-              | _ => ReasonReact.string("no name")
-              }
-            | _ => signIn
+                signOut
+              </div>
+            | _ => ReasonReact.string("no name")
             }
+          | _ => signIn
           }
         }
-      </GetProfileUserQuery>
-    </div>,
+      }
+    </GetProfileUserQuery>
+  </div>;
 };
-
-let default = ReasonReact.wrapReasonForJs(~component, _jsProps => make([||]));

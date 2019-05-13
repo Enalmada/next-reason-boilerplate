@@ -28,7 +28,9 @@ let make = _children => {
       <NextSeo title="Create User" />
       <RegisterBox />
       {ReasonReact.string("Already have an account? ")}
-      <Next.Link prefetch=true href="/auth/signin"> <a> {ReasonReact.string(" sign in")} </a> </Next.Link>
+      <Next.Link prefetch={Some(true)} href="/auth/signin">
+        <a> {ReasonReact.string(" sign in")} </a>
+      </Next.Link>
     </ConsumerPage>,
 };
 

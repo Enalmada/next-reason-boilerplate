@@ -1,5 +1,4 @@
 /* eslint react/prefer-stateless-function: 0 */
-
 import React, {Component} from "react";
 import {LocaleProvider} from "antd-mobile";
 import enUS from "antd-mobile/lib/locale-provider/en_US";

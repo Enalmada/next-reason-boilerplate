@@ -1,5 +1,5 @@
 import hoistNonReactStatics from "hoist-non-react-statics";
-import {injectIntl} from "react-intl";
+import {injectIntl} from "@4c/react-intl";
 
 export const hoistStatics = higherOrderComponent => (BaseComponent) => {
     const NewComponent = higherOrderComponent(BaseComponent);

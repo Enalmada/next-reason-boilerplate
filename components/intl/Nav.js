@@ -1,5 +1,5 @@
 import React from "react";
-import {FormattedMessage} from "react-intl";
+import {FormattedMessage} from "@4c/react-intl";
 import Link from "next/link";
 
 export default () => (

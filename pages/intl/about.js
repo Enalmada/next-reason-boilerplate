@@ -1,7 +1,7 @@
 /* eslint no-unused-vars: 0 */
 
 import React, {Component} from "react";
-import {FormattedRelative} from "react-intl";
+import {FormattedRelative} from "@4c/react-intl";
 import Layout from "../../components/intl/Layout";
 
 class About extends Component {

@@ -1,3 +1,4 @@
+[@bs.config {jsx: 2}];
 open AntdMobile;
 
 type state = {
@@ -41,7 +42,8 @@ type myResponseVariant = [ | `Button | `WingBlank];
 [%bs.raw {| require("../../../assets/antdMobile.less") |}];
 [%bs.raw {| require("../../../assets/antd-mobile-examples.less") |}];
 
-let config = nextSeoConfig(~canonical="https://www.example.com/about", ~title="Button");
+let config =
+  nextSeoConfig(~canonical="https://www.example.com/about", ~title="Button");
 
 let t = text => ReasonReact.string(text);
 
@@ -109,7 +111,9 @@ let placeHolder =
  let subTitle = ReactDOMRe.Style.make(~color="#888", ~fontSize="14px", ~padding="30px 0 18px 0", ());
  */
 let flexExample =
-  <div className="flex-container" style={ReactDOMRe.Style.make(~margin="0 15px", ())}>
+  <div
+    className="flex-container"
+    style={ReactDOMRe.Style.make(~margin="0 15px", ())}>
     {ReasonReact.string("commented out")}
   </div>;
 /*
@@ -182,7 +186,9 @@ let flexExample =
    */
 
 let wingBlankExample =
-  <div className="flex-container" style={ReactDOMRe.Style.make(~margin="0 15px", ())}>
+  <div
+    className="flex-container"
+    style={ReactDOMRe.Style.make(~margin="0 15px", ())}>
     {ReasonReact.string("commented out")}
   </div>;
 
@@ -196,7 +202,9 @@ let wingBlankExample =
   </div>;
 
 let whiteSpaceExample =
-  <div className="flex-container" style={ReactDOMRe.Style.make(~margin="0 15px", ())}>
+  <div
+    className="flex-container"
+    style={ReactDOMRe.Style.make(~margin="0 15px", ())}>
     {ReasonReact.string("commented out")}
   </div>;
 /*
@@ -228,7 +236,9 @@ let sideBar =
                {t("Category")}
              </List.Item>;
            } else {
-             <List.Item key={string_of_int(x)} thumb="https://zos.alipayobjects.com/rmsportal/eOZidTabPoEbPeU.png">
+             <List.Item
+               key={string_of_int(x)}
+               thumb="https://zos.alipayobjects.com/rmsportal/eOZidTabPoEbPeU.png">
                {t("Category")}
                {t(string_of_int(x))}
              </List.Item>;
@@ -239,17 +249,28 @@ let sideBar =
 
 let sideBar2 =
   <List>
-    <List.Item key="0" thumb="https://zos.alipayobjects.com/rmsportal/eOZidTabPoEbPeU.png" multipleLine=true>
+    <List.Item
+      key="0"
+      thumb="https://zos.alipayobjects.com/rmsportal/eOZidTabPoEbPeU.png"
+      multipleLine=true>
       {t("Category")}
     </List.Item>
   </List>;
 
 let drawerStyle = ReactDOMRe.Style.make(~minHeight="100vh", ());
-let drawerContentStyle = ReactDOMRe.Style.make(~color="#A6A6A6", ~textAlign="center", ~paddingTop="42px", ());
+let drawerContentStyle =
+  ReactDOMRe.Style.make(
+    ~color="#A6A6A6",
+    ~textAlign="center",
+    ~paddingTop="42px",
+    (),
+  );
 
 let drawerExample = (open_, drawerClick) =>
   <div>
-    <NavBar icon={<Icon _type=`ellipsis />} onLeftClick=drawerClick> {t("Basic")} </NavBar>
+    <NavBar icon={<Icon _type=`ellipsis />} onLeftClick=drawerClick>
+      {t("Basic")}
+    </NavBar>
     <Drawer
       className="my-drawer"
       style=drawerStyle
@@ -272,7 +293,11 @@ let listExample = (disabled, onClick) =>
         {t("Title")}
         <List.Item.Brief> {t("subtitle")} </List.Item.Brief>
       </List.Item>
-      <List.Item arrow=`horizontal multipleLine=true platform=`android onClick={_event => ()}>
+      <List.Item
+        arrow=`horizontal
+        multipleLine=true
+        platform=`android
+        onClick={_event => ()}>
         {t("ListItem ?Android")}
         <List.Item.Brief>
           {t("There may have water ripple effect of")}
@@ -281,15 +306,21 @@ let listExample = (disabled, onClick) =>
         </List.Item.Brief>
       </List.Item>
       <List.Item
-        arrow=`horizontal thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png" multipleLine=true>
+        arrow=`horizontal
+        thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"
+        multipleLine=true>
         {t("Title")}
         <List.Item.Brief> {t("subtitle")} </List.Item.Brief>
       </List.Item>
     </List>
-    <List renderHeader="Customized Right Side?Empty Content / Text / Image?" className="my-list">
+    <List
+      renderHeader="Customized Right Side?Empty Content / Text / Image?"
+      className="my-list">
       <List.Item> {t("Title")} </List.Item>
       <List.Item arrow=`horizontal> {t("Title")} </List.Item>
-      <List.Item extra={t("extra content")} arrow=`horizontal> {t("Title")} </List.Item>
+      <List.Item extra={t("extra content")} arrow=`horizontal>
+        {t("Title")}
+      </List.Item>
       <List.Item
         extra={t("10:30")}
         align=`top
@@ -306,20 +337,31 @@ let listExample = (disabled, onClick) =>
       </List.Item>
     </List>
     <List renderHeader="Icon in the left">
-      <List.Item thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png" arrow=`horizontal>
+      <List.Item
+        thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"
+        arrow=`horizontal>
         {t("My wallet")}
       </List.Item>
-      <List.Item thumb="https://zos.alipayobjects.com/rmsportal/UmbJMbWOejVOpxe.png" arrow=`horizontal>
+      <List.Item
+        thumb="https://zos.alipayobjects.com/rmsportal/UmbJMbWOejVOpxe.png"
+        arrow=`horizontal>
         {t("My Cost Ratio")}
       </List.Item>
     </List>
     <List renderHeader="Text Wrapping" className="my-list">
-      <List.Item> {t("Single line?long text will be hidden with ellipsis")} </List.Item>
-      <List.Item wrap=true>
-        {t("Multiple line?long text will wrap?Long Text Long Text Long Text Long Text Long Text Long Text")}
+      <List.Item>
+        {t("Single line?long text will be hidden with ellipsis")}
       </List.Item>
-      <List.Item extra={t("extra content")} multipleLine=true align=`top wrap=true>
-        {t("Multiple line and long text will wrap. Long Text Long Text Long Text")}
+      <List.Item wrap=true>
+        {t(
+           "Multiple line?long text will wrap?Long Text Long Text Long Text Long Text Long Text Long Text",
+         )}
+      </List.Item>
+      <List.Item
+        extra={t("extra content")} multipleLine=true align=`top wrap=true>
+        {t(
+           "Multiple line and long text will wrap. Long Text Long Text Long Text",
+         )}
       </List.Item>
       <List.Item extra={t("no arrow")} arrow=`empty className="spe" wrap=true>
         {t(
@@ -328,7 +370,9 @@ let listExample = (disabled, onClick) =>
       </List.Item>
     </List>
     <List renderHeader="Other" className="my-list">
-      <List.Item disabled extra={t("")} onClick> {t("Click to disable")} </List.Item>
+      <List.Item disabled extra={t("")} onClick>
+        {t("Click to disable")}
+      </List.Item>
       <List.Item>
         <select defaultValue="1">
           <option value="1"> {t("Html select element")} </option>
@@ -341,40 +385,168 @@ let listExample = (disabled, onClick) =>
 
 let buttonExample =
   <div style={ReactDOMRe.Style.make(~paddingTop="15px", ())}>
-    <WingBlank> <Button _type=`primary> {t("Button Mobile")} </Button> </WingBlank>
+    <WingBlank>
+      <Button _type=`primary> {t("Button Mobile")} </Button>
+    </WingBlank>
   </div>;
 
 let gridStyle = ReactDOMRe.Style.make(~padding="12.5px", ());
-let gridImageStyle = ReactDOMRe.Style.make(~color="#888", ~fontSize="14px", ~marginTop="12px", ());
-let gridLastStyle = ReactDOMRe.Style.make(~height="150px", ~background="rgba(0,0,0,.05)'", ());
+let gridImageStyle =
+  ReactDOMRe.Style.make(
+    ~color="#888",
+    ~fontSize="14px",
+    ~marginTop="12px",
+    (),
+  );
+let gridLastStyle =
+  ReactDOMRe.Style.make(~height="150px", ~background="rgba(0,0,0,.05)'", ());
 
 let gridData: list(Grid.dataProps) = [
-  Grid.dataProps(~icon=t("https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png"), ~text=t("1")),
-  Grid.dataProps(~icon=t("https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png"), ~text=t("1")),
-  Grid.dataProps(~icon=t("https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png"), ~text=t("1")),
-  Grid.dataProps(~icon=t("https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png"), ~text=t("1")),
-  Grid.dataProps(~icon=t("https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png"), ~text=t("1")),
-  Grid.dataProps(~icon=t("https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png"), ~text=t("1")),
-  Grid.dataProps(~icon=t("https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png"), ~text=t("1")),
-  Grid.dataProps(~icon=t("https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png"), ~text=t("1")),
-  Grid.dataProps(~icon=t("https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png"), ~text=t("1")),
+  Grid.dataProps(
+    ~icon=
+      t(
+        "https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png",
+      ),
+    ~text=t("1"),
+  ),
+  Grid.dataProps(
+    ~icon=
+      t(
+        "https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png",
+      ),
+    ~text=t("1"),
+  ),
+  Grid.dataProps(
+    ~icon=
+      t(
+        "https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png",
+      ),
+    ~text=t("1"),
+  ),
+  Grid.dataProps(
+    ~icon=
+      t(
+        "https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png",
+      ),
+    ~text=t("1"),
+  ),
+  Grid.dataProps(
+    ~icon=
+      t(
+        "https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png",
+      ),
+    ~text=t("1"),
+  ),
+  Grid.dataProps(
+    ~icon=
+      t(
+        "https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png",
+      ),
+    ~text=t("1"),
+  ),
+  Grid.dataProps(
+    ~icon=
+      t(
+        "https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png",
+      ),
+    ~text=t("1"),
+  ),
+  Grid.dataProps(
+    ~icon=
+      t(
+        "https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png",
+      ),
+    ~text=t("1"),
+  ),
+  Grid.dataProps(
+    ~icon=
+      t(
+        "https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png",
+      ),
+    ~text=t("1"),
+  ),
 ];
 
 let gridData1: list(Grid.dataProps) = [
-  Grid.dataProps(~icon=t("https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"), ~text=t("")),
-  Grid.dataProps(~icon=t("https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"), ~text=t("")),
-  Grid.dataProps(~icon=t("https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"), ~text=t("")),
-  Grid.dataProps(~icon=t("https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"), ~text=t("")),
-  Grid.dataProps(~icon=t("https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"), ~text=t("")),
-  Grid.dataProps(~icon=t("https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"), ~text=t("")),
-  Grid.dataProps(~icon=t("https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"), ~text=t("")),
-  Grid.dataProps(~icon=t("https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"), ~text=t("")),
-  Grid.dataProps(~icon=t("https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"), ~text=t("")),
+  Grid.dataProps(
+    ~icon=
+      t(
+        "https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png",
+      ),
+    ~text=t(""),
+  ),
+  Grid.dataProps(
+    ~icon=
+      t(
+        "https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png",
+      ),
+    ~text=t(""),
+  ),
+  Grid.dataProps(
+    ~icon=
+      t(
+        "https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png",
+      ),
+    ~text=t(""),
+  ),
+  Grid.dataProps(
+    ~icon=
+      t(
+        "https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png",
+      ),
+    ~text=t(""),
+  ),
+  Grid.dataProps(
+    ~icon=
+      t(
+        "https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png",
+      ),
+    ~text=t(""),
+  ),
+  Grid.dataProps(
+    ~icon=
+      t(
+        "https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png",
+      ),
+    ~text=t(""),
+  ),
+  Grid.dataProps(
+    ~icon=
+      t(
+        "https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png",
+      ),
+    ~text=t(""),
+  ),
+  Grid.dataProps(
+    ~icon=
+      t(
+        "https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png",
+      ),
+    ~text=t(""),
+  ),
+  Grid.dataProps(
+    ~icon=
+      t(
+        "https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png",
+      ),
+    ~text=t(""),
+  ),
 ];
 
-let subTitle = ReactDOMRe.Style.make(~color="#888", ~fontSize="14px", ~padding="15px 0 9px 15px", ());
+let subTitle =
+  ReactDOMRe.Style.make(
+    ~color="#888",
+    ~fontSize="14px",
+    ~padding="15px 0 9px 15px",
+    (),
+  );
 
-Css.(global("not-square-grid .am-grid-icon", [width(px(40)), height(px(60))]));
+Css.(
+  global(
+    "not-square-grid .am-grid-icon",
+    [width(px(40)), height(px(60))],
+  )
+);
 
 /*
  .not-square-grid .am-grid-icon {
@@ -387,7 +559,9 @@ let gridExample =
   <div>
     <div className="sub-title"> {t("Always square grid item")} </div>
     <Grid data=gridData />
-    <div className="sub-title" style=subTitle> {t("Grid item adjust accroiding to img size")} </div>
+    <div className="sub-title" style=subTitle>
+      {t("Grid item adjust accroiding to img size")}
+    </div>
     <Grid data=gridData square=false className="not-square-grid" />
     <div className="sub-title" style=subTitle> {t("ColumnNum=3")} </div>
     <Grid data=gridData columnNum=3 />
@@ -401,8 +575,18 @@ let gridExample =
       columnNum=3
       renderItem={dataItem =>
         <div style=gridStyle>
-          <img src=dataItem##icon style={ReactDOMRe.Style.make(~width="75px", ~height="75px", ())} alt="" />
-          <div style={ReactDOMRe.Style.make(~color="#888", ~fontSize="14px", ~marginTop="12px", ())}>
+          <img
+            src=dataItem##icon
+            style={ReactDOMRe.Style.make(~width="75px", ~height="75px", ())}
+            alt=""
+          />
+          <div
+            style={ReactDOMRe.Style.make(
+              ~color="#888",
+              ~fontSize="14px",
+              ~marginTop="12px",
+              (),
+            )}>
             <span> {t("I am title..")} </span>
           </div>
         </div>
@@ -421,7 +605,11 @@ let navbarExample =
       icon={<Icon _type=`left />}
       onLeftClick={() => Js.log("onLeftClick")}
       rightContent=[
-        <Icon key="0" _type=`search style={ReactDOMRe.Style.make(~marginRight="16px", ())} />,
+        <Icon
+          key="0"
+          _type=`search
+          style={ReactDOMRe.Style.make(~marginRight="16px", ())}
+        />,
         <Icon key="1" _type=`ellipsis />,
       ]>
       {t("NavBar")}
@@ -430,7 +618,11 @@ let navbarExample =
       mode=`dark
       leftContent=[t("Back")]
       rightContent=[
-        <Icon key="0" _type=`search style={ReactDOMRe.Style.make(~marginRight="16px", ())} />,
+        <Icon
+          key="0"
+          _type=`search
+          style={ReactDOMRe.Style.make(~marginRight="16px", ())}
+        />,
         <Icon key="1" _type=`ellipsis />,
       ]>
       {t("NavBar")}
@@ -438,13 +630,20 @@ let navbarExample =
   </div>;
 
 let myImg = src =>
-  <img src={"https://gw.alipayobjects.com/zos/rmsportal/" ++ src ++ ".svg"} className="am-icon am-icon-xs" alt="" />;
+  <img
+    src={"https://gw.alipayobjects.com/zos/rmsportal/" ++ src ++ ".svg"}
+    className="am-icon am-icon-xs"
+    alt=""
+  />;
 
 let overflow: AntdMobile_Popover.overflow = {"adjustY": 0, "adjustX": 0};
 
 let offset = [|(-10), 0|];
 
-let align: AntdMobile_Popover.alignConfig = {"overflow": overflow, "offset": offset};
+let align: AntdMobile_Popover.alignConfig = {
+  "overflow": overflow,
+  "offset": offset,
+};
 
 let popoverExample = (visible, handleVisibleChange, handleSelect) =>
   <div>
@@ -457,7 +656,10 @@ let popoverExample = (visible, handleVisibleChange, handleSelect) =>
           overlayStyle={ReactDOMRe.Style.make(~color="currentColor", ())}
           visible
           overlay=[
-            <Popover.Item key="4" value="scan" icon={myImg("tOtXhkIWzwotgGSeptou")}> {t("Scan")} </Popover.Item>,
+            <Popover.Item
+              key="4" value="scan" icon={myImg("tOtXhkIWzwotgGSeptou")}>
+              {t("Scan")}
+            </Popover.Item>,
             <Popover.Item
               key="5"
               value="special"
@@ -465,8 +667,11 @@ let popoverExample = (visible, handleVisibleChange, handleSelect) =>
               style={ReactDOMRe.Style.make(~whiteSpace="nowrap", ())}>
               {t("My Qrcode")}
             </Popover.Item>,
-            <Popover.Item key="6" value="button ct" icon={myImg("uQIYTFeRrjPELImDRrPt")}>
-              <span style={ReactDOMRe.Style.make(~marginRight="5px", ())}> {t("Help")} </span>
+            <Popover.Item
+              key="6" value="button ct" icon={myImg("uQIYTFeRrjPELImDRrPt")}>
+              <span style={ReactDOMRe.Style.make(~marginRight="5px", ())}>
+                {t("Help")}
+              </span>
             </Popover.Item>,
           ]
           align
@@ -489,11 +694,16 @@ let popoverExample = (visible, handleVisibleChange, handleSelect) =>
     </NavBar>
   </div>;
 
-let locale: Pagination.locale = {"prevText": t("Prev"), "nextText": t("Next")};
+let locale: Pagination.locale = {
+  "prevText": t("Prev"),
+  "nextText": t("Next"),
+};
 
 let customLocale: Pagination.locale = {
-  "prevText": <span className="arrow-align"> <Icon _type=`left /> {t("L")} </span>,
-  "nextText": <span className="arrow-align"> {t("R")} <Icon _type=`right /> </span>,
+  "prevText":
+    <span className="arrow-align"> <Icon _type=`left /> {t("L")} </span>,
+  "nextText":
+    <span className="arrow-align"> {t("R")} <Icon _type=`right /> </span>,
 };
 
 let paginationExample =
@@ -501,13 +711,23 @@ let paginationExample =
     <p className="sub-title"> {t("Button with text")} </p>
     <Pagination total=5 current=1 locale />
     <p className="sub-title"> {t("Button with text and icon")} </p>
-    <Pagination total=5 className="custom-pagination-with-icon" current=1 locale=customLocale />
+    <Pagination
+      total=5
+      className="custom-pagination-with-icon"
+      current=1
+      locale=customLocale
+    />
     <p className="sub-title"> {t("Hide number")} </p>
     <Pagination simple=true total=5 current=1 locale />
     <p className="sub-title"> {t("Show number only")} </p>
     <Pagination mode=`number total=5 current=3 />
     <p className="sub-title"> {t("Point style")} </p>
-    <Pagination mode=`pointer total=5 current=2 style={ReactDOMRe.Style.make(~marginBottom="16px", ())} />
+    <Pagination
+      mode=`pointer
+      total=5
+      current=2
+      style={ReactDOMRe.Style.make(~marginBottom="16px", ())}
+    />
   </div>;
 
 let segmentedOnChange: ReactEvent.Mouse.t => unit =
@@ -515,7 +735,8 @@ let segmentedOnChange: ReactEvent.Mouse.t => unit =
     {| 'console.log(`selectedIndex:${e.nativeEvent.selectedSegmentIndex}`)' |}
     /* */
   ];
-let segmentedOnValueChange: ReactEvent.Mouse.t => unit = value => Js.log(value);
+let segmentedOnValueChange: ReactEvent.Mouse.t => unit =
+  value => Js.log(value);
 
 let segmentedControlExample = (segmentedOnChange, segmentedOnValueChange) =>
   <WingBlank size=`lg className="sc-example">
@@ -524,7 +745,10 @@ let segmentedControlExample = (segmentedOnChange, segmentedOnValueChange) =>
     <p className="sub-title"> {t("Disabled")} </p>
     <SegmentedControl values=["Segment1", "Segment2"] disabled=true />
     <p className="sub-title"> {t("SelectedIndex")} </p>
-    <SegmentedControl selectedIndex=1 values=["Segment1", "Segment2", "Segment3"] />
+    <SegmentedControl
+      selectedIndex=1
+      values=["Segment1", "Segment2", "Segment3"]
+    />
     <p className="sub-title"> {t("TintColor")} </p>
     <SegmentedControl
       values=["Segment1", "Segment2", "Segment3"]
@@ -579,27 +803,54 @@ let tabBarStyle: string => ReactDOMRe.Style.t =
     ReactDOMRe.Style.make(
       ~width="22px",
       ~height="22px",
-      ~background="url(" ++ iconUrl ++ ") center center /  21px 21px no-repeat",
+      ~background=
+        "url(" ++ iconUrl ++ ") center center /  21px 21px no-repeat",
       (),
     );
 
 let tabBarExample = (selectedTab, setTabBarState) =>
   <div style={ReactDOMRe.Style.make(~height="400px", ())}>
-    <TabBar unselectedTintColor="#949494" tintColor="#33A3F4" barTintColor="white" hidden=false>
+    <TabBar
+      unselectedTintColor="#949494"
+      tintColor="#33A3F4"
+      barTintColor="white"
+      hidden=false>
       <TabBar.Item
         title="Life"
         key="Life"
-        icon={<div style={tabBarStyle("https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg")} />}
-        selectedIcon={<div style={tabBarStyle("https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg")} />}
+        icon={
+          <div
+            style={tabBarStyle(
+              "https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg",
+            )}
+          />
+        }
+        selectedIcon={
+          <div
+            style={tabBarStyle(
+              "https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg",
+            )}
+          />
+        }
         selected={selectedTab == "blueTab"}
         badge="1"
         onPress={_unit => setTabBarState("blueTab")}>
         {t("Life")}
       </TabBar.Item>
       <TabBar.Item
-        icon={<div style={tabBarStyle("https://gw.alipayobjects.com/zos/rmsportal/BTSsmHkPsQSPTktcXyTV.svg")} />}
+        icon={
+          <div
+            style={tabBarStyle(
+              "https://gw.alipayobjects.com/zos/rmsportal/BTSsmHkPsQSPTktcXyTV.svg",
+            )}
+          />
+        }
         selectedIcon={
-          <div style={tabBarStyle("https://gw.alipayobjects.com/zos/rmsportal/ekLecvKBnRazVLXbWOnE.svg")} />
+          <div
+            style={tabBarStyle(
+              "https://gw.alipayobjects.com/zos/rmsportal/ekLecvKBnRazVLXbWOnE.svg",
+            )}
+          />
         }
         title="Koubei"
         key="Koubei"
@@ -609,8 +860,20 @@ let tabBarExample = (selectedTab, setTabBarState) =>
         {t("Koubei")}
       </TabBar.Item>
       <TabBar.Item
-        icon={<div style={tabBarStyle("https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg")} />}
-        selectedIcon={<div style={tabBarStyle("https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg")} />}
+        icon={
+          <div
+            style={tabBarStyle(
+              "https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg",
+            )}
+          />
+        }
+        selectedIcon={
+          <div
+            style={tabBarStyle(
+              "https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg",
+            )}
+          />
+        }
         title="Friend"
         key="Friend"
         dot=true
@@ -622,11 +885,30 @@ let tabBarExample = (selectedTab, setTabBarState) =>
   </div>;
 
 let marginLeft = ReactDOMRe.Style.make(~marginLeft="12px", ());
-let customOne = ReactDOMRe.Style.make(~width="26px", ~height="26px", ~background="#ddd", ~display="inline-block", ());
+let customOne =
+  ReactDOMRe.Style.make(
+    ~width="26px",
+    ~height="26px",
+    ~background="#ddd",
+    ~display="inline-block",
+    (),
+  );
 let customTwo =
-  ReactDOMRe.Style.make(~marginLeft="12px", ~padding="0 3px", ~backgroundColor="#f19736", ~borderRadius="2", ());
+  ReactDOMRe.Style.make(
+    ~marginLeft="12px",
+    ~padding="0 3px",
+    ~backgroundColor="#f19736",
+    ~borderRadius="2",
+    (),
+  );
 let customThree =
-  ReactDOMRe.Style.make(~marginLeft="12px", ~padding="0 3px", ~backgroundColor="#21b68a", ~borderRadius="2", ());
+  ReactDOMRe.Style.make(
+    ~marginLeft="12px",
+    ~padding="0 3px",
+    ~backgroundColor="#21b68a",
+    ~borderRadius="2",
+    (),
+  );
 
 let badgeExample =
   <List>
@@ -641,9 +923,13 @@ let badgeExample =
       {t("Content")}
     </List.Item>
     <List.Item>
-      <Badge text="Corner" corner=true> <div className="corner-badge"> {t("Use corner prop")} </div> </Badge>
+      <Badge text="Corner" corner=true>
+        <div className="corner-badge"> {t("Use corner prop")} </div>
+      </Badge>
     </List.Item>
-    <List.Item className="special-badge" extra={<Badge text="Custom" />}> {t("Custom corner")} </List.Item>
+    <List.Item className="special-badge" extra={<Badge text="Custom" />}>
+      {t("Custom corner")}
+    </List.Item>
     <List.Item extra={t("extra")} arrow=`horizontal>
       <Badge text="0" style=marginLeft> {t("Text number 0")} </Badge>
       <Badge text="new" style=marginLeft />
@@ -669,14 +955,18 @@ let checkboxExample =
       <CheckboxItem key="0"> {t("PHD")} </CheckboxItem>
       <CheckboxItem key="1"> {t("Bachelor")} </CheckboxItem>
       <CheckboxItem key="2"> {t("College")} </CheckboxItem>
-      <CheckboxItem key="disabled" disabled=true defaultChecked=true multipleLine=true>
+      <CheckboxItem
+        key="disabled" disabled=true defaultChecked=true multipleLine=true>
         {t("Undergraduate")}
         <List.Item.Brief> {t("Auxiliary text")} </List.Item.Brief>
       </CheckboxItem>
     </List>
     <Flex>
       <Flex.Item>
-        <AgreeItem onChange={_e => Js.log("checkbox")}> {t("Agree")} <a> {t("agreement")} </a> </AgreeItem>
+        <AgreeItem onChange={_e => Js.log("checkbox")}>
+          {t("Agree")}
+          <a> {t("agreement")} </a>
+        </AgreeItem>
       </Flex.Item>
     </Flex>
   </div>;
@@ -691,7 +981,9 @@ let radioExample =
 
 let switchExample = (switchChecked, handleSwitch) =>
   <List renderHeader="Form switch">
-    <List.Item extra={<Switch checked=switchChecked onClick=handleSwitch />}> {t("On")} </List.Item>
+    <List.Item extra={<Switch checked=switchChecked onClick=handleSwitch />}>
+      {t("On")}
+    </List.Item>
   </List>;
 
 let searchBarExample =
@@ -700,7 +992,8 @@ let searchBarExample =
     <SearchBar placeholder="Search" maxLength=8 />
   </div>;
 
-let textareaItemExample = <List renderHeader="Count"> <TextareaItem rows=5 count=100 /> </List>;
+let textareaItemExample =
+  <List renderHeader="Count"> <TextareaItem rows=5 count=100 /> </List>;
 
 let iconList = [
   `checkCircle,
@@ -719,7 +1012,10 @@ let iconList = [
 ];
 
 let iconData: list(Grid.dataProps) =
-  ListLabels.map(~f=item => Grid.dataProps(~icon=<Icon _type=item />, ~text=t("text")), iconList);
+  ListLabels.map(
+    ~f=item => Grid.dataProps(~icon=<Icon _type=item />, ~text=t("text")),
+    iconList,
+  );
 
 let iconExample = <Grid data=iconData columnNum=3 hasLine=false />;
 
@@ -729,11 +1025,16 @@ let cardExample =
     <Card>
       <Card.Header
         title={t("This is title")}
-        thumb={t("https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg")}
+        thumb={t(
+          "https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg",
+        )}
         extra={<span> {t("this is extra")} </span>}
       />
       <Card.Body> <div> {t("This is content of `Card`")} </div> </Card.Body>
-      <Card.Footer content={t("footer content")} extra={<div> {t("extra footer content")} </div>} />
+      <Card.Footer
+        content={t("footer content")}
+        extra={<div> {t("extra footer content")} </div>}
+      />
     </Card>
     <WhiteSpace size=`lg />
   </WingBlank>;
@@ -744,23 +1045,43 @@ let noticeBarExample =
   <div>
     <WhiteSpace size=`lg />
     <NoticeBar
-      marqueeProps={NoticeBar.marqueeProps(~loop=true, ~style=marqueeStyle, ~leading=0, ~trailing=0, ~fps=40)}>
-      {t("Notice: The arrival time of incomes and transfers of Yu &#39;E Bao will be delayed during National Day.")}
+      marqueeProps={NoticeBar.marqueeProps(
+        ~loop=true,
+        ~style=marqueeStyle,
+        ~leading=0,
+        ~trailing=0,
+        ~fps=40,
+      )}>
+      {t(
+         "Notice: The arrival time of incomes and transfers of Yu &#39;E Bao will be delayed during National Day.",
+       )}
     </NoticeBar>
     <WhiteSpace size=`lg />
     <NoticeBar mode=`link onClick={() => Js.log("1")}>
-      {t("Notice: The arrival time of incomes and transfers of Yu &#39;E Bao will be delayed during National Day.")}
+      {t(
+         "Notice: The arrival time of incomes and transfers of Yu &#39;E Bao will be delayed during National Day.",
+       )}
     </NoticeBar>
     <WhiteSpace size=`lg />
     <NoticeBar mode=`closable> {t("Remove the default icon.")} </NoticeBar>
     <WhiteSpace size=`lg />
-    <NoticeBar mode=`closable icon={<Icon _type=`checkCircleO size=`xxs />}> {t("Customized icon.")} </NoticeBar>
+    <NoticeBar mode=`closable icon={<Icon _type=`checkCircleO size=`xxs />}>
+      {t("Customized icon.")}
+    </NoticeBar>
     <WhiteSpace size=`lg />
-    <NoticeBar mode=`closable action={<span style={ReactDOMRe.Style.make(~color="a1a1a1", ())}> {t("yay")} </span>}>
+    <NoticeBar
+      mode=`closable
+      action={
+        <span style={ReactDOMRe.Style.make(~color="a1a1a1", ())}>
+          {t("yay")}
+        </span>
+      }>
       {t("Closable demo for `actionText`.")}
     </NoticeBar>
     <WhiteSpace size=`lg />
-    <NoticeBar mode=`link action={<span> {t("yayagain")} </span>}> {t("Link demo for `actionText`.")} </NoticeBar>
+    <NoticeBar mode=`link action={<span> {t("yayagain")} </span>}>
+      {t("Link demo for `actionText`.")}
+    </NoticeBar>
   </div>;
 
 let activityIndicatorExample =
@@ -768,14 +1089,22 @@ let activityIndicatorExample =
     <WingBlank>
       <div className="loading-container">
         <p className="sub-title"> {t("Without text")} </p>
-        <div className="loading-example"> <ActivityIndicator animating=true /> </div>
+        <div className="loading-example">
+          <ActivityIndicator animating=true />
+        </div>
         <p className="sub-title"> {t("With text")} </p>
-        <div className="loading-example"> <ActivityIndicator text="Loading..." /> </div>
-        <p className="sub-title"> {t("With large size and customized text style")} </p>
+        <div className="loading-example">
+          <ActivityIndicator text="Loading..." />
+        </div>
+        <p className="sub-title">
+          {t("With large size and customized text style")}
+        </p>
         <div className="loading-example">
           <div className="align">
             <ActivityIndicator size=`large />
-            <span style={ReactDOMRe.Style.make(~marginTop="8", ())}> {t("Loading...")} </span>
+            <span style={ReactDOMRe.Style.make(~marginTop="8", ())}>
+              {t("Loading...")}
+            </span>
           </div>
         </div>
       </div>
@@ -831,7 +1160,8 @@ let activityIndicatorExample =
                         return (
  */
 
-let modalExample = (modal1, modal2, modalShow1, modalClose1, modalShow2, modalClose2) =>
+let modalExample =
+    (modal1, modal2, modalShow1, modalClose1, modalShow2, modalClose2) =>
   <WingBlank>
     <Button onClick=modalShow1> {t("basic")} </Button>
     <WhiteSpace />
@@ -848,19 +1178,25 @@ let modalExample = (modal1, modal2, modalShow1, modalClose1, modalShow2, modalCl
           ();
         }),
       ]>
-      <div style={ReactDOMRe.Style.make(~height="100", ~overflow="scroll", ())}>
+      <div
+        style={ReactDOMRe.Style.make(~height="100", ~overflow="scroll", ())}>
         {t("scoll content...")}
         <br />
       </div>
     </Modal>
     <Button onClick=modalShow2> {t("popup")} </Button>
     <WhiteSpace />
-    <Modal popup=true visible=modal2 onClose=modalClose2 animationType=`slideUp>
+    <Modal
+      popup=true visible=modal2 onClose=modalClose2 animationType=`slideUp>
       <List renderHeader="somethingsomething" className="popup-list">
         <List.Item key="one"> {t("one")} </List.Item>
         <List.Item key="two"> {t("two")} </List.Item>
         <List.Item key="three"> {t("three")} </List.Item>
-        <List.Item> <Button _type=`primary onClick={_event => modalClose2()}> {t("something")} </Button> </List.Item>
+        <List.Item>
+          <Button _type=`primary onClick={_event => modalClose2()}>
+            {t("something")}
+          </Button>
+        </List.Item>
       </List>
     </Modal>
   </WingBlank>;
@@ -939,7 +1275,8 @@ let modalExample = (modal1, modal2, modalShow1, modalClose1, modalShow2, modalCl
  */
 
 let onCloseToast = (.) => Js.log("clicked");
-let showToast = () => Toast.info(t("This is a toast tips !!!"), 1, onCloseToast, true);
+let showToast = () =>
+  Toast.info(t("This is a toast tips !!!"), 1, onCloseToast, true);
 
 let toastExample =
   <WingBlank>
@@ -962,11 +1299,15 @@ let make = (~which, _children) => {
   reducer: (action, state) =>
     switch (action) {
     | DisableList => ReasonReact.Update({...state, listDisabled: true})
-    | DrawerClick => ReasonReact.Update({...state, drawerOpen: !state.drawerOpen})
-    | PopoverVisible(popoverVisible) => ReasonReact.Update({...state, popoverVisible})
+    | DrawerClick =>
+      ReasonReact.Update({...state, drawerOpen: !state.drawerOpen})
+    | PopoverVisible(popoverVisible) =>
+      ReasonReact.Update({...state, popoverVisible})
     | PopoverClick => ReasonReact.Update({...state, popoverVisible: false})
-    | TabBarClick((selectedTab: string)) => ReasonReact.Update({...state, selectedTab})
-    | SwitchClick => ReasonReact.Update({...state, switchChecked: !state.switchChecked})
+    | TabBarClick((selectedTab: string)) =>
+      ReasonReact.Update({...state, selectedTab})
+    | SwitchClick =>
+      ReasonReact.Update({...state, switchChecked: !state.switchChecked})
     | ShowModal1 => ReasonReact.Update({...state, modal1: true})
     | HideModal1 => ReasonReact.Update({...state, modal1: false})
     | ShowModal2 => ReasonReact.Update({...state, modal2: true})
@@ -984,7 +1325,10 @@ let make = (~which, _children) => {
          | "WhiteSpace" => whiteSpaceExample
 
          /* Navigation */
-         | "Drawer" => drawerExample(self.state.drawerOpen, _event => self.send(DrawerClick))
+         | "Drawer" =>
+           drawerExample(self.state.drawerOpen, _event =>
+             self.send(DrawerClick)
+           )
          | "Menu" => menuExample
          | "NavBar" => navbarExample
          | "Popover" =>
@@ -994,15 +1338,22 @@ let make = (~which, _children) => {
              _event => self.send(PopoverClick),
            )
          | "Pagination" => paginationExample
-         | "SegmentedControl" => segmentedControlExample(segmentedOnChange, segmentedOnValueChange)
+         | "SegmentedControl" =>
+           segmentedControlExample(segmentedOnChange, segmentedOnValueChange)
          | "Tabs" => tabsExample
-         | "TabBar" => tabBarExample(self.state.selectedTab, selectedTab => self.send(TabBarClick(selectedTab)))
+         | "TabBar" =>
+           tabBarExample(self.state.selectedTab, selectedTab =>
+             self.send(TabBarClick(selectedTab))
+           )
 
          /* Data Entry */
          | "Button" => buttonExample
          | "Checkbox" => checkboxExample
          | "Radio" => radioExample
-         | "Switch" => switchExample(self.state.switchChecked, _selectedTab => self.send(SwitchClick))
+         | "Switch" =>
+           switchExample(self.state.switchChecked, _selectedTab =>
+             self.send(SwitchClick)
+           )
          | "SearchBar" => searchBarExample
          | "TextareaItem" => textareaItemExample
 
@@ -1011,7 +1362,10 @@ let make = (~which, _children) => {
          | "Card" => cardExample
          | "Grid" => gridExample
          | "Icon" => iconExample
-         | "List" => listExample(self.state.listDisabled, _event => self.send(DisableList))
+         | "List" =>
+           listExample(self.state.listDisabled, _event =>
+             self.send(DisableList)
+           )
          | "NoticeBar" => noticeBarExample
 
          /* Feedback */
@@ -1035,4 +1389,7 @@ let make = (~which, _children) => {
 [@bs.deriving abstract]
 type jsProps = {which: string};
 
-let default = ReasonReact.wrapReasonForJs(~component, jsProps => make(~which=jsProps->whichGet, [||]));
+let default =
+  ReasonReact.wrapReasonForJs(~component, jsProps =>
+    make(~which=jsProps->whichGet, [||])
+  );

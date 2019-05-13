@@ -12,7 +12,7 @@ import {faComments} from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import {UserAgentProvider} from "@quentin-sommer/react-useragent";
 import RUM from "next-rum";
-import {IntlProvider, addLocaleData} from "react-intl";
+import {IntlProvider, addLocaleData} from "@4c/react-intl";
 import withApollo from "../util/withApollo";
 // import your default seo configuration
 import SEO from "../next-seo.config";
@@ -136,19 +136,19 @@ class MyApp extends App {
         return (
             <Container>
                 <RUM navigated={navigated}>
-                    <SiteContext.Provider value={{someValue: 1000}}>
-                        <UserAgentProvider ua={ua}>
-                            <IntlProvider locale={locale} messages={messages} initialNow={now}>
-                                <LocaleProvider locale={en_US}>
-                                    <ApolloProvider client={apolloClient}>
-                                        {/* Here we call NextSeo and pass our default configuration to it  */}
-                                        <NextSeo config={SEO}/>
-                                        <Component {...pageProps} />
-                                    </ApolloProvider>
-                                </LocaleProvider>
-                            </IntlProvider>
-                        </UserAgentProvider>
-                    </SiteContext.Provider>
+                    {/* <SiteContext.Provider value={{someValue: 1000}}> */}
+                    <UserAgentProvider ua={ua}>
+                        <IntlProvider locale={locale} messages={messages} initialNow={now}>
+                            <LocaleProvider locale={en_US}>
+                                <ApolloProvider client={apolloClient}>
+                                    {/* Here we call NextSeo and pass our default configuration to it  */}
+                                    <NextSeo config={SEO}/>
+                                    <Component {...pageProps} />
+                                </ApolloProvider>
+                            </LocaleProvider>
+                        </IntlProvider>
+                    </UserAgentProvider>
+                    {/* /SiteContext.Provider> */}
                 </RUM>
             </Container>
         );

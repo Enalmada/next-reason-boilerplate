@@ -1,21 +1,21 @@
-/* comment */
-type action =
-  | Add;
+let count = ref(0);
 
-let component = ReasonReact.reducerComponent("Counter");
+[@react.component]
+let make = () => {
+  let (_state, dispatch) =
+    React.useReducer((_, _) => Js.Obj.empty(), Js.Obj.empty());
 
-let make = _children => {
-  ...component,
-  initialState: () => 0,
-  reducer: (action, state) =>
-    switch (action) {
-    | Add => ReasonReact.Update(state + 1)
-    },
-  render: self => {
-    let countMsg = "Count: " ++ string_of_int(self.state);
-    <div>
-      <p> {ReasonReact.string(countMsg)} </p>
-      <button onClick={_event => self.send(Add)}> {ReasonReact.string("Add")} </button>
-    </div>;
-  },
+  let countMsg = "Count: " ++ string_of_int(count^);
+
+  let add = () => {
+    count := count^ + 1;
+    dispatch();
+  };
+
+  <div>
+    <p> {ReasonReact.string(countMsg)} </p>
+    <button onClick={_ => add()}> {React.string("Add")} </button>
+  </div>;
 };
+
+let default = make;

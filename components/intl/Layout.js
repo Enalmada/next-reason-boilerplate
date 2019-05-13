@@ -1,5 +1,5 @@
 import React from "react";
-import {defineMessages, injectIntl} from "react-intl";
+import {defineMessages, injectIntl} from "@4c/react-intl";
 import Head from "next/head";
 import Nav from "./Nav";
 
