@@ -1,8 +1,5 @@
 # Next.js reason-react apollo production ready boilerplate 
 
-https://next-reason-boilerplate.now.sh/
-(Note: free hosting may take minutes to fire up)
-
 This project is an attempt to provide a production ready starting point for your cutting edge project.
 Feel free to propose anything in tickets or push anything you think would benefit the community.
 
