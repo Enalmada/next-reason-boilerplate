@@ -1,5 +1,8 @@
 # Next.js reason-react apollo production ready boilerplate 
 
+Archived.  Please refer to https://github.com/Enalmada/nextjs-boilerplate which supports most of the features below in a more modern next version.
+
+
 https://next-reason-boilerplate.now.sh/
 
 This project is an attempt to provide a production ready starting point for your cutting edge project.
